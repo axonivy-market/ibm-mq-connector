@@ -1,20 +1,20 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>com.axonivy.market</groupId>
-  <name>MY-PRODUCT-NAME</name>
-  <artifactId>MY-PRODUCT-NAME-modules</artifactId>
-  <version>12.0.0-SNAPSHOT</version>
+  <groupId>com.axonivy.connector.imb.mq</groupId>
+  <name>ibm-mq-connector</name>
+  <artifactId>ibm-mq-connector-modules</artifactId>
+  <version>12.0.15-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <modules>
-    <module>MY-PRODUCT-NAME</module>
-    <module>MY-PRODUCT-NAME-demo</module>
-    <module>MY-PRODUCT-NAME-test</module>
-    <module>MY-PRODUCT-NAME-product</module>
+    <module>ibm-mq-connector</module>
+    <module>ibm-mq-connector-demo</module>
+    <module>ibm-mq-connector-test</module>
+    <module>ibm-mq-connector-product</module>
   </modules>
 
   <scm>
-    <developerConnection>scm:git:https://github.com/axonivy-market/MY-PRODUCT-NAME.git</developerConnection>
+    <developerConnection>scm:git:https://github.com/axonivy-market/ibm-mq-connector.git</developerConnection>
     <tag>HEAD</tag>
   </scm>
 
