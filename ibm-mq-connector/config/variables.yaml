@@ -6,12 +6,12 @@ Variables:
     # TCP port on which the IBM MQ listener is running (default: 1414)
     port: "1414"
     # MQ channel name used for client connections (e.g., DEV.APP.SVRCONN)
-    channel: ""
+    channel: "DEV.APP.SVRCONN"
     # Name of the Queue Manager to connect to (e.g., QM1)
-    queueManager: ""
+    queueManager: "QM1"
     # Name of the queue to send/receive messages (e.g., DEV.QUEUE.1)
-    queueName: ""
+    queueName: "DEV.QUEUE.1"
     # Username for authenticating with the IBM MQ server
-    user: admin
+    user: app
     # Password for authenticating with the IBM MQ server
     password: "123456"

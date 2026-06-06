@@ -21,12 +21,13 @@
 								<br />
 								<div>
 									<p:outputLabel for="@next" value="File format:" />
-								</div>
-								<div>
+									
+								</div>								
+								<div style="margin-top: 8px">
 									<p:selectOneMenu id="option"
 										value="#{selectOneMenuView.selectedOption}"
 										style="width:440px">
-										<f:selectItem itemLabel="Select One" itemValue="" />
+										<f:selectItem itemLabel="Select" itemValue="" />
 										<f:selectItem itemLabel="JSON" itemValue="json" />
 										<f:selectItem itemLabel="XML" itemValue="xml" />
 									</p:selectOneMenu>
@@ -37,7 +38,7 @@
 										actionListener="#{ivyWorkflowView.cancel()}" process="@this"
 										value="Cancel" />
 									<p:commandButton id="proceed" actionListener="#{logic.close}"
-										value="Next" update="form" icon="pi pi-check" />
+										value="Process" update="form" icon="pi pi-check" />
 								</div>
 
 							</div>
