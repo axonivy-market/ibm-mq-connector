@@ -3,14 +3,19 @@
   "simpleName" : "loanProcessingData",
   "namespace" : "com.axonivy.connector.imb.mq",
   "fields" : [ {
-    "name" : "loanInfo",
-    "type" : "com.axonivy.connector.model.Loan",
-    "modifiers" : [ ]
-  }, {
     "name" : "error",
     "modifiers" : [ ]
   }, {
     "name" : "loanService",
-    "type" : "com.axonivy.connector.service.loanProcessingService"
+    "type" : "com.axonivy.connector.service.loanProcessingService",
+    "modifiers" : [ ]
+  }, {
+    "name" : "loanRequest",
+    "type" : "com.axonivy.connector.model.LoanRequest",
+    "modifiers" : [ ]
+  }, {
+    "name" : "loanResult",
+    "type" : "com.axonivy.connector.model.LoanResult",
+    "modifiers" : [ ]
   } ]
 }

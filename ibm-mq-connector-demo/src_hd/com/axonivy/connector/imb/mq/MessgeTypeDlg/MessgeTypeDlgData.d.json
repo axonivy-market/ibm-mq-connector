@@ -3,7 +3,8 @@
   "simpleName" : "MessgeTypeDlgData",
   "namespace" : "com.axonivy.connector.imb.mq.MessgeTypeDlg",
   "fields" : [ {
-    "name" : "error"
+    "name" : "loanRequest",
+    "type" : "com.axonivy.connector.imb.mq.LoanRequest"
   }, {
     "name" : "messageType"
   } ]

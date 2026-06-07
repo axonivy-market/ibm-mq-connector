@@ -8,9 +8,9 @@
   "elements" : [ {
       "id" : "f0",
       "type" : "CallSubStart",
-      "name" : "fetch()",
+      "name" : "fetch(LoanRequest)",
       "config" : {
-        "signature" : "start",
+        "signature" : "fetch",
         "input" : {
           "map" : { },
           "code" : [
@@ -48,14 +48,7 @@
       "name" : "process MQ",
       "config" : {
         "output" : {
-          "code" : [
-            "import com.axonivy.connector.model.Loan;",
-            "if(out.loanInfo == null) {",
-            "  out.loanInfo = new Loan();",
-            "  out.loanInfo.setMessageType(\"json\");",
-            "}",
-            "out.loanService.process(out.loanInfo);"
-          ]
+          "code" : "out.loanResult = out.loanService.process(out.loanRequest);"
         }
       },
       "visual" : {

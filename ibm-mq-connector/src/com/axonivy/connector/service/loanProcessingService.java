@@ -2,7 +2,8 @@ package com.axonivy.connector.service;
 
 import java.util.Hashtable;
 
-import com.axonivy.connector.model.Loan;
+import com.axonivy.connector.model.LoanRequest;
+import com.axonivy.connector.model.LoanResult;
 import com.ibm.mq.MQException;
 import com.ibm.mq.MQQueueManager;
 import com.ibm.mq.constants.CMQC;
@@ -10,18 +11,21 @@ import com.ibm.mq.constants.CMQC;
 import ch.ivyteam.ivy.environment.Ivy;
 
 public class loanProcessingService {
-	public void process(Loan loanInfo) {
+	public LoanResult process(LoanRequest loanInfo) {
+		LoanResult result = new LoanResult();
+		
 		if (loanInfo == null || loanInfo.getMessageType() == null) {
-			loanInfo = new Loan();
-			loanInfo.setError("MessageType is required.");
+			loanInfo = new LoanRequest();
+			result.setError("MessageType is required.");
+			return result;
 		}
 		MQQueueManager queueManager = this.connect();
 		if (queueManager == null) {			
-			loanInfo.setError("Can not connect to IBM MQ.");
+			result.setError("Can not connect to IBM MQ.");
 		}
-		
+		Ivy.log().info("Connect MQ successfully");
 		disconnect(queueManager);
-		
+		return result;
 	}
 	
 	private MQQueueManager connect() {
