@@ -51,6 +51,17 @@
       "id" : "f3",
       "type" : "Script",
       "name" : "process MQ",
+      "config" : {
+        "output" : {
+          "code" : [
+            "import com.axonivy.connector.service.loanProcessingService;",
+            "import com.axonivy.connector.model.LoanRequest;",
+            "",
+            "out.loanService = new loanProcessingService();",
+            "out.loanResult = out.loanService.process(in.loanRequest);"
+          ]
+        }
+      },
       "visual" : {
         "at" : { "x" : 256, "y" : 64 }
       },

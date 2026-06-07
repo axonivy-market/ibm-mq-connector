@@ -15,7 +15,7 @@ public class loanProcessingService {
 		Ivy.log().info("===== start loanProcessingService");
 		LoanResult result = new LoanResult();
 		
-		Ivy.log().info("===== start loanRequest", loanRequest);
+		Ivy.log().info("===== start loanRequest" + loanRequest.getMessageType());
 		
 		if (loanRequest == null || loanRequest.getMessageType() == null) {
 			loanRequest = new LoanRequest();
@@ -40,6 +40,7 @@ public class loanProcessingService {
 		String password = Ivy.var().get("ibmmqConnector.password");
 		
 		try {
+			Ivy.log().info("===== start connectMQ");
 			return connectMQ(host, port, channel, queueManager, user, password);
 		} catch (MQException e) {
 			Ivy.log().error("Can not connect to IBM MQ: " + e.getMessage());
