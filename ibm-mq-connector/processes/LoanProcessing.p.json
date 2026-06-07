@@ -1,0 +1,68 @@
+{
+  "$schema" : "https://json-schema.axonivy.com/process/12.0.0/process.json",
+  "id" : "19E97328BAFB7033",
+  "kind" : "CALLABLE_SUB",
+  "config" : {
+    "data" : "com.axonivy.connector.imb.mq.loanProcessingData"
+  },
+  "elements" : [ {
+      "id" : "f0",
+      "type" : "CallSubStart",
+      "name" : "fetch()",
+      "config" : {
+        "signature" : "start",
+        "input" : {
+          "map" : { },
+          "code" : [
+            "import com.axonivy.connector.service.loanProcessingService;",
+            "out.loanService = new loanProcessingService();"
+          ]
+        },
+        "result" : {
+          "params" : [
+            { "name" : "error", "type" : "String", "desc" : "" }
+          ],
+          "map" : { }
+        }
+      },
+      "tags" : [
+        "connector"
+      ],
+      "visual" : {
+        "at" : { "x" : 96, "y" : 64 },
+        "labelOffset" : { "x" : 17, "y" : 41 }
+      },
+      "connect" : [
+        { "id" : "f2", "to" : "f3" }
+      ]
+    }, {
+      "id" : "f1",
+      "type" : "CallSubEnd",
+      "visual" : {
+        "at" : { "x" : 424, "y" : 64 },
+        "labelOffset" : { "x" : 13, "y" : 33 }
+      }
+    }, {
+      "id" : "f3",
+      "type" : "Script",
+      "name" : "process MQ",
+      "config" : {
+        "output" : {
+          "code" : [
+            "import com.axonivy.connector.model.Loan;",
+            "if(out.loanInfo == null) {",
+            "  out.loanInfo = new Loan();",
+            "  out.loanInfo.setMessageType(\"json\");",
+            "}",
+            "out.loanService.process(out.loanInfo);"
+          ]
+        }
+      },
+      "visual" : {
+        "at" : { "x" : 256, "y" : 64 }
+      },
+      "connect" : [
+        { "id" : "f4", "to" : "f1", "color" : "default" }
+      ]
+    } ]
+}
