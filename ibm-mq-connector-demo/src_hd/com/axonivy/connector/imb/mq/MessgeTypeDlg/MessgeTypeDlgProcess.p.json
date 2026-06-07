@@ -23,7 +23,7 @@
       "id" : "f1",
       "type" : "HtmlDialogEnd",
       "visual" : {
-        "at" : { "x" : 224, "y" : 64 },
+        "at" : { "x" : 352, "y" : 64 },
         "labelOffset" : { "x" : 10, "y" : 30 }
       }
     }, {
@@ -46,5 +46,52 @@
         "at" : { "x" : 224, "y" : 160 },
         "labelOffset" : { "x" : 10, "y" : 30 }
       }
+    }, {
+      "id" : "f6",
+      "type" : "HtmlDialogMethodStart",
+      "name" : "fetchMessage",
+      "config" : {
+        "signature" : "fetchMessages",
+        "guid" : "19EA0A86AC896AFA"
+      },
+      "visual" : {
+        "at" : { "x" : 96, "y" : 248 }
+      },
+      "connect" : [
+        { "id" : "f8", "to" : "f9" }
+      ]
+    }, {
+      "id" : "f7",
+      "type" : "HtmlDialogEnd",
+      "visual" : {
+        "at" : { "x" : 376, "y" : 248 },
+        "labelOffset" : { "x" : 10, "y" : 30 }
+      }
+    }, {
+      "id" : "f9",
+      "type" : "Script",
+      "name" : "Show message",
+      "config" : {
+        "output" : {
+          "code" : [
+            "import com.axonivy.connector.imb.mq.Loan;",
+            "import javax.faces.application.FacesMessage;",
+            "import javax.faces.context.FacesContext;",
+            "",
+            "if(in.error != \"\"){",
+            "  FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, in.error, null));",
+            "} else {",
+            "  String message = \"Success created task with id: \";",
+            "  FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, message, null));",
+            "}"
+          ]
+        }
+      },
+      "visual" : {
+        "at" : { "x" : 240, "y" : 248 }
+      },
+      "connect" : [
+        { "id" : "f10", "to" : "f7", "color" : "default" }
+      ]
     } ]
 }

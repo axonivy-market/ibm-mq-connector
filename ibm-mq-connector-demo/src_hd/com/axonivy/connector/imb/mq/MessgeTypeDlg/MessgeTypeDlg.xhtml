@@ -24,8 +24,8 @@
 									
 								</div>								
 								<div style="margin-top: 8px">
-									<p:selectOneMenu id="option"
-										value="#{selectOneMenuView.selectedOption}"
+									<p:selectOneMenu id="option" required="true"
+										value="#{data.messageType}"
 										style="width:440px">
 										<f:selectItem itemLabel="Select" itemValue="" />
 										<f:selectItem itemLabel="JSON" itemValue="json" />
@@ -37,7 +37,7 @@
 									<p:commandLink id="cancel"
 										actionListener="#{ivyWorkflowView.cancel()}" process="@this"
 										value="Cancel" />
-									<p:commandButton id="proceed" actionListener="#{logic.close}"
+									<p:commandButton id="proceed" actionListener="#{logic.fetchMessages()}"
 										value="Process" update="form" icon="pi pi-check" />
 								</div>
 
