@@ -12,10 +12,15 @@
       "config" : {
         "signature" : "fetch",
         "input" : {
+          "params" : [
+            { "name" : "request", "type" : "com.axonivy.connector.model.LoanRequest", "desc" : "" }
+          ],
           "map" : { },
           "code" : [
             "import com.axonivy.connector.service.loanProcessingService;",
-            "out.loanService = new loanProcessingService();"
+            "",
+            "out.loanService = new loanProcessingService();",
+            "out.loanService.process(param.request);"
           ]
         },
         "result" : {
@@ -46,11 +51,6 @@
       "id" : "f3",
       "type" : "Script",
       "name" : "process MQ",
-      "config" : {
-        "output" : {
-          "code" : "out.loanResult = out.loanService.process(out.loanRequest);"
-        }
-      },
       "visual" : {
         "at" : { "x" : 256, "y" : 64 }
       },

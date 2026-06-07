@@ -11,11 +11,14 @@ import com.ibm.mq.constants.CMQC;
 import ch.ivyteam.ivy.environment.Ivy;
 
 public class loanProcessingService {
-	public LoanResult process(LoanRequest loanInfo) {
+	public LoanResult process(LoanRequest loanRequest) {
+		Ivy.log().info("===== start loanProcessingService");
 		LoanResult result = new LoanResult();
 		
-		if (loanInfo == null || loanInfo.getMessageType() == null) {
-			loanInfo = new LoanRequest();
+		Ivy.log().info("===== start loanRequest", loanRequest);
+		
+		if (loanRequest == null || loanRequest.getMessageType() == null) {
+			loanRequest = new LoanRequest();
 			result.setError("MessageType is required.");
 			return result;
 		}
