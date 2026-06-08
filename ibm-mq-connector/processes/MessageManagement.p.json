@@ -3,28 +3,28 @@
   "id" : "19E97328BAFB7033",
   "kind" : "CALLABLE_SUB",
   "config" : {
-    "data" : "com.axonivy.connector.imb.mq.loanProcessingData"
+    "data" : "com.axonivy.connector.imb.mq.MessageManagementData"
   },
   "elements" : [ {
       "id" : "f0",
       "type" : "CallSubStart",
-      "name" : "fetch(LoanRequest)",
+      "name" : "fetch(MessageRequest)",
       "config" : {
         "signature" : "fetch",
         "input" : {
           "params" : [
-            { "name" : "request", "type" : "com.axonivy.connector.model.LoanRequest", "desc" : "" }
+            { "name" : "messageRequest", "type" : "com.axonivy.connector.model.MessageRequest", "desc" : "" }
           ],
           "map" : {
-            "out.loanRequest" : "param.request"
+            "out.messageRequest" : "param.messageRequest"
           }
         },
         "result" : {
           "params" : [
-            { "name" : "loanResult", "type" : "com.axonivy.connector.model.LoanResult", "desc" : "" }
+            { "name" : "messageResult", "type" : "com.axonivy.connector.model.MessageResult", "desc" : "" }
           ],
           "map" : {
-            "result.loanResult" : "in.loanResult"
+            "result.messageResult" : "in.messageResult"
           }
         }
       },
@@ -48,17 +48,13 @@
     }, {
       "id" : "f3",
       "type" : "Script",
-      "name" : "process MQ",
+      "name" : "filter messages",
       "config" : {
         "output" : {
           "code" : [
-            "import com.axonivy.connector.service.LoanProcessingService;",
-            "import com.axonivy.connector.model.LoanRequest;",
-            "",
-            "out.loanService = new LoanProcessingService();",
-            "out.loanResult = out.loanService.process(in.loanRequest);",
-            "",
-            "ivy.log.warn(\"In callable::loanResult: \" + out.loanResult);"
+            "import com.axonivy.connector.service.MessageService;",
+            "out.messageService = new MessageService();",
+            "out.messageResult = out.messageService.fetch(in.messageRequest);"
           ]
         }
       },

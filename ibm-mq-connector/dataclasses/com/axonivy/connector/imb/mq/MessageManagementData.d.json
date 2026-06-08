@@ -1,11 +1,8 @@
 {
   "$schema" : "https://json-schema.axonivy.com/data-class/12.0.1/data-class.json",
-  "simpleName" : "loanProcessingData",
+  "simpleName" : "MessageManagementData",
   "namespace" : "com.axonivy.connector.imb.mq",
   "fields" : [ {
-    "name" : "error",
-    "modifiers" : [ ]
-  }, {
     "name" : "loanService",
     "type" : "com.axonivy.connector.service.LoanProcessingService",
     "modifiers" : [ ]
@@ -14,8 +11,16 @@
     "type" : "com.axonivy.connector.model.LoanRequest",
     "modifiers" : [ ]
   }, {
-    "name" : "loanResult",
-    "type" : "com.axonivy.connector.model.LoanResult",
+    "name" : "messageResult",
+    "type" : "com.axonivy.connector.model.MessageResult",
+    "modifiers" : [ ]
+  }, {
+    "name" : "messageRequest",
+    "type" : "com.axonivy.connector.model.MessageRequest",
+    "modifiers" : [ ]
+  }, {
+    "name" : "messageService",
+    "type" : "com.axonivy.connector.service.MessageService",
     "modifiers" : [ ]
   } ]
 }

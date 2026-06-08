@@ -3,10 +3,10 @@
   "simpleName" : "MessgeTypeDlgData",
   "namespace" : "com.axonivy.connector.imb.mq.MessgeTypeDlg",
   "fields" : [ {
-    "name" : "loanResult",
-    "type" : "com.axonivy.connector.model.LoanResult"
+    "name" : "messageRequest",
+    "type" : "com.axonivy.connector.model.MessageRequest"
   }, {
-    "name" : "loanRequest",
-    "type" : "com.axonivy.connector.model.LoanRequest"
+    "name" : "messageResult",
+    "type" : "com.axonivy.connector.model.MessageResult"
   } ]
 }
