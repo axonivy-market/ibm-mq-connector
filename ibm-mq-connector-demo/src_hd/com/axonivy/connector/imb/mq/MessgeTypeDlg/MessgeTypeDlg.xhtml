@@ -37,7 +37,7 @@
 									<p:commandLink id="cancel"
 										actionListener="#{ivyWorkflowView.cancel()}" process="@this"
 										value="Cancel" />
-									<p:commandButton id="proceed" actionListener="#{logic.fetchMessages()}"
+									<p:commandButton id="proceed" actionListener="#{logic.fetchMessages(data.loanRequest)}"
 										value="Process" update="form" icon="pi pi-check" />
 								</div>
 

@@ -15,19 +15,17 @@
           "params" : [
             { "name" : "request", "type" : "com.axonivy.connector.model.LoanRequest", "desc" : "" }
           ],
-          "map" : { },
-          "code" : [
-            "import com.axonivy.connector.service.loanProcessingService;",
-            "",
-            "out.loanService = new loanProcessingService();",
-            "out.loanService.process(param.request);"
-          ]
+          "map" : {
+            "out.loanRequest" : "param.request"
+          }
         },
         "result" : {
           "params" : [
-            { "name" : "error", "type" : "String", "desc" : "" }
+            { "name" : "loanResult", "type" : "com.axonivy.connector.model.LoanResult", "desc" : "" }
           ],
-          "map" : { }
+          "map" : {
+            "result.loanResult" : "in.loanResult"
+          }
         }
       },
       "tags" : [
@@ -58,7 +56,9 @@
             "import com.axonivy.connector.model.LoanRequest;",
             "",
             "out.loanService = new loanProcessingService();",
-            "out.loanResult = out.loanService.process(in.loanRequest);"
+            "out.loanResult = out.loanService.process(in.loanRequest);",
+            "",
+            "ivy.log.warn(\"In callable::loanResult: \" + out.loanResult);"
           ]
         }
       },

@@ -11,6 +11,13 @@
       "name" : "start()",
       "config" : {
         "signature" : "start",
+        "input" : {
+          "map" : { },
+          "code" : [
+            "import com.axonivy.connector.model.LoanRequest;",
+            "out.loanRequest = new LoanRequest();"
+          ]
+        },
         "guid" : "19E971E43FDA4351"
       },
       "visual" : {
@@ -52,6 +59,16 @@
       "name" : "fetchMessage(LoanRequest)",
       "config" : {
         "signature" : "fetchMessages",
+        "input" : {
+          "params" : [
+            { "name" : "request", "type" : "com.axonivy.connector.model.LoanRequest", "desc" : "" }
+          ],
+          "map" : { }
+        },
+        "result" : {
+          "map" : { },
+          "code" : "ivy.log.warn(in.loanRequest.messageType);"
+        },
         "guid" : "19EA0A86AC896AFA"
       },
       "visual" : {
@@ -96,7 +113,18 @@
       "type" : "SubProcessCall",
       "name" : "Process MQ",
       "config" : {
-        "processCall" : "LoanProcessing:fetch(com.axonivy.connector.model.LoanRequest)"
+        "processCall" : "LoanProcessing:fetch(com.axonivy.connector.model.LoanRequest)",
+        "call" : {
+          "map" : {
+            "param.request" : "in.loanRequest"
+          }
+        },
+        "output" : {
+          "map" : {
+            "out" : "in",
+            "out.loanResult" : "result.loanResult"
+          }
+        }
       },
       "visual" : {
         "at" : { "x" : 224, "y" : 248 }

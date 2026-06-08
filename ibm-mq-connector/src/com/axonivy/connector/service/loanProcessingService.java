@@ -25,6 +25,7 @@ public class loanProcessingService {
 		MQQueueManager queueManager = this.connect();
 		if (queueManager == null) {			
 			result.setError("Can not connect to IBM MQ.");
+			return result;
 		}
 		Ivy.log().info("Connect MQ successfully");
 		disconnect(queueManager);

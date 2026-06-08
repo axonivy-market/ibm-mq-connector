@@ -5,7 +5,8 @@ import java.io.Serializable;
 public class LoanRequest implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private String messageType;
-	private String error;
+	private String error;	
+	
 
 	public String getMessageType() {
 		return messageType;
@@ -21,7 +22,13 @@ public class LoanRequest implements Serializable {
 
 	public void setError(String error) {
 		this.error = error;
+	}
+
+	@Override
+	public String toString() {
+		return "LoanRequest [messageType=" + messageType + ", error=" + error + "]";
 	}	
+	
 	
 }
 
