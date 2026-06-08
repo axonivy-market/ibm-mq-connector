@@ -93,11 +93,10 @@
           "code" : [
             "import javax.faces.application.FacesMessage;",
             "import javax.faces.context.FacesContext;",
-            "if (in.loanResult.error != \"\") {",
+            "if (in.loanResult.error != null && !in.loanResult.error.isEmpty()) {",
             "  FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, in.loanResult.error, null));",
-            "} else {  ",
-            "  String message = \"Fetch messages successfully\";",
-            "  FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, message, null));",
+            "} else if (in.loanResult.message != null && !in.loanResult.message.isEmpty()) {",
+            "  FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, in.loanResult.message, null));",
             "}"
           ]
         }

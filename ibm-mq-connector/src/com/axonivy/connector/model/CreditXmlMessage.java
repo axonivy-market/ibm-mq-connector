@@ -19,6 +19,13 @@ public class CreditXmlMessage {
 		this.creditApplicationRequest = creditApplicationRequest;
 	}
 
+	@Override
+	public String toString() {
+		return "CreditXmlMessage{" +
+				"creditApplicationRequest=" + creditApplicationRequest +
+				'}';
+	}
+
 	@JsonIgnoreProperties(ignoreUnknown = true)
 	public static class CreditApplicationRequest {
 		@JacksonXmlProperty(localName = "MsgHdr")
@@ -75,6 +82,17 @@ public class CreditXmlMessage {
 		public void setProcessingHints(ProcessingHints processingHints) {
 			this.processingHints = processingHints;
 		}
+
+		@Override
+		public String toString() {
+			return "CreditApplicationRequest{" +
+					"msgHdr=" + msgHdr +
+					", applicant=" + applicant +
+					", loanRequest=" + loanRequest +
+					", financialProfile=" + financialProfile +
+					", processingHints=" + processingHints +
+					'}';
+		}
 	}
 
 	@JsonIgnoreProperties(ignoreUnknown = true)
@@ -121,6 +139,16 @@ public class CreditXmlMessage {
 
 		public void setReplyToQueue(String replyToQueue) {
 			this.replyToQueue = replyToQueue;
+		}
+
+		@Override
+		public String toString() {
+			return "MsgHdr{" +
+					"msgId='" + msgId + '\'' +
+					", creDtTm='" + creDtTm + '\'' +
+					", correlationId='" + correlationId + '\'' +
+					", replyToQueue='" + replyToQueue + '\'' +
+					'}';
 		}
 	}
 
@@ -191,6 +219,18 @@ public class CreditXmlMessage {
 		public void setEmploymentDetails(EmploymentDetails employmentDetails) {
 			this.employmentDetails = employmentDetails;
 		}
+
+		@Override
+		public String toString() {
+			return "Applicant{" +
+					"customerId='" + customerId + '\'' +
+					", firstName='" + firstName + '\'' +
+					", lastName='" + lastName + '\'' +
+					", dateOfBirth='" + dateOfBirth + '\'' +
+					", contact=" + contact +
+					", employmentDetails=" + employmentDetails +
+					'}';
+		}
 	}
 
 	@JsonIgnoreProperties(ignoreUnknown = true)
@@ -215,6 +255,14 @@ public class CreditXmlMessage {
 
 		public void setPhone(String phone) {
 			this.phone = phone;
+		}
+
+		@Override
+		public String toString() {
+			return "Contact{" +
+					"email='" + email + '\'' +
+					", phone='" + phone + '\'' +
+					'}';
 		}
 	}
 
@@ -263,6 +311,16 @@ public class CreditXmlMessage {
 		public void setMonthlyNetIncome(Amount monthlyNetIncome) {
 			this.monthlyNetIncome = monthlyNetIncome;
 		}
+
+		@Override
+		public String toString() {
+			return "EmploymentDetails{" +
+					"status='" + status + '\'' +
+					", employer='" + employer + '\'' +
+					", jobTitle='" + jobTitle + '\'' +
+					", monthlyNetIncome=" + monthlyNetIncome +
+					'}';
+		}
 	}
 
 	@JsonIgnoreProperties(ignoreUnknown = true)
@@ -299,6 +357,15 @@ public class CreditXmlMessage {
 		public void setRequestedTermMonths(Integer requestedTermMonths) {
 			this.requestedTermMonths = requestedTermMonths;
 		}
+
+		@Override
+		public String toString() {
+			return "LoanRequest{" +
+					"loanPurpose='" + loanPurpose + '\'' +
+					", requestedAmount=" + requestedAmount +
+					", requestedTermMonths=" + requestedTermMonths +
+					'}';
+		}
 	}
 
 	@JsonIgnoreProperties(ignoreUnknown = true)
@@ -323,6 +390,14 @@ public class CreditXmlMessage {
 
 		public void setCreditScore(CreditScore creditScore) {
 			this.creditScore = creditScore;
+		}
+
+		@Override
+		public String toString() {
+			return "FinancialProfile{" +
+					"monthlyExpenses=" + monthlyExpenses +
+					", creditScore=" + creditScore +
+					'}';
 		}
 	}
 
@@ -360,6 +435,15 @@ public class CreditXmlMessage {
 		public void setProvider(String provider) {
 			this.provider = provider;
 		}
+
+		@Override
+		public String toString() {
+			return "CreditScore{" +
+					"score=" + score +
+					", scoreClass='" + scoreClass + '\'' +
+					", provider='" + provider + '\'' +
+					'}';
+		}
 	}
 
 	@JsonIgnoreProperties(ignoreUnknown = true)
@@ -396,6 +480,15 @@ public class CreditXmlMessage {
 		public void setMaxDecisionTimeSec(Integer maxDecisionTimeSec) {
 			this.maxDecisionTimeSec = maxDecisionTimeSec;
 		}
+
+		@Override
+		public String toString() {
+			return "ProcessingHints{" +
+					"requestChannel='" + requestChannel + '\'' +
+					", autoDecisionAllowed=" + autoDecisionAllowed +
+					", maxDecisionTimeSec=" + maxDecisionTimeSec +
+					'}';
+		}
 	}
 
 	@JsonIgnoreProperties(ignoreUnknown = true)
@@ -420,6 +513,14 @@ public class CreditXmlMessage {
 
 		public void setValue(String value) {
 			this.value = value;
+		}
+
+		@Override
+		public String toString() {
+			return "Amount{" +
+					"currency='" + currency + '\'' +
+					", value='" + value + '\'' +
+					'}';
 		}
 	}
 }

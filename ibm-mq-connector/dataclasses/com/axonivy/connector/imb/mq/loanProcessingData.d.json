@@ -7,7 +7,7 @@
     "modifiers" : [ ]
   }, {
     "name" : "loanService",
-    "type" : "com.axonivy.connector.service.loanProcessingService",
+    "type" : "com.axonivy.connector.service.LoanProcessingService",
     "modifiers" : [ ]
   }, {
     "name" : "loanRequest",

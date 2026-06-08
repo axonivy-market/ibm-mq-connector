@@ -2,7 +2,7 @@
 Variables:
   ibmmqConnector:
     # Hostname or IP address of the IBM MQ server (e.g., localhost or mq.example.com)
-    host: abc
+    host: localhost
     # TCP port on which the IBM MQ listener is running (default: 1414)
     port: "1414"
     # MQ channel name used for client connections (e.g., DEV.APP.SVRCONN)

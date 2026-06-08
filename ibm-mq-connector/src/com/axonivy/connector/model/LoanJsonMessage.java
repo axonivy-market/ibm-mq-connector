@@ -41,6 +41,16 @@ public class LoanJsonMessage {
 		this.creditScore = creditScore;
 	}
 
+	@Override
+	public String toString() {
+		return "LoanJsonMessage{" +
+				"msgHeader=" + msgHeader +
+				", applicant=" + applicant +
+				", loanRequest=" + loanRequest +
+				", creditScore=" + creditScore +
+				'}';
+	}
+
 	@JsonIgnoreProperties(ignoreUnknown = true)
 	public static class MsgHeader {
 		private String msgId;
@@ -78,6 +88,16 @@ public class LoanJsonMessage {
 
 		public void setReplyToQueue(String replyToQueue) {
 			this.replyToQueue = replyToQueue;
+		}
+
+		@Override
+		public String toString() {
+			return "MsgHeader{" +
+					"msgId='" + msgId + '\'' +
+					", createdAt='" + createdAt + '\'' +
+					", correlationId='" + correlationId + '\'' +
+					", replyToQueue='" + replyToQueue + '\'' +
+					'}';
 		}
 	}
 
@@ -119,6 +139,16 @@ public class LoanJsonMessage {
 		public void setMonthlyNetIncome(Double monthlyNetIncome) {
 			this.monthlyNetIncome = monthlyNetIncome;
 		}
+
+		@Override
+		public String toString() {
+			return "Applicant{" +
+					"customerId='" + customerId + '\'' +
+					", name=" + name +
+					", dateOfBirth='" + dateOfBirth + '\'' +
+					", monthlyNetIncome=" + monthlyNetIncome +
+					'}';
+		}
 	}
 
 	@JsonIgnoreProperties(ignoreUnknown = true)
@@ -140,6 +170,14 @@ public class LoanJsonMessage {
 
 		public void setLast(String last) {
 			this.last = last;
+		}
+
+		@Override
+		public String toString() {
+			return "Name{" +
+					"first='" + first + '\'' +
+					", last='" + last + '\'' +
+					'}';
 		}
 	}
 
@@ -171,6 +209,15 @@ public class LoanJsonMessage {
 
 		public void setTermMonths(Integer termMonths) {
 			this.termMonths = termMonths;
+		}
+
+		@Override
+		public String toString() {
+			return "LoanRequest{" +
+					"purpose='" + purpose + '\'' +
+					", amount=" + amount +
+					", termMonths=" + termMonths +
+					'}';
 		}
 	}
 
@@ -211,6 +258,16 @@ public class LoanJsonMessage {
 
 		public void setNegativeEntries(Boolean negativeEntries) {
 			this.negativeEntries = negativeEntries;
+		}
+
+		@Override
+		public String toString() {
+			return "CreditScore{" +
+					"score=" + score +
+					", scoreClass='" + scoreClass + '\'' +
+					", provider='" + provider + '\'' +
+					", negativeEntries=" + negativeEntries +
+					'}';
 		}
 	}
 }

@@ -52,10 +52,10 @@
       "config" : {
         "output" : {
           "code" : [
-            "import com.axonivy.connector.service.loanProcessingService;",
+            "import com.axonivy.connector.service.LoanProcessingService;",
             "import com.axonivy.connector.model.LoanRequest;",
             "",
-            "out.loanService = new loanProcessingService();",
+            "out.loanService = new LoanProcessingService();",
             "out.loanResult = out.loanService.process(in.loanRequest);",
             "",
             "ivy.log.warn(\"In callable::loanResult: \" + out.loanResult);"
