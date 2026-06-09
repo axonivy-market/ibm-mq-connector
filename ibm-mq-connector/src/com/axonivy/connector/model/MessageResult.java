@@ -5,7 +5,7 @@ import java.util.List;
 
 public class MessageResult {
 	private String error;
-	private String messagetypeRequest;
+	private String messageTypeRequest;
 	private List<MessageDetail> messageDetails;
 
 	public MessageResult() {
@@ -18,14 +18,14 @@ public class MessageResult {
 
 	public void setError(String error) {
 		this.error = error;
+	}	
+
+	public String getMessageTypeRequest() {
+		return messageTypeRequest;
 	}
 
-	public String getMessagetypeRequest() {
-		return messagetypeRequest;
-	}
-
-	public void setMessagetypeRequest(String messagetypeRequest) {
-		this.messagetypeRequest = messagetypeRequest;
+	public void setMessageTypeRequest(String messageTypeRequest) {
+		this.messageTypeRequest = messageTypeRequest;
 	}
 
 	public List<MessageDetail> getMessageDetails() {

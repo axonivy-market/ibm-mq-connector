@@ -1,6 +1,6 @@
 package com.axonivy.connector.model;
 
-public class MessageRequest {
+public class MessageFetchRequest {
 	private String messageType;
 	private String queueName;
 	private int maxMessage;

@@ -8,15 +8,15 @@
   "elements" : [ {
       "id" : "f0",
       "type" : "CallSubStart",
-      "name" : "fetch(MessageRequest)",
+      "name" : "fetch(MessageFetchRequest)",
       "config" : {
         "signature" : "fetch",
         "input" : {
           "params" : [
-            { "name" : "messageRequest", "type" : "com.axonivy.connector.model.MessageRequest", "desc" : "" }
+            { "name" : "messageFetchRequest", "type" : "com.axonivy.connector.model.MessageFetchRequest", "desc" : "" }
           ],
           "map" : {
-            "out.messageRequest" : "param.messageRequest"
+            "out.messageFetchRequest" : "param.messageFetchRequest"
           }
         },
         "result" : {
@@ -54,7 +54,7 @@
           "code" : [
             "import com.axonivy.connector.service.MessageService;",
             "out.messageService = new MessageService();",
-            "out.messageResult = out.messageService.fetch(in.messageRequest);"
+            "out.messageResult = out.messageService.fetch(in.messageFetchRequest);"
           ]
         }
       },
@@ -67,7 +67,7 @@
     }, {
       "id" : "f5",
       "type" : "CallSubStart",
-      "name" : "push(MessageData)",
+      "name" : "push(MessagePushRequest)",
       "config" : {
         "signature" : "call"
       },
@@ -91,6 +91,15 @@
       "id" : "f7",
       "type" : "Script",
       "name" : "put messages",
+      "config" : {
+        "output" : {
+          "code" : [
+            "import com.axonivy.connector.service.MessageService;",
+            "out.messageService = new MessageService();",
+            "out.messageService.push(in.messagePushRequest);"
+          ]
+        }
+      },
       "visual" : {
         "at" : { "x" : 256, "y" : 208 }
       },

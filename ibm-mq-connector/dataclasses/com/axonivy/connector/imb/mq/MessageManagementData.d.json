@@ -15,12 +15,16 @@
     "type" : "com.axonivy.connector.model.MessageResult",
     "modifiers" : [ ]
   }, {
-    "name" : "messageRequest",
-    "type" : "com.axonivy.connector.model.MessageRequest",
+    "name" : "messageFetchRequest",
+    "type" : "com.axonivy.connector.model.MessageFetchRequest",
     "modifiers" : [ ]
   }, {
     "name" : "messageService",
     "type" : "com.axonivy.connector.service.MessageService",
+    "modifiers" : [ ]
+  }, {
+    "name" : "messagePushRequest",
+    "type" : "com.axonivy.connector.model.MessagePushRequest",
     "modifiers" : [ ]
   } ]
 }

@@ -3,8 +3,8 @@
   "simpleName" : "MessgeTypeDlgData",
   "namespace" : "com.axonivy.connector.imb.mq.MessgeTypeDlg",
   "fields" : [ {
-    "name" : "messageRequest",
-    "type" : "com.axonivy.connector.model.MessageRequest"
+    "name" : "messageFetchRequest",
+    "type" : "com.axonivy.connector.model.MessageFetchRequest"
   }, {
     "name" : "messageResult",
     "type" : "com.axonivy.connector.model.MessageResult"

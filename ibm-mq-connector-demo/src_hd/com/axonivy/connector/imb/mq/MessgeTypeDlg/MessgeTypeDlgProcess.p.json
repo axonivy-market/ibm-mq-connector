@@ -14,14 +14,14 @@
         "input" : {
           "map" : { },
           "code" : [
-            "import com.axonivy.connector.model.MessageRequest;",
-            "out.messageRequest = new MessageRequest();"
+            "import com.axonivy.connector.model.MessageFetchRequest;",
+            "out.messageFetchRequest = new MessageFetchRequest();"
           ]
         },
         "guid" : "19E971E43FDA4351"
       },
       "visual" : {
-        "at" : { "x" : 96, "y" : 64 }
+        "at" : { "x" : 64, "y" : 64 }
       },
       "connect" : [
         { "id" : "f2", "to" : "f13" }
@@ -41,7 +41,7 @@
         "guid" : "19E971E4404790CA"
       },
       "visual" : {
-        "at" : { "x" : 96, "y" : 160 }
+        "at" : { "x" : 64, "y" : 160 }
       },
       "connect" : [
         { "id" : "f5", "to" : "f4" }
@@ -56,12 +56,12 @@
     }, {
       "id" : "f6",
       "type" : "HtmlDialogMethodStart",
-      "name" : "fetchMessages(MessageRequest)",
+      "name" : "fetchMessages(MessageFetchRequest)",
       "config" : {
         "signature" : "fetchMessages",
         "input" : {
           "params" : [
-            { "name" : "messageRequest", "type" : "com.axonivy.connector.model.MessageRequest", "desc" : "" }
+            { "name" : "messageFetchRequest", "type" : "com.axonivy.connector.model.MessageFetchRequest", "desc" : "" }
           ],
           "map" : { }
         },
@@ -74,7 +74,8 @@
         "guid" : "19EA0A86AC896AFA"
       },
       "visual" : {
-        "at" : { "x" : 96, "y" : 248 }
+        "at" : { "x" : 64, "y" : 248 },
+        "labelOffset" : { "x" : 3, "y" : 43 }
       },
       "connect" : [
         { "id" : "f8", "to" : "f11" }
@@ -112,16 +113,10 @@
       "type" : "SubProcessCall",
       "name" : "Fetch and Filter",
       "config" : {
-        "processCall" : "MessageManagement:fetch(com.axonivy.connector.model.MessageRequest)",
+        "processCall" : "MessageManagement:fetch(com.axonivy.connector.model.MessageFetchRequest)",
         "call" : {
           "map" : {
-            "param.messageRequest" : "in.messageRequest"
-          }
-        },
-        "output" : {
-          "map" : {
-            "out" : "in",
-            "out.messageResult" : "result.messageResult"
+            "param.messageFetchRequest" : "in.messageFetchRequest"
           }
         }
       },
@@ -138,8 +133,8 @@
       "config" : {
         "output" : {
           "code" : [
-            "in.messageRequest.setMaxMessage(10);",
-            "in.messageRequest.setQueueName(\"DEV.QUEUE.1\");"
+            "in.messageFetchRequest.setMaxMessage(10);",
+            "in.messageFetchRequest.setQueueName(\"DEV.QUEUE.1\");"
           ]
         }
       },

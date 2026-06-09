@@ -9,7 +9,7 @@
   <properties>
     <project.build.plugin.version>12.0.15</project.build.plugin.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <tester.version>12.0.15</tester.version>
+    <tester.version>10.0.16</tester.version>
   </properties>
   <pluginRepositories>
     <!-- Snapshot releases are available via sonatype.org -->
