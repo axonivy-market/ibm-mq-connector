@@ -9,9 +9,9 @@ import com.axonivy.connector.model.CreditXmlMessage;
 import com.axonivy.connector.model.LoanJsonMessage;
 import com.axonivy.connector.model.MessageDetail;
 import com.axonivy.connector.model.MessageFetchRequest;
+import com.axonivy.connector.model.MessageFetchResult;
 import com.axonivy.connector.model.MessagePush;
 import com.axonivy.connector.model.MessagePushRequest;
-import com.axonivy.connector.model.MessageResult;
 import com.axonivy.connector.util.IbmMQConnectUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
@@ -27,14 +27,14 @@ public class MessageService {
 	private static final ObjectMapper JSON_MAPPER = new ObjectMapper();
 	private static final XmlMapper XML_MAPPER = new XmlMapper();
 
-	public MessageResult fetch(MessageFetchRequest request) {
-		Ivy.log().info("=====start MessageService::fetch");
-		MessageResult result = isValidator(request);
+	public MessageFetchResult fetch(MessageFetchRequest request) {
+		Ivy.log().info("=====start MessageService::fetch: " + request);
+		MessageFetchResult result = isValidator(request);
 
 		if (StringUtils.isNotBlank(result.getError())) {
 			return result;
 		}
-		result.setMessageTypeRequest(request.getMessageType());
+		result.setMessageType(request.getMessageType());
 
 		try (IbmMQConnectUtil mqUtil = new IbmMQConnectUtil()) {
 			return listenAndParseMessages(request, mqUtil);
@@ -62,8 +62,8 @@ public class MessageService {
 		}
 	}
 
-	private static MessageResult isValidator(MessageFetchRequest request) {
-		MessageResult result = new MessageResult();
+	private static MessageFetchResult isValidator(MessageFetchRequest request) {
+		MessageFetchResult result = new MessageFetchResult();
 		if (request == null || StringUtils.isBlank(request.getMessageType())) {
 			result.setError("MessageType is required.");
 			return result;
@@ -76,11 +76,12 @@ public class MessageService {
 		return result;
 	}
 
-	private static MessageResult listenAndParseMessages(MessageFetchRequest request, IbmMQConnectUtil mqUtil)
+	private static MessageFetchResult listenAndParseMessages(MessageFetchRequest request, IbmMQConnectUtil mqUtil)
 			throws MQException {
+		Ivy.log().info("===start listenAndParseMessages " + request);
 		int openOptions = CMQC.MQOO_INPUT_AS_Q_DEF + CMQC.MQOO_FAIL_IF_QUIESCING;
 		MQQueue queue = null;
-		MessageResult result = new MessageResult();
+		MessageFetchResult result = new MessageFetchResult();
 		try {
 			queue = mqUtil.getQueueManager().accessQueue(request.getQueueName(), openOptions);
 			for (int index = 1; index <= request.getMaxMessage(); index++) {
@@ -111,22 +112,26 @@ public class MessageService {
 				queue.close();
 			}
 		}
+		Ivy.log().info(String.format("Fetch %d messages from %s", result.getMessageDetails().size(), request.getQueueName()));
 		return result;
 	}
 
 	private static MessageDetail parsePayload(String payload, String messageType) {
 		String content = StringUtils.trimToEmpty(payload);
-		try {
-			if ("xml".equalsIgnoreCase(messageType) && content.startsWith("<")) {
+		try {			
+			if ("xml".equalsIgnoreCase(messageType) && content.startsWith("<")) {				
+				Ivy.log().warn("start parse XML payload");
+				Ivy.log().warn("payload:" + content);
 				return new MessageDetail("XML", XML_MAPPER.readValue(content, CreditXmlMessage.class));
 			}
-			if ("json".equalsIgnoreCase(messageType) && (content.startsWith("{") || content.startsWith("["))) {
+			if ("json".equalsIgnoreCase(messageType) && (content.startsWith("{"))) {
+				Ivy.log().warn("start parse JSON payload");
 				return new MessageDetail("JSON", JSON_MAPPER.readValue(content, LoanJsonMessage.class));
 			}
-			throw new IllegalStateException("Unsupported message payload format");
 		} catch (IOException ex) {
 			throw new IllegalStateException("Unable to parse payload as JSON/XML", ex);
 		}
+		return null;
 	}
 
 }

@@ -3,7 +3,7 @@ package com.axonivy.connector.model;
 public class MessageFetchRequest {
 	private String messageType;
 	private String queueName;
-	private int maxMessage;
+	private int maxMessage = 10;
 
 	public String getMessageType() {
 		return messageType;

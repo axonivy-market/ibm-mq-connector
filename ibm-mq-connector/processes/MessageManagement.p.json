@@ -21,10 +21,10 @@
         },
         "result" : {
           "params" : [
-            { "name" : "messageResult", "type" : "com.axonivy.connector.model.MessageResult", "desc" : "" }
+            { "name" : "messageFetchResult", "type" : "com.axonivy.connector.model.MessageFetchResult", "desc" : "" }
           ],
           "map" : {
-            "result.messageResult" : "in.messageResult"
+            "result.messageFetchResult" : "in.messageFetchResult"
           }
         }
       },
@@ -51,10 +51,14 @@
       "name" : "filter messages",
       "config" : {
         "output" : {
+          "map" : {
+            "out" : "in",
+            "out.messageFetchRequest" : "in.messageFetchRequest"
+          },
           "code" : [
             "import com.axonivy.connector.service.MessageService;",
             "out.messageService = new MessageService();",
-            "out.messageResult = out.messageService.fetch(in.messageFetchRequest);"
+            "out.messageFetchResult = out.messageService.fetch(in.messageFetchRequest);"
           ]
         }
       },
@@ -69,7 +73,15 @@
       "type" : "CallSubStart",
       "name" : "push(MessagePushRequest)",
       "config" : {
-        "signature" : "call"
+        "signature" : "call",
+        "input" : {
+          "params" : [
+            { "name" : "messagePushRequest", "type" : "com.axonivy.connector.model.MessagePushRequest", "desc" : "" }
+          ],
+          "map" : {
+            "out.messagePushRequest" : "param.messagePushRequest"
+          }
+        }
       },
       "tags" : [
         "connector"

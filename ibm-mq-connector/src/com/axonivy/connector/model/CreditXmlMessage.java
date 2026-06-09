@@ -21,9 +21,7 @@ public class CreditXmlMessage {
 
 	@Override
 	public String toString() {
-		return "CreditXmlMessage{" +
-				"creditApplicationRequest=" + creditApplicationRequest +
-				'}';
+		return "CreditXmlMessage{" + "creditApplicationRequest=" + creditApplicationRequest + '}';
 	}
 
 	@JsonIgnoreProperties(ignoreUnknown = true)
@@ -85,13 +83,9 @@ public class CreditXmlMessage {
 
 		@Override
 		public String toString() {
-			return "CreditApplicationRequest{" +
-					"msgHdr=" + msgHdr +
-					", applicant=" + applicant +
-					", loanRequest=" + loanRequest +
-					", financialProfile=" + financialProfile +
-					", processingHints=" + processingHints +
-					'}';
+			return "CreditApplicationRequest{" + "msgHdr=" + msgHdr + ", applicant=" + applicant + ", loanRequest="
+					+ loanRequest + ", financialProfile=" + financialProfile + ", processingHints=" + processingHints
+					+ '}';
 		}
 	}
 
@@ -143,12 +137,8 @@ public class CreditXmlMessage {
 
 		@Override
 		public String toString() {
-			return "MsgHdr{" +
-					"msgId='" + msgId + '\'' +
-					", creDtTm='" + creDtTm + '\'' +
-					", correlationId='" + correlationId + '\'' +
-					", replyToQueue='" + replyToQueue + '\'' +
-					'}';
+			return "MsgHdr{" + "msgId='" + msgId + '\'' + ", creDtTm='" + creDtTm + '\'' + ", correlationId='"
+					+ correlationId + '\'' + ", replyToQueue='" + replyToQueue + '\'' + '}';
 		}
 	}
 
@@ -222,14 +212,9 @@ public class CreditXmlMessage {
 
 		@Override
 		public String toString() {
-			return "Applicant{" +
-					"customerId='" + customerId + '\'' +
-					", firstName='" + firstName + '\'' +
-					", lastName='" + lastName + '\'' +
-					", dateOfBirth='" + dateOfBirth + '\'' +
-					", contact=" + contact +
-					", employmentDetails=" + employmentDetails +
-					'}';
+			return "Applicant{" + "customerId='" + customerId + '\'' + ", firstName='" + firstName + '\''
+					+ ", lastName='" + lastName + '\'' + ", dateOfBirth='" + dateOfBirth + '\'' + ", contact=" + contact
+					+ ", employmentDetails=" + employmentDetails + '}';
 		}
 	}
 
@@ -259,10 +244,7 @@ public class CreditXmlMessage {
 
 		@Override
 		public String toString() {
-			return "Contact{" +
-					"email='" + email + '\'' +
-					", phone='" + phone + '\'' +
-					'}';
+			return "Contact{" + "email='" + email + '\'' + ", phone='" + phone + '\'' + '}';
 		}
 	}
 
@@ -314,12 +296,8 @@ public class CreditXmlMessage {
 
 		@Override
 		public String toString() {
-			return "EmploymentDetails{" +
-					"status='" + status + '\'' +
-					", employer='" + employer + '\'' +
-					", jobTitle='" + jobTitle + '\'' +
-					", monthlyNetIncome=" + monthlyNetIncome +
-					'}';
+			return "EmploymentDetails{" + "status='" + status + '\'' + ", employer='" + employer + '\'' + ", jobTitle='"
+					+ jobTitle + '\'' + ", monthlyNetIncome=" + monthlyNetIncome + '}';
 		}
 	}
 
@@ -360,11 +338,8 @@ public class CreditXmlMessage {
 
 		@Override
 		public String toString() {
-			return "LoanRequest{" +
-					"loanPurpose='" + loanPurpose + '\'' +
-					", requestedAmount=" + requestedAmount +
-					", requestedTermMonths=" + requestedTermMonths +
-					'}';
+			return "LoanRequest{" + "loanPurpose='" + loanPurpose + '\'' + ", requestedAmount=" + requestedAmount
+					+ ", requestedTermMonths=" + requestedTermMonths + '}';
 		}
 	}
 
@@ -394,10 +369,7 @@ public class CreditXmlMessage {
 
 		@Override
 		public String toString() {
-			return "FinancialProfile{" +
-					"monthlyExpenses=" + monthlyExpenses +
-					", creditScore=" + creditScore +
-					'}';
+			return "FinancialProfile{" + "monthlyExpenses=" + monthlyExpenses + ", creditScore=" + creditScore + '}';
 		}
 	}
 
@@ -438,11 +410,8 @@ public class CreditXmlMessage {
 
 		@Override
 		public String toString() {
-			return "CreditScore{" +
-					"score=" + score +
-					", scoreClass='" + scoreClass + '\'' +
-					", provider='" + provider + '\'' +
-					'}';
+			return "CreditScore{" + "score=" + score + ", scoreClass='" + scoreClass + '\'' + ", provider='" + provider
+					+ '\'' + '}';
 		}
 	}
 
@@ -456,6 +425,9 @@ public class CreditXmlMessage {
 
 		@JacksonXmlProperty(localName = "MaxDecisionTimeSec")
 		private Integer maxDecisionTimeSec;
+
+		@JacksonXmlProperty(localName = "AutoApproved")
+		private Boolean AutoApproved;
 
 		public String getRequestChannel() {
 			return requestChannel;
@@ -481,14 +453,20 @@ public class CreditXmlMessage {
 			this.maxDecisionTimeSec = maxDecisionTimeSec;
 		}
 
+		public Boolean getAutoApproved() {
+			return AutoApproved;
+		}
+
+		public void setAutoApproved(Boolean autoApproved) {
+			AutoApproved = autoApproved;
+		}
+
 		@Override
 		public String toString() {
-			return "ProcessingHints{" +
-					"requestChannel='" + requestChannel + '\'' +
-					", autoDecisionAllowed=" + autoDecisionAllowed +
-					", maxDecisionTimeSec=" + maxDecisionTimeSec +
-					'}';
+			return "ProcessingHints [requestChannel=" + requestChannel + ", autoDecisionAllowed=" + autoDecisionAllowed
+					+ ", maxDecisionTimeSec=" + maxDecisionTimeSec + ", AutoApproved=" + AutoApproved + "]";
 		}
+
 	}
 
 	@JsonIgnoreProperties(ignoreUnknown = true)
@@ -517,10 +495,7 @@ public class CreditXmlMessage {
 
 		@Override
 		public String toString() {
-			return "Amount{" +
-					"currency='" + currency + '\'' +
-					", value='" + value + '\'' +
-					'}';
+			return "Amount{" + "currency='" + currency + '\'' + ", value='" + value + '\'' + '}';
 		}
 	}
 }

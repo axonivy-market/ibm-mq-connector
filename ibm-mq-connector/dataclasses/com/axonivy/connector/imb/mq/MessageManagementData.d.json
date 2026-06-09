@@ -3,16 +3,8 @@
   "simpleName" : "MessageManagementData",
   "namespace" : "com.axonivy.connector.imb.mq",
   "fields" : [ {
-    "name" : "loanService",
-    "type" : "com.axonivy.connector.service.LoanProcessingService",
-    "modifiers" : [ ]
-  }, {
-    "name" : "loanRequest",
-    "type" : "com.axonivy.connector.model.LoanRequest",
-    "modifiers" : [ ]
-  }, {
-    "name" : "messageResult",
-    "type" : "com.axonivy.connector.model.MessageResult",
+    "name" : "messageFetchResult",
+    "type" : "com.axonivy.connector.model.MessageFetchResult",
     "modifiers" : [ ]
   }, {
     "name" : "messageFetchRequest",

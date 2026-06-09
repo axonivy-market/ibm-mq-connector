@@ -11,20 +11,13 @@
       "name" : "start()",
       "config" : {
         "signature" : "start",
-        "input" : {
-          "map" : { },
-          "code" : [
-            "import com.axonivy.connector.model.MessageFetchRequest;",
-            "out.messageFetchRequest = new MessageFetchRequest();"
-          ]
-        },
         "guid" : "19E971E43FDA4351"
       },
       "visual" : {
         "at" : { "x" : 64, "y" : 64 }
       },
       "connect" : [
-        { "id" : "f2", "to" : "f13" }
+        { "id" : "f14", "to" : "f2" }
       ]
     }, {
       "id" : "f1",
@@ -63,13 +56,17 @@
           "params" : [
             { "name" : "messageFetchRequest", "type" : "com.axonivy.connector.model.MessageFetchRequest", "desc" : "" }
           ],
-          "map" : { }
+          "map" : {
+            "out.messageFetchRequest" : "param.messageFetchRequest"
+          }
         },
         "result" : {
           "params" : [
-            { "name" : "messageResult", "type" : "com.axonivy.connector.model.MessageResult", "desc" : "" }
+            { "name" : "messageFetchResult", "type" : "com.axonivy.connector.model.MessageFetchResult", "desc" : "" }
           ],
-          "map" : { }
+          "map" : {
+            "result.messageFetchResult" : "in.messageFetchResult"
+          }
         },
         "guid" : "19EA0A86AC896AFA"
       },
@@ -84,7 +81,7 @@
       "id" : "f7",
       "type" : "HtmlDialogEnd",
       "visual" : {
-        "at" : { "x" : 520, "y" : 248 },
+        "at" : { "x" : 672, "y" : 256 },
         "labelOffset" : { "x" : 10, "y" : 30 }
       }
     }, {
@@ -96,14 +93,14 @@
           "code" : [
             "import javax.faces.application.FacesMessage;",
             "import javax.faces.context.FacesContext;",
-            "if (in.messageResult.error != null && !in.messageResult.error.isEmpty()) {",
-            "  FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, in.messageResult.error, null));",
+            "if (in.messageFetchResult.error != null && !in.messageFetchResult.error.isEmpty()) {",
+            "  FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, in.messageFetchResult.error, null));",
             "}"
           ]
         }
       },
       "visual" : {
-        "at" : { "x" : 392, "y" : 248 }
+        "at" : { "x" : 544, "y" : 256 }
       },
       "connect" : [
         { "id" : "f10", "to" : "f7", "color" : "default" }
@@ -111,12 +108,18 @@
     }, {
       "id" : "f11",
       "type" : "SubProcessCall",
-      "name" : "Fetch and Filter",
+      "name" : "Fetch JSON/XML",
       "config" : {
         "processCall" : "MessageManagement:fetch(com.axonivy.connector.model.MessageFetchRequest)",
         "call" : {
           "map" : {
             "param.messageFetchRequest" : "in.messageFetchRequest"
+          }
+        },
+        "output" : {
+          "map" : {
+            "out" : "in",
+            "out.messageFetchResult" : "result.messageFetchResult"
           }
         }
       },
@@ -124,26 +127,46 @@
         "at" : { "x" : 224, "y" : 248 }
       },
       "connect" : [
-        { "id" : "f12", "to" : "f9", "color" : "default" }
+        { "id" : "f12", "to" : "f15", "color" : "default" }
       ]
     }, {
-      "id" : "f13",
+      "id" : "f15",
+      "type" : "Script",
+      "name" : "Process messages",
+      "config" : {
+        "output" : {
+          "code" : [
+            "import com.axonivy.connector.imb.mq.service.ProcessMessageService;",
+            "out.processMessageService = new ProcessMessageService();",
+            "out.processMessageService.process(out.messageFetchResult);"
+          ]
+        }
+      },
+      "visual" : {
+        "at" : { "x" : 384, "y" : 256 }
+      },
+      "connect" : [
+        { "id" : "f16", "to" : "f9", "color" : "default" }
+      ]
+    }, {
+      "id" : "f2",
       "type" : "Script",
       "name" : "Set QueueName",
       "config" : {
         "output" : {
           "code" : [
-            "in.messageFetchRequest.setMaxMessage(10);",
-            "in.messageFetchRequest.setQueueName(\"DEV.QUEUE.1\");"
+            "import com.axonivy.connector.model.MessageFetchRequest;",
+            "out.messageFetchRequest = new MessageFetchRequest();",
+            "out.messageFetchRequest.setMaxMessage(10);",
+            "out.messageFetchRequest.setQueueName(\"DEV.QUEUE.1\");"
           ]
         }
       },
       "visual" : {
-        "at" : { "x" : 232, "y" : 64 },
-        "size" : { "width" : 128, "height" : 62 }
+        "at" : { "x" : 208, "y" : 64 }
       },
       "connect" : [
-        { "id" : "f14", "to" : "f1", "color" : "default" }
+        { "id" : "f13", "to" : "f1" }
       ]
     } ]
 }

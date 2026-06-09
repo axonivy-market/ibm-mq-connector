@@ -14,7 +14,7 @@
 					<h:form id="form">
 						<div class="grid justify-content-center">
 							<div class="col" style="max-width: 450px;">
-								<p:messages id="errorMessageType" autoUpdate="true" />
+								<p:messages id="errorMessageType" />
 								<h2>IBM MQ Messaging</h2>
 								<div style="font-size: 15px">To start message fetching,
 									select file format:</div>
@@ -25,7 +25,7 @@
 								</div>								
 								<div style="margin-top: 8px">
 									<p:selectOneMenu id="option" required="true"
-										value="#{data.messageRequest.messageType}"
+										value="#{data.messageFetchRequest.messageType}"
 										style="width:440px">
 										<f:selectItem itemLabel="Select" itemValue="" />
 										<f:selectItem itemLabel="JSON" itemValue="json" />
@@ -37,7 +37,7 @@
 									<p:commandLink id="cancel"
 										actionListener="#{ivyWorkflowView.cancel()}" process="@this"
 										value="Cancel" />
-									<p:commandButton id="proceed" actionListener="#{logic.fetchMessages(data.messageRequest)}"
+									<p:commandButton id="proceed" actionListener="#{logic.fetchMessages(data.messageFetchRequest)}"
 										value="Process" update="form" icon="pi pi-check" />
 								</div>
 

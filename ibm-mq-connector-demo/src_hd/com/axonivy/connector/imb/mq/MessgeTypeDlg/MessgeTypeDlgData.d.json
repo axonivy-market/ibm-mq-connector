@@ -3,10 +3,13 @@
   "simpleName" : "MessgeTypeDlgData",
   "namespace" : "com.axonivy.connector.imb.mq.MessgeTypeDlg",
   "fields" : [ {
+    "name" : "messageFetchResult",
+    "type" : "com.axonivy.connector.model.MessageFetchResult"
+  }, {
+    "name" : "processMessageService",
+    "type" : "com.axonivy.connector.imb.mq.service.ProcessMessageService"
+  }, {
     "name" : "messageFetchRequest",
     "type" : "com.axonivy.connector.model.MessageFetchRequest"
-  }, {
-    "name" : "messageResult",
-    "type" : "com.axonivy.connector.model.MessageResult"
   } ]
 }

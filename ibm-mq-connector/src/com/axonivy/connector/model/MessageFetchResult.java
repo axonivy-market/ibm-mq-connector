@@ -3,12 +3,12 @@ package com.axonivy.connector.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MessageResult {
+public class MessageFetchResult {
 	private String error;
-	private String messageTypeRequest;
+	private String messageType;
 	private List<MessageDetail> messageDetails;
 
-	public MessageResult() {
+	public MessageFetchResult() {
 		messageDetails = new ArrayList<>();
 	}
 
@@ -18,14 +18,14 @@ public class MessageResult {
 
 	public void setError(String error) {
 		this.error = error;
-	}	
-
-	public String getMessageTypeRequest() {
-		return messageTypeRequest;
 	}
 
-	public void setMessageTypeRequest(String messageTypeRequest) {
-		this.messageTypeRequest = messageTypeRequest;
+	public String getMessageType() {
+		return messageType;
+	}
+
+	public void setMessageType(String messageType) {
+		this.messageType = messageType;
 	}
 
 	public List<MessageDetail> getMessageDetails() {
@@ -36,4 +36,9 @@ public class MessageResult {
 		this.messageDetails = messageDetails;
 	}
 
+	@Override
+	public String toString() {
+		return "MessageFetchResult [error=" + error + ", messageType=" + messageType + ", messageDetails="
+				+ messageDetails + "]";
+	}	
 }
