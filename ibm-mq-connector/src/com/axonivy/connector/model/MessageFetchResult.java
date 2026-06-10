@@ -4,12 +4,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MessageFetchResult {
+	private String notification;
 	private String error;
 	private String messageType;
 	private List<MessageDetail> messageDetails;
 
 	public MessageFetchResult() {
 		messageDetails = new ArrayList<>();
+	}
+
+	public String getNotification() {
+		return notification;
+	}
+
+	public void setNotification(String notification) {
+		this.notification = notification;
 	}
 
 	public String getError() {
@@ -38,7 +47,7 @@ public class MessageFetchResult {
 
 	@Override
 	public String toString() {
-		return "MessageFetchResult [error=" + error + ", messageType=" + messageType + ", messageDetails="
-				+ messageDetails + "]";
+		return "MessageFetchResult [notification=" + notification + ", error=" + error + ", messageType=" + messageType
+				+ ", messageDetails=" + messageDetails + "]";
 	}	
 }

@@ -2,44 +2,55 @@ package com.axonivy.connector.imb.mq.service;
 
 import java.util.List;
 
+import com.axonivy.connector.imb.mq.model.AutoApprovalResult;
 import com.axonivy.connector.model.CreditXmlMessage;
 import com.axonivy.connector.model.LoanJsonMessage;
 import com.axonivy.connector.model.MessageDetail;
 import com.axonivy.connector.model.MessageFetchResult;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
 import ch.ivyteam.ivy.environment.Ivy;
 
 public class ProcessMessageService {
+	private static final ObjectMapper JSON_MAPPER = new ObjectMapper();
+	private static final XmlMapper XML_MAPPER = new XmlMapper();
 
-	public void process(MessageFetchResult result) {
-		Ivy.log().warn("ProcessMessageService::process:result: " + result);
-		String messageType = result.getMessageType();
-		List<MessageDetail> messageDetails = result.getMessageDetails();
+	public AutoApprovalResult process(MessageFetchResult fetchResult) {
+		AutoApprovalResult autoApprovalResult = new AutoApprovalResult();
+		Ivy.log().warn("ProcessMessageService::process:result: " + fetchResult);
+		String messageType = fetchResult.getMessageType();
+		List<MessageDetail> messageDetails = fetchResult.getMessageDetails();
 		for (MessageDetail detail : messageDetails) {
 			Ivy.log().info("Processing message detail: " + detail);
-			Object payload = detail.getPayload();
-			if ("JSON".equalsIgnoreCase(messageType) && payload instanceof LoanJsonMessage) {
-				LoanJsonMessage jsonMessage = LoanJsonMessage.class.cast(payload);
-				if (isApproveJson(jsonMessage)) { 
-					Ivy.log().warn("add JSON to approvalList to push MQ");
+			String payload = detail.getPayload();
+			try {
+				if (isAutoApproval(payload, messageType)) {
+					Ivy.log().warn("add message to approvalList to push MQ");
+					autoApprovalResult.getAutoApprovalMessages().add(new MessageDetail(messageType, payload));
 				} else {
-					Ivy.log().warn("add JSON to manualList to create Tasks");					 
-
+					Ivy.log().warn("add message to manualList to create Tasks");
+					autoApprovalResult.getManualMessages().add(new MessageDetail(messageType, payload));
 				}
-			} else if (payload instanceof CreditXmlMessage) {
-				CreditXmlMessage xmlMessage = CreditXmlMessage.class.cast(payload);
-				if (isApproveXml(xmlMessage)) {
-					Ivy.log().warn("add XML to approvalList to push MQ");					
-
-				} else {
-					
-					Ivy.log().warn("add XML to manualList to create Tasks");
-				}
+			} catch (Exception ex) {
+				Ivy.log().error("Failed to process message detail: " + detail, ex);
 			}
 		}
+		return autoApprovalResult;
+	}
+
+	private static boolean isAutoApproval(String payload, String messageType) throws Exception {
+		Ivy.log().warn("line 43, isAutoApproval:: messageType: " + messageType);
+		if ("JSON".equalsIgnoreCase(messageType)) {
+			return isApproveJson(JSON_MAPPER.readValue(payload, LoanJsonMessage.class));
+		} else if ("XML".equalsIgnoreCase(messageType)) {
+			return isApproveXml(XML_MAPPER.readValue(payload, CreditXmlMessage.class));
+		}
+		throw new IllegalArgumentException("Unsupported message type: " + messageType);
 	}
 
 	private static boolean isAutoApproval(int score, double income) {
+		Ivy.log().warn("score: " + score + ", income: " + income);
 		return (score >= 700 && income >= 4000);
 	}
 

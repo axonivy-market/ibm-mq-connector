@@ -1,10 +1,15 @@
 package com.axonivy.connector.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MessagePushRequest {	
 	private String queueName;	
-	private List<MessagePush> messagePushs;
+	private List<MessageDetail> messageDetails;
+	
+	public MessagePushRequest() {
+		messageDetails = new ArrayList<>();
+	}
 
 	public String getQueueName() {
 		return queueName;
@@ -14,17 +19,17 @@ public class MessagePushRequest {
 		this.queueName = queueName;
 	}
 
-	public List<MessagePush> getMessagePushs() {
-		return messagePushs;
+	public List<MessageDetail> getMessageDetails() {
+		return messageDetails;
 	}
 
-	public void setMessagePushs(List<MessagePush> messagePushs) {
-		this.messagePushs = messagePushs;
+	public void setMessageDetails(List<MessageDetail> messageDetails) {
+		this.messageDetails = messageDetails;
 	}
 
 	@Override
 	public String toString() {
-		return "MessagePushRequest [queueName=" + queueName + ", messagePushs=" + messagePushs + "]";
+		return "MessagePushRequest [queueName=" + queueName + ", messageDetails=" + messageDetails + "]";
 	}	
 	
 }

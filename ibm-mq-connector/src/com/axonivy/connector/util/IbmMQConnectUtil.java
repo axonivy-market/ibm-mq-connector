@@ -15,9 +15,7 @@ import ch.ivyteam.ivy.environment.Ivy;
 public class IbmMQConnectUtil implements AutoCloseable {
 	private final MQQueueManager queueManager;
 	
-	public IbmMQConnectUtil() throws MQException {
-		Ivy.log().warn("======start IbmMQConnectUtil");
-		
+	public IbmMQConnectUtil() throws MQException {		
 		String host = Ivy.var().get("ibmmqConnector.host");
 		int port = Integer.parseInt(Ivy.var().get("ibmmqConnector.port"));
 		String channel = Ivy.var().get("ibmmqConnector.channel");

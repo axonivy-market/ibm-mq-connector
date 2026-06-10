@@ -11,5 +11,11 @@
   }, {
     "name" : "messageFetchRequest",
     "type" : "com.axonivy.connector.model.MessageFetchRequest"
+  }, {
+    "name" : "autoApprovalResult",
+    "type" : "com.axonivy.connector.imb.mq.model.AutoApprovalResult"
+  }, {
+    "name" : "messagePushRequest",
+    "type" : "com.axonivy.connector.model.MessagePushRequest"
   } ]
 }

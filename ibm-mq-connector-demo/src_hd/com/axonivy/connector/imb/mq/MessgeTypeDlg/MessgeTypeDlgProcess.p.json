@@ -58,7 +58,11 @@
           ],
           "map" : {
             "out.messageFetchRequest" : "param.messageFetchRequest"
-          }
+          },
+          "code" : [
+            "import com.axonivy.connector.imb.mq.model.AutoApprovalResult;",
+            "out.autoApprovalResult = new AutoApprovalResult();"
+          ]
         },
         "result" : {
           "params" : [
@@ -81,7 +85,7 @@
       "id" : "f7",
       "type" : "HtmlDialogEnd",
       "visual" : {
-        "at" : { "x" : 672, "y" : 256 },
+        "at" : { "x" : 1048, "y" : 248 },
         "labelOffset" : { "x" : 10, "y" : 30 }
       }
     }, {
@@ -100,7 +104,7 @@
         }
       },
       "visual" : {
-        "at" : { "x" : 544, "y" : 256 }
+        "at" : { "x" : 944, "y" : 248 }
       },
       "connect" : [
         { "id" : "f10", "to" : "f7", "color" : "default" }
@@ -136,22 +140,30 @@
       "config" : {
         "output" : {
           "code" : [
+            "import com.axonivy.connector.model.MessagePushRequest;",
             "import com.axonivy.connector.imb.mq.service.ProcessMessageService;",
             "out.processMessageService = new ProcessMessageService();",
-            "out.processMessageService.process(out.messageFetchResult);"
+            "out.autoApprovalResult = out.processMessageService.process(out.messageFetchResult);",
+            "out.messagePushRequest = new MessagePushRequest();",
+            "out.messagePushRequest.setQueueName(\"DEV.QUEUE.2\");",
+            "",
+            "ivy.log.warn(\"autoApprovalM: \" + out.autoApprovalResult.getAutoApprovalMessages());",
+            "if(out.autoApprovalResult.getAutoApprovalMessages().size() > 0) {",
+            "  out.messagePushRequest.getMessageDetails().addAll(out.autoApprovalResult.getAutoApprovalMessages());",
+            "}"
           ]
         }
       },
       "visual" : {
-        "at" : { "x" : 384, "y" : 256 }
+        "at" : { "x" : 384, "y" : 248 }
       },
       "connect" : [
-        { "id" : "f16", "to" : "f9", "color" : "default" }
+        { "id" : "f17", "to" : "f19" }
       ]
     }, {
       "id" : "f2",
       "type" : "Script",
-      "name" : "Set QueueName",
+      "name" : "Set Fetch QueueName",
       "config" : {
         "output" : {
           "code" : [
@@ -163,10 +175,45 @@
         }
       },
       "visual" : {
-        "at" : { "x" : 208, "y" : 64 }
+        "at" : { "x" : 212, "y" : 65 },
+        "size" : { "width" : 120, "height" : 62 }
       },
       "connect" : [
         { "id" : "f13", "to" : "f1" }
+      ]
+    }, {
+      "id" : "f16",
+      "type" : "SubProcessCall",
+      "name" : "Push messages",
+      "config" : {
+        "processCall" : "MessageManagement:pushMessage(com.axonivy.connector.model.MessagePushRequest)",
+        "call" : {
+          "map" : {
+            "param.messagePushRequest" : "in.messagePushRequest"
+          }
+        }
+      },
+      "visual" : {
+        "at" : { "x" : 712, "y" : 248 }
+      },
+      "connect" : [
+        { "id" : "f18", "to" : "f9" }
+      ]
+    }, {
+      "id" : "f19",
+      "type" : "Script",
+      "name" : "Set Push QueueName",
+      "config" : {
+        "output" : {
+          "code" : "out.messagePushRequest.setQueueName(\"DEV.QUEUE.2\");"
+        }
+      },
+      "visual" : {
+        "at" : { "x" : 548, "y" : 249 },
+        "size" : { "width" : 120, "height" : 62 }
+      },
+      "connect" : [
+        { "id" : "f20", "to" : "f16", "color" : "default" }
       ]
     } ]
 }

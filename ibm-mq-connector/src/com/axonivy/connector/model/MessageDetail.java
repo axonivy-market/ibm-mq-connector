@@ -2,12 +2,12 @@ package com.axonivy.connector.model;
 
 public class MessageDetail {
 	private String type;
-	private Object payload;
+	private String payload;
 
 	public MessageDetail() {
 	}
 
-	public MessageDetail(String type, Object payload) {
+	public MessageDetail(String type, String payload) {
 		this.type = type;
 		this.payload = payload;
 	}
@@ -20,11 +20,11 @@ public class MessageDetail {
 		this.type = type;
 	}
 
-	public Object getPayload() {
+	public String getPayload() {
 		return payload;
 	}
 
-	public void setPayload(Object payload) {
+	public void setPayload(String payload) {
 		this.payload = payload;
 	}
 
