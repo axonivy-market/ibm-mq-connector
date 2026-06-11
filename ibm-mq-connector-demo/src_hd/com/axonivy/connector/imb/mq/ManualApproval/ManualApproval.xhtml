@@ -1,0 +1,90 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://xmlns.jcp.org/jsf/core"
+  xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+  xmlns:ic="http://ivyteam.ch/jsf/component" xmlns:p="http://primefaces.org/ui"
+  xmlns:pe="http://primefaces.org/ui/extensions">
+<h:body>
+  <ui:composition template="/layouts/basic-10.xhtml">
+    <ui:define name="title">Manual Approval</ui:define>
+    <ui:define name="content">
+	<div class="card p-4 bg-gray-50 border-1 border-gray-200 border-round p-5 mx-auto" style="max-width: 450px;">
+
+    <h2 class="mt-0 mb-4">IBM MQ Messaging</h2>
+
+        <!-- Applicant -->
+    <h3 class="mb-3">Applicant</h3>
+
+    <div class="flex justify-content-between py-2 border-bottom-1 surface-border">
+        <span>First name</span>
+        <span>James</span>
+    </div>
+
+    <div class="flex justify-content-between py-2 border-bottom-1 surface-border">
+        <span>Last name</span>
+        <span>Harrison</span>
+    </div>
+
+    <div class="flex justify-content-between py-2 border-bottom-1 surface-border">
+        <span>Date of birth</span>
+        <span>14.07.1982</span>
+    </div>
+
+    <div class="flex justify-content-between py-2 mb-4">
+        <span>Monthly net income</span>
+        <span>EUR 4250.-</span>
+    </div>
+
+    <!-- Loan Request -->
+    <h3 class="mb-3">Loan Request</h3>
+
+    <div class="flex justify-content-between py-2 border-bottom-1 surface-border">
+        <span>Purpose</span>
+        <span>Vehicle purchase</span>
+    </div>
+
+    <div class="flex justify-content-between py-2 border-bottom-1 surface-border">
+        <span>Amount</span>
+        <span>EUR 28'500.-</span>
+    </div>
+
+    <div class="flex justify-content-between py-2 mb-4">
+        <span>Term</span>
+        <span>60 months</span>
+    </div>
+
+    <!-- Credit Score -->
+    <h3 class="mb-3">Credit Score</h3>
+
+    <div class="flex justify-content-between py-2 border-bottom-1 surface-border">
+        <span>Score</span>
+        <span>740</span>
+    </div>
+
+    <div class="flex justify-content-between py-2 border-bottom-1 surface-border">
+        <span>Score class</span>
+        <span>A</span>
+    </div>
+
+    <div class="flex justify-content-between py-2 mb-5">
+        <span>Provider</span>
+        <span>Experian</span>
+    </div>
+
+    <!-- Buttons -->
+    <div class="flex justify-content-end gap-2">
+            <p:commandButton
+                value="Reject"
+                icon="pi pi-times"
+                styleClass="text-900 bg-white border-1 border-white" />
+
+            <p:commandButton
+                value="Confirm"
+                icon="pi pi-check" />
+
+    </div>
+
+</div>
+    </ui:define>
+  </ui:composition>
+</h:body>
+
+</html>

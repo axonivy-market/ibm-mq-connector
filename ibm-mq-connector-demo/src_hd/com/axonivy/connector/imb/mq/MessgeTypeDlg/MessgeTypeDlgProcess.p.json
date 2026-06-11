@@ -85,7 +85,7 @@
       "id" : "f7",
       "type" : "HtmlDialogEnd",
       "visual" : {
-        "at" : { "x" : 1048, "y" : 248 },
+        "at" : { "x" : 1040, "y" : 248 },
         "labelOffset" : { "x" : 10, "y" : 30 }
       }
     }, {
@@ -104,7 +104,7 @@
         }
       },
       "visual" : {
-        "at" : { "x" : 944, "y" : 248 }
+        "at" : { "x" : 904, "y" : 248 }
       },
       "connect" : [
         { "id" : "f10", "to" : "f7", "color" : "default" }
