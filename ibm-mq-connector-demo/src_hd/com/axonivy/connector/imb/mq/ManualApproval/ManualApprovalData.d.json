@@ -1,5 +1,8 @@
 {
   "$schema" : "https://json-schema.axonivy.com/data-class/12.0.1/data-class.json",
   "simpleName" : "ManualApprovalData",
-  "namespace" : "com.axonivy.connector.imb.mq.ManualApproval"
+  "namespace" : "com.axonivy.connector.imb.mq.ManualApproval",
+  "fields" : [ {
+    "name" : "approval"
+  } ]
 }

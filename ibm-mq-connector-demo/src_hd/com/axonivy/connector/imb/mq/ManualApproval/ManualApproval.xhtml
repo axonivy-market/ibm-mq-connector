@@ -9,6 +9,7 @@
 	<div class="card p-4 bg-gray-50 border-1 border-gray-200 border-round p-5 mx-auto" style="max-width: 450px;">
 
     <h2 class="mt-0 mb-4">IBM MQ Messaging</h2>
+    <h:form id="approvalForm">
 
         <!-- Applicant -->
     <h3 class="mb-3">Applicant</h3>
@@ -74,14 +75,18 @@
             <p:commandButton
                 value="Reject"
                 icon="pi pi-times"
-                styleClass="text-900 bg-white border-1 border-white" />
+                styleClass="text-900 bg-white border-1 border-white" 
+                action="#{logic.submit('REJECT')}" />
 
             <p:commandButton
                 value="Confirm"
-                icon="pi pi-check" />
+                icon="pi pi-check" 
+                update="approvalForm"
+                action="#{logic.submit('CONFIRM')}" />
 
     </div>
 
+</h:form>
 </div>
     </ui:define>
   </ui:composition>

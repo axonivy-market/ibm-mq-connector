@@ -18,7 +18,7 @@
         "at" : { "x" : 96, "y" : 64 }
       },
       "connect" : [
-        { "id" : "f2", "to" : "f10" }
+        { "id" : "f2", "to" : "f3" }
       ]
     }, {
       "id" : "f1",
@@ -78,29 +78,47 @@
         "at" : { "x" : 328, "y" : 192 }
       },
       "connect" : [
-        { "id" : "f9", "to" : "f12" }
+        { "id" : "f12", "to" : "f9" }
       ]
     }, {
-      "id" : "f10",
+      "id" : "f9",
       "type" : "DialogCall",
-      "name" : "Manual Approve",
+      "name" : "Manual Approval Form",
       "config" : {
-        "dialog" : "com.axonivy.connector.imb.mq.ManualApproval:start()"
+        "dialog" : "com.axonivy.connector.imb.mq.ManualApproval:start()",
+        "output" : {
+          "map" : {
+            "out" : "in",
+            "out.approval" : "result.approval"
+          }
+        }
       },
       "visual" : {
-        "at" : { "x" : 224, "y" : 64 }
+        "at" : { "x" : 496, "y" : 192 }
       },
       "connect" : [
-        { "id" : "f11", "to" : "f3", "color" : "default" }
+        { "id" : "f13", "to" : "f14" }
       ]
     }, {
-      "id" : "f12",
+      "id" : "f14",
       "type" : "Script",
+      "name" : "Custom Fields",
+      "config" : {
+        "output" : {
+          "code" : [
+            "import ch.ivyteam.ivy.workflow.ITask;",
+            "ITask task = ivy.task;",
+            "",
+            "ivy.log.warn(\"Custom fields::approval: \" + in.approval);",
+            "task.customFields().stringField(\"decision\").set(in.approval);"
+          ]
+        }
+      },
       "visual" : {
-        "at" : { "x" : 672, "y" : 192 }
+        "at" : { "x" : 656, "y" : 192 }
       },
       "connect" : [
-        { "id" : "f13", "to" : "f6", "color" : "default" }
+        { "id" : "f15", "to" : "f6", "color" : "default" }
       ]
     } ]
 }
