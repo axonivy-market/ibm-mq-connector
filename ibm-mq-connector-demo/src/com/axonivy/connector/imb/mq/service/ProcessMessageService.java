@@ -3,6 +3,8 @@ package com.axonivy.connector.imb.mq.service;
 import java.util.List;
 
 import com.axonivy.connector.imb.mq.model.AutoApprovalResult;
+import com.axonivy.connector.model.Applicant;
+import com.axonivy.connector.model.CreditScore;
 import com.axonivy.connector.model.CreditXmlMessage;
 import com.axonivy.connector.model.LoanJsonMessage;
 import com.axonivy.connector.model.MessageDetail;
@@ -39,6 +41,7 @@ public class ProcessMessageService {
 		}
 		Ivy.log().info("=== call signal Task: " + SIGNAL_CODE);
 		String taskData = "\"{\"id\":\"1122\"}\"";
+		
 		Ivy.wf().signals().create().data(taskData).send(SIGNAL_CODE);
 		return autoApprovalResult;
 	}
@@ -59,19 +62,19 @@ public class ProcessMessageService {
 	}
 
 	private static boolean isApproveJson(LoanJsonMessage jsonMessage) {
-		LoanJsonMessage.CreditScore creditScore = jsonMessage.getCreditScore();
-		LoanJsonMessage.Applicant applicant = jsonMessage.getApplicant();
+		CreditScore creditScore = jsonMessage.getCreditScore();
+		Applicant applicant = jsonMessage.getApplicant();
 
 		return isAutoApproval(getScoreJson(creditScore), getIncomeJson(applicant));
 	}
 
-	private static double getIncomeJson(LoanJsonMessage.Applicant applicant) {
+	private static double getIncomeJson(Applicant applicant) {
 		double income = (applicant != null && applicant.getMonthlyNetIncome() != null) ? applicant.getMonthlyNetIncome()
 				: 0.0;
 		return income;
 	}
 
-	private static int getScoreJson(LoanJsonMessage.CreditScore creditScore) {
+	private static int getScoreJson(CreditScore creditScore) {
 		int score = (creditScore != null && creditScore.getScore() != null) ? creditScore.getScore() : 0;
 		return score;
 	}

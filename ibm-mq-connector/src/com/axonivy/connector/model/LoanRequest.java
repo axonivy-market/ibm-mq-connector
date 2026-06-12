@@ -1,34 +1,43 @@
 package com.axonivy.connector.model;
 
-import java.io.Serializable;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-public class LoanRequest implements Serializable {
-	private static final long serialVersionUID = 1L;
-	private String messageType;
-	private String error;	
-	
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class LoanRequest {
+	private String purpose;
+	private Double amount;
+	private Integer termMonths;
 
-	public String getMessageType() {
-		return messageType;
+	public String getPurpose() {
+		return purpose;
 	}
 
-	public void setMessageType(String messageType) {
-		this.messageType = messageType;
+	public void setPurpose(String purpose) {
+		this.purpose = purpose;
 	}
 
-	public String getError() {
-		return error;
+	public Double getAmount() {
+		return amount;
 	}
 
-	public void setError(String error) {
-		this.error = error;
+	public void setAmount(Double amount) {
+		this.amount = amount;
+	}
+
+	public Integer getTermMonths() {
+		return termMonths;
+	}
+
+	public void setTermMonths(Integer termMonths) {
+		this.termMonths = termMonths;
 	}
 
 	@Override
 	public String toString() {
-		return "LoanRequest [messageType=" + messageType + ", error=" + error + "]";
-	}	
-	
-	
+		return "LoanRequest{" +
+				"purpose='" + purpose + '\'' +
+				", amount=" + amount +
+				", termMonths=" + termMonths +
+				'}';
+	}
 }
-

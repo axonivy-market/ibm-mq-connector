@@ -41,8 +41,7 @@ public class MessageService {
 		return result;
 	}
 
-	public void push(MessagePushRequest request) {
-		Ivy.log().warn("line45::push::request: " + request);
+	public void push(MessagePushRequest request) {		
 		try (IbmMQConnectUtil mqUtil = new IbmMQConnectUtil()) {
 			for (MessageDetail detail : request.getMessageDetails()) {
 				if (detail != null && StringUtils.isNotBlank(detail.getPayload())) {
