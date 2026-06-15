@@ -2,10 +2,12 @@ package com.axonivy.connector.imb.mq.util;
 
 import com.axonivy.connector.imb.mq.model.LoanApplication;
 import com.axonivy.connector.model.Applicant;
-import com.axonivy.connector.model.LoanJsonMessage.Name;
+import com.axonivy.connector.model.CreditScore;
+import com.axonivy.connector.model.LoanRequest;
 import com.axonivy.connector.model.CreditXmlMessage;
 import com.axonivy.connector.model.CreditXmlMessage.CreditApplicationRequest;
 import com.axonivy.connector.model.LoanJsonMessage;
+import com.axonivy.connector.model.LoanJsonMessage.Name;
 
 public final class TaskUtil {
 	private TaskUtil() {
@@ -28,27 +30,63 @@ public final class TaskUtil {
 			return null;
 		}
 		LoanApplication loanApplication = new LoanApplication();
-		CreditApplicationRequest reqeuest = xmlMessage.getCreditApplicationRequest();
-		if (reqeuest == null) {
+		CreditApplicationRequest Request = xmlMessage.getCreditApplicationRequest();
+		if (Request == null) {
 			return null;
 		}
-		if (reqeuest.getApplicant() != null) {
-			Applicant applicant = new Applicant();
-			Name name = new Name();
-			name.setFirst(reqeuest.getApplicant().getFirstName());
-			name.setLast(reqeuest.getApplicant().getLastName());
+		loanApplication.setApplicant(getApplicantXml(Request));
+		loanApplication.setCreditScore(getCreditScoreXml(Request));
+		loanApplication.setLoanRequest(getLoanReuestXml(Request));
 
-			applicant.setName(name);
-			applicant.setCustomerId(reqeuest.getApplicant().getCustomerId());
-			applicant.setDateOfBirth(reqeuest.getApplicant().getDateOfBirth());
-			// convert monthly net income from Amount to Double
-			if (reqeuest.getApplicant().getEmploymentDetails() != null && reqeuest.getApplicant().getEmploymentDetails().getMonthlyNetIncome() != null) {
-				applicant.setMonthlyNetIncome(Double.parseDouble(reqeuest.getApplicant().getEmploymentDetails().getMonthlyNetIncome().getValue()));
-			} else {
-				applicant.setMonthlyNetIncome(0.0);
-			}
-			loanApplication.setApplicant(applicant);
-		}
 		return loanApplication;
+	}
+
+	private static CreditScore getCreditScoreXml(CreditApplicationRequest request) {
+		if (request.getFinancialProfile() == null || request.getFinancialProfile().getCreditScore() == null) {
+			return null;
+		}
+		CreditScore creditScore = new CreditScore();
+		creditScore.setProvider(request.getFinancialProfile().getCreditScore().getProvider());
+		creditScore.setScore(request.getFinancialProfile().getCreditScore().getScore());
+		creditScore.setScoreClass(request.getFinancialProfile().getCreditScore().getScoreClass());
+
+		return creditScore;
+	}
+
+	private static LoanRequest getLoanReuestXml(CreditApplicationRequest request) {
+		if (request.getLoanRequest() == null) {
+			return null;
+		}
+		LoanRequest loanRequest = new LoanRequest();
+		loanRequest.setPurpose(request.getLoanRequest().getLoanPurpose());
+		loanRequest.setAmount(Double.parseDouble(request.getLoanRequest().getRequestedAmount().getValue()));
+		loanRequest.setTermMonths(request.getLoanRequest().getRequestedTermMonths());
+
+		return loanRequest;
+	}
+
+	private static Applicant getApplicantXml(CreditApplicationRequest request) {
+		if (request.getApplicant() == null) {
+			return null;
+		}
+
+		Applicant applicant = new Applicant();
+		Name name = new Name();
+		name.setFirst(request.getApplicant().getFirstName());
+		name.setLast(request.getApplicant().getLastName());
+
+		applicant.setName(name);
+		applicant.setCustomerId(request.getApplicant().getCustomerId());
+		applicant.setDateOfBirth(request.getApplicant().getDateOfBirth());
+
+		if (request.getApplicant().getEmploymentDetails() != null
+				&& request.getApplicant().getEmploymentDetails().getMonthlyNetIncome() != null) {
+			applicant.setMonthlyNetIncome(
+					Double.parseDouble(request.getApplicant().getEmploymentDetails().getMonthlyNetIncome().getValue()));
+		} else {
+			applicant.setMonthlyNetIncome(0.0);
+		}
+
+		return applicant;
 	}
 }

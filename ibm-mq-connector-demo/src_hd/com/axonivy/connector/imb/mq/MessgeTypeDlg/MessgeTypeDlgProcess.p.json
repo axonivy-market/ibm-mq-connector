@@ -148,7 +148,6 @@
             "out.messagePushRequest = new MessagePushRequest();",
             "out.messagePushRequest.setQueueName(\"DEV.QUEUE.2\");",
             "",
-            "ivy.log.warn(\"autoApprovalM: \" + out.autoApprovalResult.getAutoApprovalMessages());",
             "if(out.autoApprovalResult.getAutoApprovalMessages().size() > 0) {",
             "  out.messagePushRequest.getMessageDetails().addAll(out.autoApprovalResult.getAutoApprovalMessages());",
             "}"

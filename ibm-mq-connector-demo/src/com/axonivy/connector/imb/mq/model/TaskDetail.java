@@ -3,7 +3,7 @@ package com.axonivy.connector.imb.mq.model;
 import java.io.Serializable;
 
 public class TaskDetail implements Serializable {
-	private static final long serialVersionUID = 1L;	
+	private static final long serialVersionUID = 1L;
 	private String approvalType;
 	private LoanApplication loanApplication;
 

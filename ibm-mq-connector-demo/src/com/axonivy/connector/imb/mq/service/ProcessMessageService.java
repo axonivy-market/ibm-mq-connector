@@ -23,7 +23,6 @@ public class ProcessMessageService {
 
 	public AutoApprovalResult process(MessageFetchResult fetchResult) {
 		AutoApprovalResult autoApprovalResult = new AutoApprovalResult();
-		Ivy.log().warn("ProcessMessageService::process:result: " + fetchResult);
 		String messageType = fetchResult.getMessageType();
 		List<MessageDetail> messageDetails = fetchResult.getMessageDetails();
 		for (MessageDetail detail : messageDetails) {
@@ -67,6 +66,7 @@ public class ProcessMessageService {
 	}
 
 	private static boolean isAutoApproval(int score, double income) {
+		Ivy.log().warn("score >= 700 && income >= 4000");
 		Ivy.log().warn("score: " + score + ", income: " + income);
 		return (score >= 700 && income >= 4000);
 	}
