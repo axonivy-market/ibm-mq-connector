@@ -16,40 +16,40 @@
 
     <div class="flex justify-content-between py-2 border-bottom-1 surface-border">     	
         <span>First name</span>
-        <h:outputLabel value="#{data.taskDetail.loanApplication.applicant.name.first}" />
+        <h:outputLabel for="firstname" value="#{data.taskDetail.loanApplication.applicant.name.first}" />
     </div>
 
     <div class="flex justify-content-between py-2 border-bottom-1 surface-border">
         <span>Last name</span>
-        <h:outputLabel value="#{data.taskDetail.loanApplication.applicant.name.last}" />
+        <h:outputLabel for="lastname" value="#{data.taskDetail.loanApplication.applicant.name.last}" />
     </div>
 
     <div class="flex justify-content-between py-2 border-bottom-1 surface-border">
         <span>Date of birth</span>
-        <h:outputLabel value="#{data.taskDetail.loanApplication.applicant.dateOfBirth}" />
+        <h:outputLabel for="dateOfBirth" value="#{data.taskDetail.loanApplication.applicant.dateOfBirth}" />
     </div>
 
     <div class="flex justify-content-between py-2 mb-4">
         <span>Monthly net income</span>
-        <h:outputLabel value="#{data.taskDetail.loanApplication.applicant.monthlyNetIncome}" />        
+        <span>EUR <h:outputLabel for="monthlyNetIncome" value="#{data.taskDetail.loanApplication.applicant.monthlyNetIncome}" /> </span>        
     </div>
 
     <!-- Loan Request -->
     <h3 class="mb-3">Loan Request</h3>
 
     <div class="flex justify-content-between py-2 border-bottom-1 surface-border">
-        <span>Purpose</span>
-                <span>Purpose</span>
+        <span>Purpose</span>        
+        <h:outputLabel for="purpose" value="#{data.taskDetail.loanApplication.loanRequest.purpose}" />
     </div>
 
     <div class="flex justify-content-between py-2 border-bottom-1 surface-border">
         <span>Amount</span>
-                <span>Amount</span>
+        <span>EUR <h:outputLabel for="amount" value="#{data.taskDetail.loanApplication.loanRequest.amount}" /> </span>
     </div>
 
     <div class="flex justify-content-between py-2 mb-4">
         <span>Term</span>
-        <span>Term</span>
+        <span> <h:outputLabel for="termMonths" value="#{data.taskDetail.loanApplication.loanRequest.termMonths}" /> Months </span>
     </div>
 
     <!-- Credit Score -->
@@ -57,17 +57,17 @@
 
     <div class="flex justify-content-between py-2 border-bottom-1 surface-border">
         <span>Score</span>
-        <h:outputLabel value="#{data.taskDetail.loanApplication.creditScore.score}" />        
+        <h:outputLabel for="score" value="#{data.taskDetail.loanApplication.creditScore.score}" />        
     </div>
 
     <div class="flex justify-content-between py-2 border-bottom-1 surface-border">
         <span>Score class</span>
-        <h:outputLabel value="#{data.taskDetail.loanApplication.creditScore.scoreClass}" />        
+        <h:outputLabel for="scoreClass" value="#{data.taskDetail.loanApplication.creditScore.scoreClass}" />        
     </div>
 
     <div class="flex justify-content-between py-2 mb-5">
         <span>Provider</span>
-        <h:outputLabel value="#{data.taskDetail.loanApplication.creditScore.provider}" />        
+        <h:outputLabel for="provider" value="#{data.taskDetail.loanApplication.creditScore.provider}" />        
     </div>
 
     <!-- Buttons -->

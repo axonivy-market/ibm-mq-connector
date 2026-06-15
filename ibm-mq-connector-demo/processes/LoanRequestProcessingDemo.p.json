@@ -99,6 +99,12 @@
           "map" : {
             "param.taskDetail" : "in.taskDetail"
           }
+        },
+        "output" : {
+          "map" : {
+            "out" : "in",
+            "out.approval" : "result.approval"
+          }
         }
       },
       "visual" : {
@@ -118,6 +124,11 @@
             "ITask task = ivy.task;",
             "",
             "ivy.log.warn(\"Custom fields::approval: \" + in.approval);",
+            "task.customFields().stringField(\"customerId\").set(out.taskDetail.getCustomerId());",
+            "if (out.taskDetail.getLoanApplication() != null && out.taskDetail.getLoanApplication().getApplicant() != null && out.taskDetail.getLoanApplication().getApplicant() != null && out.taskDetail.getLoanApplication().getApplicant().getName() != null) {",
+            "  task.customFields().stringField(\"firstName\").set(out.taskDetail.getLoanApplication().getApplicant().name.first);",
+            "  task.customFields().stringField(\"lastName\").set(out.taskDetail.getLoanApplication().getApplicant().name.last);",
+            "}",
             "task.customFields().stringField(\"decision\").set(in.approval);"
           ]
         }

@@ -3,22 +3,22 @@ package com.axonivy.connector.imb.mq.model;
 import java.io.Serializable;
 
 public class TaskDetail implements Serializable {
-	private static final long serialVersionUID = 1L;
-	private String id;
+	private static final long serialVersionUID = 1L;	
 	private String approvalType;
 	private LoanApplication loanApplication;
 
 	public TaskDetail() {
 	}
 
-	public String getId() {
-		return id;
+	public String getCustomerId() {
+		try {
+			return loanApplication.getApplicant().getCustomerId();
+		} catch (Exception e) {
+			return "";
+		}
 	}
 
-	public void setId(String id) {
-		this.id = id;
-	}
-
+	
 	public String getApprovalType() {
 		return approvalType;
 	}
@@ -37,7 +37,7 @@ public class TaskDetail implements Serializable {
 
 	@Override
 	public String toString() {
-		return "TaskDetail [id=" + id + ", approvalType=" + approvalType + ", loanApplication=" + loanApplication + "]";
+		return "TaskDetail [approvalType=" + approvalType + ", loanApplication=" + loanApplication + "]";
 	}
 
 }
