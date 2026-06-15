@@ -1,6 +1,10 @@
 package com.axonivy.connector.model;
 
-public class MessageFetchRequest {
+import java.io.Serializable;
+
+public class MessageFetchRequest implements Serializable {
+	private static final long serialVersionUID = 1L;
+	
 	private String messageType;
 	private String queueName;
 	private int maxMessage = 10;

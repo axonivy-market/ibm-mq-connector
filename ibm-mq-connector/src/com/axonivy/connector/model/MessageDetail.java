@@ -1,6 +1,9 @@
 package com.axonivy.connector.model;
 
-public class MessageDetail {
+import java.io.Serializable;
+
+public class MessageDetail implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private String type;
 	private String payload;
 

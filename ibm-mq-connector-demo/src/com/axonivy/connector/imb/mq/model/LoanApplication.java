@@ -1,10 +1,14 @@
 package com.axonivy.connector.imb.mq.model;
 
+import java.io.Serializable;
+
 import com.axonivy.connector.model.Applicant;
 import com.axonivy.connector.model.CreditScore;
 import com.axonivy.connector.model.LoanRequest;
 
-public class LoanApplication {
+public class LoanApplication implements Serializable {
+	private static final long serialVersionUID = 1L;
+	
 	private Applicant applicant;
 	private LoanRequest loanRequest;
 	private CreditScore creditScore;

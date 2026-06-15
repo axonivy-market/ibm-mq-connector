@@ -124,7 +124,8 @@
           "map" : {
             "out" : "in",
             "out.messageFetchResult" : "result.messageFetchResult"
-          }
+          },
+          "code" : "ivy.log.warn(\"Fetch Result: \" + out.messageFetchResult);"
         }
       },
       "visual" : {

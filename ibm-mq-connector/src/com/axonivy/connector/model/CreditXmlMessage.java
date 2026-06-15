@@ -1,5 +1,7 @@
 package com.axonivy.connector.model;
 
+import java.io.Serializable;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
@@ -7,7 +9,9 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlText;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JacksonXmlRootElement(localName = "Document")
-public class CreditXmlMessage {
+public class CreditXmlMessage implements Serializable {
+	private static final long serialVersionUID = 1L;
+	
 	@JacksonXmlProperty(localName = "CreditApplicationRequest")
 	private CreditApplicationRequest creditApplicationRequest;
 

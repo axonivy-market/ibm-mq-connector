@@ -1,9 +1,13 @@
 package com.axonivy.connector.model;
 
+import java.io.Serializable;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class LoanRequest {
+public class LoanRequest implements Serializable {
+	private static final long serialVersionUID = 1L;
+	
 	private String purpose;
 	private Double amount;
 	private Integer termMonths;

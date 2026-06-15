@@ -4,5 +4,8 @@
   "namespace" : "com.axonivy.connector.imb.mq.ManualApproval",
   "fields" : [ {
     "name" : "approval"
+  }, {
+    "name" : "taskDetail",
+    "type" : "com.axonivy.connector.imb.mq.model.TaskDetail"
   } ]
 }

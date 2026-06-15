@@ -14,24 +14,24 @@
         <!-- Applicant -->
     <h3 class="mb-3">Applicant</h3>
 
-    <div class="flex justify-content-between py-2 border-bottom-1 surface-border">
+    <div class="flex justify-content-between py-2 border-bottom-1 surface-border">     	
         <span>First name</span>
-        <span>James</span>
+        <h:outputLabel value="#{data.taskDetail.loanApplication.applicant.name.first}" />
     </div>
 
     <div class="flex justify-content-between py-2 border-bottom-1 surface-border">
         <span>Last name</span>
-        <span>Harrison</span>
+        <h:outputLabel value="#{data.taskDetail.loanApplication.applicant.name.last}" />
     </div>
 
     <div class="flex justify-content-between py-2 border-bottom-1 surface-border">
         <span>Date of birth</span>
-        <span>14.07.1982</span>
+        <h:outputLabel value="#{data.taskDetail.loanApplication.applicant.dateOfBirth}" />
     </div>
 
     <div class="flex justify-content-between py-2 mb-4">
         <span>Monthly net income</span>
-        <span>EUR 4250.-</span>
+        <h:outputLabel value="#{data.taskDetail.loanApplication.applicant.monthlyNetIncome}" />        
     </div>
 
     <!-- Loan Request -->
@@ -39,17 +39,17 @@
 
     <div class="flex justify-content-between py-2 border-bottom-1 surface-border">
         <span>Purpose</span>
-        <span>Vehicle purchase</span>
+                <span>Purpose</span>
     </div>
 
     <div class="flex justify-content-between py-2 border-bottom-1 surface-border">
         <span>Amount</span>
-        <span>EUR 28'500.-</span>
+                <span>Amount</span>
     </div>
 
     <div class="flex justify-content-between py-2 mb-4">
         <span>Term</span>
-        <span>60 months</span>
+        <span>Term</span>
     </div>
 
     <!-- Credit Score -->
@@ -57,17 +57,17 @@
 
     <div class="flex justify-content-between py-2 border-bottom-1 surface-border">
         <span>Score</span>
-        <span>740</span>
+        <h:outputLabel value="#{data.taskDetail.loanApplication.creditScore.score}" />        
     </div>
 
     <div class="flex justify-content-between py-2 border-bottom-1 surface-border">
         <span>Score class</span>
-        <span>A</span>
+        <h:outputLabel value="#{data.taskDetail.loanApplication.creditScore.scoreClass}" />        
     </div>
 
     <div class="flex justify-content-between py-2 mb-5">
         <span>Provider</span>
-        <span>Experian</span>
+        <h:outputLabel value="#{data.taskDetail.loanApplication.creditScore.provider}" />        
     </div>
 
     <!-- Buttons -->

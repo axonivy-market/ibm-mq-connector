@@ -5,5 +5,8 @@
   "fields" : [ {
     "name" : "approval",
     "modifiers" : [ ]
+  }, {
+    "name" : "taskDetail",
+    "type" : "com.axonivy.connector.imb.mq.model.TaskDetail"
   } ]
 }

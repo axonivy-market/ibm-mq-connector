@@ -17,7 +17,8 @@
           ],
           "map" : {
             "out.messageFetchRequest" : "param.messageFetchRequest"
-          }
+          },
+          "code" : "ivy.log.warn(\"Core: \" + out.messageFetchRequest);"
         },
         "result" : {
           "params" : [

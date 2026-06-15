@@ -3,6 +3,8 @@ package com.axonivy.connector.imb.mq.service;
 import java.util.List;
 
 import com.axonivy.connector.imb.mq.model.AutoApprovalResult;
+import com.axonivy.connector.imb.mq.model.TaskDetail;
+import com.axonivy.connector.imb.mq.util.TaskUtil;
 import com.axonivy.connector.model.Applicant;
 import com.axonivy.connector.model.CreditScore;
 import com.axonivy.connector.model.CreditXmlMessage;
@@ -33,16 +35,24 @@ public class ProcessMessageService {
 					autoApprovalResult.getAutoApprovalMessages().add(new MessageDetail(messageType, payload));
 				} else {
 					Ivy.log().warn("add message to manualList to create Tasks");
-					autoApprovalResult.getManualMessages().add(new MessageDetail(messageType, payload));
+//					autoApprovalResult.getManualMessages().add(new MessageDetail(messageType, payload));
+					// parse message and create TaskDetail for manual approval
+					TaskDetail taskDetail = new TaskDetail();
+					if ("JSON".equalsIgnoreCase(messageType)) {
+						taskDetail.setLoanApplication(TaskUtil.convertFromLoanJsonMessage(JSON_MAPPER.readValue(payload, LoanJsonMessage.class)));
+					} else if ("XML".equalsIgnoreCase(messageType)) {
+						taskDetail.setLoanApplication(TaskUtil.convertFromCreditXmlMessage(XML_MAPPER.readValue(payload, CreditXmlMessage.class)));
+					}
+					Ivy.log().info("=== call signal Task: " + SIGNAL_CODE);
+					Ivy.log().info("TaskDetail: " + taskDetail);
+					Ivy.wf().signals().create().data(taskDetail).send(SIGNAL_CODE);
+
 				}
 			} catch (Exception ex) {
 				Ivy.log().error("Failed to process message detail: " + detail, ex);
 			}
 		}
-		Ivy.log().info("=== call signal Task: " + SIGNAL_CODE);
-		String taskData = "\"{\"id\":\"1122\"}\"";
 		
-		Ivy.wf().signals().create().data(taskData).send(SIGNAL_CODE);
 		return autoApprovalResult;
 	}
 

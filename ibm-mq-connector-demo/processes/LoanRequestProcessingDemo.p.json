@@ -47,7 +47,16 @@
       "name" : "mqdemo:manualapproval",
       "config" : {
         "signalCode" : "mqdemo:manualapproval",
-        "attachToBusinessCase" : false
+        "attachToBusinessCase" : false,
+        "output" : {
+          "map" : { },
+          "code" : [
+            "import com.axonivy.connector.imb.mq.model.TaskDetail;",
+            "out.taskDetail = signal.getSignalData() as TaskDetail;",
+            "",
+            "ivy.log.warn(\"taskDetail: \" + out.taskDetail);"
+          ]
+        }
       },
       "visual" : {
         "at" : { "x" : 96, "y" : 192 },
@@ -85,11 +94,10 @@
       "type" : "DialogCall",
       "name" : "Manual Approval Form",
       "config" : {
-        "dialog" : "com.axonivy.connector.imb.mq.ManualApproval:start()",
-        "output" : {
+        "dialog" : "com.axonivy.connector.imb.mq.ManualApproval:start(com.axonivy.connector.imb.mq.model.TaskDetail)",
+        "call" : {
           "map" : {
-            "out" : "in",
-            "out.approval" : "result.approval"
+            "param.taskDetail" : "in.taskDetail"
           }
         }
       },

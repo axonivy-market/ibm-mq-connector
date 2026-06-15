@@ -1,9 +1,13 @@
 package com.axonivy.connector.model;
 
+import java.io.Serializable;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class CreditScore {
+public class CreditScore implements Serializable {
+	private static final long serialVersionUID = 1L;
+	
 	private Integer score;
 	private String scoreClass;
 	private String provider;

@@ -1,9 +1,12 @@
 package com.axonivy.connector.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MessageFetchResult {
+public class MessageFetchResult implements Serializable {
+	private static final long serialVersionUID = 1L;
+	
 	private String notification;
 	private String error;
 	private String messageType;

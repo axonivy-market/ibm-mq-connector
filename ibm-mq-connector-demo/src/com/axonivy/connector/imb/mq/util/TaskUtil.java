@@ -31,24 +31,24 @@ public final class TaskUtil {
 		CreditApplicationRequest reqeuest = xmlMessage.getCreditApplicationRequest();
 		if (reqeuest == null) {
 			return null;
-		}		
+		}
 		if (reqeuest.getApplicant() != null) {
 			Applicant applicant = new Applicant();
 			Name name = new Name();
 			name.setFirst(reqeuest.getApplicant().getFirstName());
 			name.setLast(reqeuest.getApplicant().getLastName());
-			
+
 			applicant.setName(name);
 			applicant.setCustomerId(reqeuest.getApplicant().getCustomerId());
 			applicant.setDateOfBirth(reqeuest.getApplicant().getDateOfBirth());
-//			applicant.setMonthlyNetIncome(reqeuest.getApplicant().getEmploymentDetails().getMonthlyNetIncome().);
+			// convert monthly net income from Amount to Double
+			if (reqeuest.getApplicant().getEmploymentDetails() != null && reqeuest.getApplicant().getEmploymentDetails().getMonthlyNetIncome() != null) {
+				applicant.setMonthlyNetIncome(Double.parseDouble(reqeuest.getApplicant().getEmploymentDetails().getMonthlyNetIncome().getValue()));
+			} else {
+				applicant.setMonthlyNetIncome(0.0);
+			}
 			loanApplication.setApplicant(applicant);
 		}
-
-		
-
-//		loanApplication.setScore(xmlMessage.getScore());
-//		loanApplication.setIncome(xmlMessage.getIncome());
 		return loanApplication;
 	}
 }
