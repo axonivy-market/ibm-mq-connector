@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class TaskDetail implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private String approvalType;
+	private boolean isAutoApproval;
 	private LoanApplication loanApplication;
 
 	public TaskDetail() {
@@ -16,15 +16,14 @@ public class TaskDetail implements Serializable {
 		} catch (Exception e) {
 			return "";
 		}
-	}
-
+	}	
 	
-	public String getApprovalType() {
-		return approvalType;
+	public boolean isAutoApproval() {
+		return isAutoApproval;
 	}
 
-	public void setApprovalType(String approvalType) {
-		this.approvalType = approvalType;
+	public void setAutoApproval(boolean isAutoApproval) {
+		this.isAutoApproval = isAutoApproval;
 	}
 
 	public LoanApplication getLoanApplication() {
@@ -37,7 +36,7 @@ public class TaskDetail implements Serializable {
 
 	@Override
 	public String toString() {
-		return "TaskDetail [approvalType=" + approvalType + ", loanApplication=" + loanApplication + "]";
-	}
+		return "TaskDetail [isAutoApproval=" + isAutoApproval + ", loanApplication=" + loanApplication + "]";
+	}	
 
 }

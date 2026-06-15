@@ -63,7 +63,7 @@
         "labelOffset" : { "x" : 13, "y" : 33 }
       },
       "connect" : [
-        { "id" : "f7", "to" : "f8" }
+        { "id" : "f7", "to" : "f10" }
       ]
     }, {
       "id" : "f6",
@@ -75,7 +75,7 @@
     }, {
       "id" : "f8",
       "type" : "TaskSwitchEvent",
-      "name" : "Manual approve",
+      "name" : "Manual Approve",
       "config" : {
         "task" : {
           "responsible" : {
@@ -129,7 +129,13 @@
             "  task.customFields().stringField(\"firstName\").set(out.taskDetail.getLoanApplication().getApplicant().name.first);",
             "  task.customFields().stringField(\"lastName\").set(out.taskDetail.getLoanApplication().getApplicant().name.last);",
             "}",
-            "task.customFields().stringField(\"decision\").set(in.approval);"
+            "if (in.taskDetail.autoApproval) {",
+            "  task.customFields().stringField(\"decisionType\").set( \"AUTO\");",
+            "  task.customFields().stringField(\"decision\").set(\"CONFIRM\");",
+            "} else {",
+            "  task.customFields().stringField(\"decisionType\").set( \"MANUAL\");",
+            "  task.customFields().stringField(\"decision\").set(in.approval);",
+            "}"
           ]
         }
       },
@@ -138,6 +144,41 @@
       },
       "connect" : [
         { "id" : "f15", "to" : "f6", "color" : "default" }
+      ]
+    }, {
+      "id" : "f10",
+      "type" : "Alternative",
+      "name" : "Switch",
+      "config" : {
+        "conditions" : {
+          "f11" : "!in.taskDetail.isAutoApproval()",
+          "f18" : "in.taskDetail.isAutoApproval()"
+        }
+      },
+      "visual" : {
+        "at" : { "x" : 216, "y" : 192 }
+      },
+      "connect" : [
+        { "id" : "f11", "to" : "f8", "color" : "default" },
+        { "id" : "f18", "to" : "f16" }
+      ]
+    }, {
+      "id" : "f16",
+      "type" : "TaskSwitchEvent",
+      "name" : "Auto Approve",
+      "config" : {
+        "task" : {
+          "responsible" : {
+            "activator" : "Manager"
+          },
+          "skipTasklist" : true
+        }
+      },
+      "visual" : {
+        "at" : { "x" : 328, "y" : 320 }
+      },
+      "connect" : [
+        { "id" : "f17", "to" : "f14" }
       ]
     } ]
 }

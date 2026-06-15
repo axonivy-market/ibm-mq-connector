@@ -86,7 +86,7 @@ public class MessageService {
 					String payload = StringUtils.trimToEmpty(message.readStringOfByteLength(message.getDataLength()));
 					String messageType = detectMessageType(payload);
 					if (request.getMessageType().equalsIgnoreCase(messageType)) {
-						messageDetails.add(new MessageDetail(messageType, payload));
+						messageDetails.add(new MessageDetail(false, messageType, payload));
 					}
 				} catch (MQException ex) {
 					if (ex.reasonCode == CMQC.MQRC_NO_MSG_AVAILABLE) {

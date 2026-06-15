@@ -29,29 +29,27 @@ public class ProcessMessageService {
 			Ivy.log().info("Processing message detail: " + detail);
 			String payload = detail.getPayload();
 			try {
-				if (isAutoApproval(payload, messageType)) {
-					Ivy.log().warn("add message to approvalList to push MQ");
-					autoApprovalResult.getAutoApprovalMessages().add(new MessageDetail(messageType, payload));
-				} else {
-					Ivy.log().warn("add message to manualList to create Tasks");
-//					autoApprovalResult.getManualMessages().add(new MessageDetail(messageType, payload));
-					// parse message and create TaskDetail for manual approval
-					TaskDetail taskDetail = new TaskDetail();
-					if ("JSON".equalsIgnoreCase(messageType)) {
-						taskDetail.setLoanApplication(TaskUtil.convertFromLoanJsonMessage(JSON_MAPPER.readValue(payload, LoanJsonMessage.class)));
-					} else if ("XML".equalsIgnoreCase(messageType)) {
-						taskDetail.setLoanApplication(TaskUtil.convertFromCreditXmlMessage(XML_MAPPER.readValue(payload, CreditXmlMessage.class)));
-					}
-					Ivy.log().info("=== call signal Task: " + SIGNAL_CODE);
-					Ivy.log().info("TaskDetail: " + taskDetail);
-					Ivy.wf().signals().create().data(taskDetail).send(SIGNAL_CODE);
-
+				TaskDetail taskDetail = new TaskDetail();
+				taskDetail.setAutoApproval(isAutoApproval(payload, messageType));
+				if (taskDetail.isAutoApproval()) {
+					autoApprovalResult.getAutoApprovalMessages().add(new MessageDetail(true, messageType, payload));
 				}
+				if ("JSON".equalsIgnoreCase(messageType)) {
+					taskDetail.setLoanApplication(
+							TaskUtil.convertFromLoanJsonMessage(JSON_MAPPER.readValue(payload, LoanJsonMessage.class)));
+				} else if ("XML".equalsIgnoreCase(messageType)) {
+					taskDetail.setLoanApplication(TaskUtil
+							.convertFromCreditXmlMessage(XML_MAPPER.readValue(payload, CreditXmlMessage.class)));
+				}
+				Ivy.log().info(
+						"=== call signal Task: " + SIGNAL_CODE + ", auto approval: " + taskDetail.isAutoApproval());
+				Ivy.log().info("TaskDetail: " + taskDetail);
+				Ivy.wf().signals().create().data(taskDetail).send(SIGNAL_CODE);
 			} catch (Exception ex) {
 				Ivy.log().error("Failed to process message detail: " + detail, ex);
 			}
 		}
-		
+
 		return autoApprovalResult;
 	}
 
@@ -101,8 +99,8 @@ public class ProcessMessageService {
 		CreditXmlMessage.Applicant applicant = request.getApplicant();
 		double income = (applicant != null && applicant.getEmploymentDetails() != null
 				&& applicant.getEmploymentDetails().getMonthlyNetIncome() != null
-						&& applicant.getEmploymentDetails().getMonthlyNetIncome().getValue() != null)
-								? Double.parseDouble(applicant.getEmploymentDetails().getMonthlyNetIncome().getValue())
+				&& applicant.getEmploymentDetails().getMonthlyNetIncome().getValue() != null)
+						? Double.parseDouble(applicant.getEmploymentDetails().getMonthlyNetIncome().getValue())
 						: 0.0;
 		return income;
 	}
