@@ -1,0 +1,72 @@
+{
+  "$schema" : "https://json-schema.axonivy.com/process/12.0.0/process.json",
+  "id" : "19ECFD02F66756F0",
+  "config" : {
+    "data" : "com.axonivy.connector.imb.mq.demo.InitialMessagesData"
+  },
+  "elements" : [ {
+      "id" : "f0",
+      "type" : "RequestStart",
+      "name" : "start",
+      "config" : {
+        "signature" : "start",
+        "input" : {
+          "map" : { },
+          "code" : [
+            "import com.axonivy.connector.model.MessagePushRequest;",
+            "out.messagePushRequest = new MessagePushRequest();"
+          ]
+        }
+      },
+      "visual" : {
+        "at" : { "x" : 96, "y" : 64 }
+      },
+      "connect" : [
+        { "id" : "f2", "to" : "f5" }
+      ]
+    }, {
+      "id" : "f1",
+      "type" : "TaskEnd",
+      "visual" : {
+        "at" : { "x" : 512, "y" : 64 },
+        "labelOffset" : { "x" : 13, "y" : 33 }
+      }
+    }, {
+      "id" : "f3",
+      "type" : "SubProcessCall",
+      "name" : "Push messages",
+      "config" : {
+        "processCall" : "MessageManagement:pushMessage(com.axonivy.connector.model.MessagePushRequest)",
+        "call" : {
+          "map" : {
+            "param.messagePushRequest" : "in.messagePushRequest"
+          }
+        }
+      },
+      "visual" : {
+        "at" : { "x" : 384, "y" : 64 }
+      },
+      "connect" : [
+        { "id" : "f4", "to" : "f1", "color" : "default" }
+      ]
+    }, {
+      "id" : "f5",
+      "type" : "Script",
+      "name" : "Load messages files",
+      "config" : {
+        "output" : {
+          "code" : [
+            "import com.axonivy.connector.imb.mq.util.MessageUtil;",
+            "",
+            "out.messagePushRequest = MessageUtil.loadResourceFiles();"
+          ]
+        }
+      },
+      "visual" : {
+        "at" : { "x" : 224, "y" : 64 }
+      },
+      "connect" : [
+        { "id" : "f6", "to" : "f3", "color" : "default" }
+      ]
+    } ]
+}
