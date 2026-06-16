@@ -9,19 +9,18 @@
 	<ui:composition template="/layouts/basic-10.xhtml">
 		<ui:define name="title">MessgeTypeDlg</ui:define>
 		<ui:define name="content">
+		<h:form id="form">
 			<div style="height: 800px;">
 				<div class="bg-gray-50 border-1 border-gray-200 border-round p-5">
-					<h:form id="form">
+					
 						<div class="grid justify-content-center">
-							<div class="col" style="max-width: 450px;">
-								<p:messages id="errorMessageType" />
+							<div class="col" style="max-width: 450px;">								
 								<h2>IBM MQ Messaging</h2>
 								<div style="font-size: 15px">To start message fetching,
 									select file format:</div>
 								<br />
 								<div>
-									<p:outputLabel for="@next" value="File format:" />
-									
+									<p:outputLabel for="@next" value="File format:" />									
 								</div>								
 								<div style="margin-top: 8px">
 									<p:selectOneMenu id="option" required="true"
@@ -42,11 +41,13 @@
 								</div>
 
 							</div>
-						</div>
-
-					</h:form>
+						</div>					
 				</div>
+				<div class="flex justify-content-between py-2 surface-border">     	
+    	    	<p:messages id="manualMessage" showIcon="false" row="5" />
+    		</div>
 			</div>
+		</h:form>	
 		</ui:define>
 	</ui:composition>
 </h:body>

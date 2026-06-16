@@ -21,7 +21,6 @@ import com.ibm.mq.constants.CMQC;
 import ch.ivyteam.ivy.environment.Ivy;
 
 public class MessageService {
-	private String notification;
 	public MessageFetchResult fetch(MessageFetchRequest request) {
 		MessageFetchResult result = new MessageFetchResult();
 		result.setError(getValidatorError(request));
@@ -32,6 +31,8 @@ public class MessageService {
 
 		try (IbmMQConnectUtil mqUtil = new IbmMQConnectUtil()) {
 			result.setMessageDetails(fetchMessagesByType(request, mqUtil));
+			result.setNotification(MessageFormat.format("Fetched {0} {1} message(s) from queue {2} ",
+						result.getMessageDetails().size(), request.getMessageType().toUpperCase(), request.getQueueName()));
 		} catch (MQException ex) {
 			result.setError("IBM MQ connection failed");
 		} catch (IllegalStateException ex) {
@@ -41,7 +42,7 @@ public class MessageService {
 		return result;
 	}
 
-	public void push(MessagePushRequest request) {		
+	public void push(MessagePushRequest request) {
 		try (IbmMQConnectUtil mqUtil = new IbmMQConnectUtil()) {
 			for (MessageDetail detail : request.getMessageDetails()) {
 				if (detail != null && StringUtils.isNotBlank(detail.getPayload())) {

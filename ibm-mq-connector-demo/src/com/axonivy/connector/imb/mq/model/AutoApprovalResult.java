@@ -7,11 +7,10 @@ import com.axonivy.connector.model.MessageDetail;
 
 public class AutoApprovalResult {	
 	private List<MessageDetail> autoApprovalMessages;
-	private List<MessageDetail> manualMessages;
+	private int totalManualMessages;
 	
 	public AutoApprovalResult() {
-		autoApprovalMessages = new ArrayList<>();
-		manualMessages = new ArrayList<>();		
+		autoApprovalMessages = new ArrayList<>();				
 	}
 
 	public List<MessageDetail> getAutoApprovalMessages() {
@@ -22,12 +21,12 @@ public class AutoApprovalResult {
 		this.autoApprovalMessages = autoApprovalMessages;
 	}
 
-	public List<MessageDetail> getManualMessages() {
-		return manualMessages;
+	public int getTotalManualMessages() {
+		return totalManualMessages;
 	}
 
-	public void setManualMessages(List<MessageDetail> manualMessages) {
-		this.manualMessages = manualMessages;
+	public void setTotalManualMessages(int totalManualMessages) {
+		this.totalManualMessages = totalManualMessages;
 	}
 	
 }

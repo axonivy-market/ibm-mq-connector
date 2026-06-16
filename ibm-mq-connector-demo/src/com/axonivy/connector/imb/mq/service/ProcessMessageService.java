@@ -25,6 +25,7 @@ public class ProcessMessageService {
 		AutoApprovalResult autoApprovalResult = new AutoApprovalResult();
 		String messageType = fetchResult.getMessageType();
 		List<MessageDetail> messageDetails = fetchResult.getMessageDetails();
+		int countManualMessages = 0;
 		for (MessageDetail detail : messageDetails) {
 			Ivy.log().info("Processing message detail: " + detail);
 			String payload = detail.getPayload();
@@ -33,6 +34,8 @@ public class ProcessMessageService {
 				taskDetail.setAutoApproval(isAutoApproval(payload, messageType));
 				if (taskDetail.isAutoApproval()) {
 					autoApprovalResult.getAutoApprovalMessages().add(new MessageDetail(true, messageType, payload));
+				} else {
+					++countManualMessages;
 				}
 				if ("JSON".equalsIgnoreCase(messageType)) {
 					taskDetail.setLoanApplication(
@@ -47,14 +50,14 @@ public class ProcessMessageService {
 				Ivy.wf().signals().create().data(taskDetail).send(SIGNAL_CODE);
 			} catch (Exception ex) {
 				Ivy.log().error("Failed to process message detail: " + detail, ex);
-			}
+			}			
 		}
+		autoApprovalResult.setTotalManualMessages(countManualMessages);
 
 		return autoApprovalResult;
 	}
 
-	private static boolean isAutoApproval(String payload, String messageType) throws Exception {
-		Ivy.log().warn("line 43, isAutoApproval:: messageType: " + messageType);
+	private static boolean isAutoApproval(String payload, String messageType) throws Exception {		
 		if ("JSON".equalsIgnoreCase(messageType)) {
 			return isApproveJson(JSON_MAPPER.readValue(payload, LoanJsonMessage.class));
 		} else if ("XML".equalsIgnoreCase(messageType)) {

@@ -60,8 +60,11 @@
             "out.messageFetchRequest" : "param.messageFetchRequest"
           },
           "code" : [
+            "import java.util.ArrayList;",
             "import com.axonivy.connector.imb.mq.model.AutoApprovalResult;",
-            "out.autoApprovalResult = new AutoApprovalResult();"
+            "",
+            "out.autoApprovalResult = new AutoApprovalResult();",
+            "out.manualMessages = new ArrayList();"
           ]
         },
         "result" : {
@@ -95,10 +98,17 @@
       "config" : {
         "output" : {
           "code" : [
+            "import com.sun.org.apache.xalan.internal.xsltc.compiler.If;",
             "import javax.faces.application.FacesMessage;",
             "import javax.faces.context.FacesContext;",
             "if (in.messageFetchResult.error != null && !in.messageFetchResult.error.isEmpty()) {",
             "  FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, in.messageFetchResult.error, null));",
+            "} else if (in.manualMessages.size() > 0) {",
+            "  String message = \"\";",
+            "  for (String msg : in.manualMessages) {",
+            "    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, msg, null));",
+            "  }",
+            "  ",
             "}"
           ]
         }
@@ -147,9 +157,15 @@
             "out.autoApprovalResult = out.processMessageService.process(out.messageFetchResult);",
             "out.messagePushRequest = new MessagePushRequest();",
             "out.messagePushRequest.setQueueName(\"DEV.QUEUE.2\");",
-            "",
-            "if(out.autoApprovalResult.getAutoApprovalMessages().size() > 0) {",
+            "if (out.messageFetchResult.notification != null) {",
+            "  out.manualMessages.add(out.messageFetchResult.notification);  ",
+            "}",
+            "if (out.autoApprovalResult.getAutoApprovalMessages().size() > 0) {",
             "  out.messagePushRequest.getMessageDetails().addAll(out.autoApprovalResult.getAutoApprovalMessages());",
+            "  out.manualMessages.add(String.format(\"Processed  %d auto-approval message(s) and pushed to queue: %s\", out.autoApprovalResult.totalManualMessages, out.messagePushRequest.getQueueName()));",
+            "}",
+            "if (out.autoApprovalResult.totalManualMessages > 0) {",
+            "  out.manualMessages.add(String.format(\"Processed  %d manual message(s)\", out.autoApprovalResult.totalManualMessages));  ",
             "}"
           ]
         }
@@ -168,6 +184,7 @@
         "output" : {
           "code" : [
             "import com.axonivy.connector.model.MessageFetchRequest;",
+            "",
             "out.messageFetchRequest = new MessageFetchRequest();",
             "out.messageFetchRequest.setMaxMessage(10);",
             "out.messageFetchRequest.setQueueName(\"DEV.QUEUE.1\");"
@@ -175,7 +192,7 @@
         }
       },
       "visual" : {
-        "at" : { "x" : 212, "y" : 65 },
+        "at" : { "x" : 216, "y" : 64 },
         "size" : { "width" : 120, "height" : 62 }
       },
       "connect" : [
