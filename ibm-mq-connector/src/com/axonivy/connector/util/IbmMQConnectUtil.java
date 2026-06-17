@@ -12,8 +12,6 @@ import com.ibm.mq.constants.CMQC;
 
 import ch.ivyteam.ivy.environment.Ivy;
 
-
-
 public class IbmMQConnectUtil implements AutoCloseable {
 	private final MQQueueManager queueManager;
 	
