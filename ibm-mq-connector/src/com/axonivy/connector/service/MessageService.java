@@ -27,12 +27,14 @@ public class MessageService {
 		if (result.getError() != null) {
 			return result;
 		}
-		result.setMessageType(request.getMessageType());
+
+		String messageType = StringUtils.trimToEmpty(request.getMessageType());
+		result.setMessageType(StringUtils.isBlank(messageType) ? "ALL" : messageType.toUpperCase());
 
 		try (IbmMQConnectUtil mqUtil = new IbmMQConnectUtil()) {
 			result.setMessageDetails(fetchMessagesByType(request, mqUtil));
-			result.setNotification(MessageFormat.format("Fetched {0} {1} message(s) from queue {2} ",
-						result.getMessageDetails().size(), request.getMessageType().toUpperCase(), request.getQueueName()));
+			result.setNotification(MessageFormat.format("Fetched {0} {1} message(s) from queue {2}",
+					result.getMessageDetails().size(), result.getMessageType(), request.getQueueName()));
 		} catch (MQException ex) {
 			result.setError("IBM MQ connection failed");
 		} catch (IllegalStateException ex) {
@@ -42,12 +44,16 @@ public class MessageService {
 		return result;
 	}
 
+	public MessageFetchResult receive(MessageFetchRequest request) {
+		return fetch(request);
+	}
+
 	public void push(MessagePushRequest request) {
 		try (IbmMQConnectUtil mqUtil = new IbmMQConnectUtil()) {
 			for (MessageDetail detail : request.getMessageDetails()) {
 				if (detail != null && StringUtils.isNotBlank(detail.getPayload())) {
 					mqUtil.putMessage(request.getQueueName(), detail.getPayload(),
-							StringUtils.trimToEmpty(detail.getType()));
+						StringUtils.trimToEmpty(detail.getType()));
 				}
 			}
 			Ivy.log().info(MessageFormat.format("Published {0} message(s) to queue: {1}",
@@ -57,19 +63,19 @@ public class MessageService {
 		}
 	}
 
-	private static String getValidatorError(MessageFetchRequest request) {
-		if (request == null || StringUtils.isBlank(request.getMessageType())) {
-			return "MessageType is required.";
-		}
+	public void send(MessagePushRequest request) {
+		push(request);
+	}
 
-		if (StringUtils.isBlank(request.getQueueName())) {
+	private static String getValidatorError(MessageFetchRequest request) {
+		if (request == null || StringUtils.isBlank(request.getQueueName())) {
 			return "QueueName of MessageRequest is required.";
 		}
 		return null;
 	}
 
 	private static List<MessageDetail> fetchMessagesByType(MessageFetchRequest request, IbmMQConnectUtil mqUtil)
-			throws MQException {
+				throws MQException {
 		Ivy.log().info("===start listenAndParseMessages " + request);
 		int openOptions = CMQC.MQOO_INPUT_AS_Q_DEF + CMQC.MQOO_FAIL_IF_QUIESCING;
 		MQQueue queue = null;
@@ -86,7 +92,8 @@ public class MessageService {
 					queue.get(message, getOptions);
 					String payload = StringUtils.trimToEmpty(message.readStringOfByteLength(message.getDataLength()));
 					String messageType = detectMessageType(payload);
-					if (request.getMessageType().equalsIgnoreCase(messageType)) {
+					if (StringUtils.isBlank(request.getMessageType())
+						|| request.getMessageType().equalsIgnoreCase(messageType)) {
 						messageDetails.add(new MessageDetail(false, messageType, payload));
 					}
 				} catch (MQException ex) {
