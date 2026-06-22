@@ -71,9 +71,9 @@
     }, {
       "id" : "f5",
       "type" : "CallSubStart",
-      "name" : "pushMessage(MessagePushRequest)",
+      "name" : "send(MessagePushRequest)",
       "config" : {
-        "signature" : "pushMessage",
+        "signature" : "send",
         "input" : {
           "params" : [
             { "name" : "messagePushRequest", "type" : "com.axonivy.connector.model.MessagePushRequest", "desc" : "" }

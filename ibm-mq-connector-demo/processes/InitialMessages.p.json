@@ -36,7 +36,7 @@
       "type" : "SubProcessCall",
       "name" : "Push messages",
       "config" : {
-        "processCall" : "MessageManagement:pushMessage(com.axonivy.connector.model.MessagePushRequest)",
+        "processCall" : "MessageManagement:send(com.axonivy.connector.model.MessagePushRequest)",
         "call" : {
           "map" : {
             "param.messagePushRequest" : "in.messagePushRequest"
