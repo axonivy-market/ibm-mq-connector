@@ -57,8 +57,8 @@
           },
           "code" : [
             "import com.axonivy.connector.service.MessageService;",
-            "out.messageService = new MessageService();",
-            "out.messageFetchResult = out.messageService.fetch(in.messageFetchRequest);"
+            "",
+            "out.messageFetchResult = MessageService.getInstance().fetch(in.messageFetchRequest);"
           ]
         }
       },
@@ -102,13 +102,12 @@
     }, {
       "id" : "f7",
       "type" : "Script",
-      "name" : "put messages",
+      "name" : "send",
       "config" : {
         "output" : {
           "code" : [
             "import com.axonivy.connector.service.MessageService;",
-            "out.messageService = new MessageService();",
-            "out.messageService.push(in.messagePushRequest);"
+            "MessageService.getInstance().push(in.messagePushRequest);"
           ]
         }
       },

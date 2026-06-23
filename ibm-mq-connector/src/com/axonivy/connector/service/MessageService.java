@@ -21,6 +21,14 @@ import com.ibm.mq.constants.CMQC;
 import ch.ivyteam.ivy.environment.Ivy;
 
 public class MessageService {
+	private static final MessageService INSTANCE = new MessageService();
+	
+	private MessageService() {}
+	
+	public static MessageService getInstance() {
+		return INSTANCE;
+	}
+
 	public MessageFetchResult fetch(MessageFetchRequest request) {
 		MessageFetchResult result = new MessageFetchResult();
 		result.setError(getValidatorError(request));

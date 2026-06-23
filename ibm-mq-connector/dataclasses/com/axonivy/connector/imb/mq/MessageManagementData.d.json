@@ -11,10 +11,6 @@
     "type" : "com.axonivy.connector.model.MessageFetchRequest",
     "modifiers" : [ ]
   }, {
-    "name" : "messageService",
-    "type" : "com.axonivy.connector.service.MessageService",
-    "modifiers" : [ ]
-  }, {
     "name" : "messagePushRequest",
     "type" : "com.axonivy.connector.model.MessagePushRequest",
     "modifiers" : [ ]

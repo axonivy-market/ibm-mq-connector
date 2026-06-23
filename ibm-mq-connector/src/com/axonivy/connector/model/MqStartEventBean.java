@@ -124,7 +124,7 @@ public class MqStartEventBean extends AbstractProcessStartEventBean {
 		private int waitIntervalMs;
 		private boolean synchronous;
 		private volatile boolean running;
-		private final MessageService messageService = new MessageService();
+		private final MessageService messageService = MessageService.getInstance();
 
 		public synchronized void start(String queueName, String messageType, int maxMessage, int waitIntervalMs,
 				boolean synchronous) {

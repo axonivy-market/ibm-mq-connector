@@ -71,21 +71,31 @@
     </div>
 
     <!-- Buttons -->
-    <div class="flex justify-content-end gap-2">
-            <p:commandButton
-                value="Reject"
-                icon="pi pi-times"
-                styleClass="text-900 bg-white border-1 border-white" 
-                action="#{logic.submit('REJECT')}" />
+    <div class="flex justify-content-between align-items-center">
 
-            <p:commandButton
-                value="Confirm"
-                icon="pi pi-check" 
-                update="approvalForm"
-                action="#{logic.submit('CONFIRM')}" />
-
-    </div>
-
+	    <!-- Left side -->
+    	<div>
+			<p:commandLink id="cancel"
+				actionListener="#{ivyWorkflowView.cancel()}" process="@this"
+				value="Cancel" />
+		</div>
+	
+  	    <!-- Right side -->
+	    <div class="flex gap-2">
+	        <p:commandButton
+	            value="Reject"
+	            icon="pi pi-times"
+	            styleClass="text-900 bg-white border-1 border-white"
+	            action="#{logic.submit('REJECT')}" />
+	
+	        <p:commandButton
+	            value="Confirm"
+	            icon="pi pi-check"
+	            update="approvalForm"
+	            action="#{logic.submit('CONFIRM')}" />
+	    </div>
+	</div>
+    
 </h:form>
 </div>
     </ui:define>
