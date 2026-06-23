@@ -107,7 +107,7 @@
         "output" : {
           "code" : [
             "import com.axonivy.connector.service.MessageService;",
-            "MessageService.getInstance().push(in.messagePushRequest);"
+            "MessageService.getInstance().send(in.messagePushRequest);"
           ]
         }
       },

@@ -5,6 +5,7 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import com.axonivy.connector.model.MessageDetail;
@@ -22,9 +23,11 @@ import ch.ivyteam.ivy.environment.Ivy;
 
 public class MessageService {
 	private static final MessageService INSTANCE = new MessageService();
-	
-	private MessageService() {}
-	
+	private static final MQueueProducer mQueueProducer = new MQueueProducer();
+
+	private MessageService() {
+	}
+
 	public static MessageService getInstance() {
 		return INSTANCE;
 	}
@@ -56,23 +59,17 @@ public class MessageService {
 		return fetch(request);
 	}
 
-	public void push(MessagePushRequest request) {
-		try (IbmMQConnectUtil mqUtil = new IbmMQConnectUtil()) {
-			for (MessageDetail detail : request.getMessageDetails()) {
-				if (detail != null && StringUtils.isNotBlank(detail.getPayload())) {
-					mqUtil.putMessage(request.getQueueName(), detail.getPayload(),
-						StringUtils.trimToEmpty(detail.getType()));
-				}
-			}
-			Ivy.log().info(MessageFormat.format("Published {0} message(s) to queue: {1}",
-					request.getMessageDetails().size(), request.getQueueName()));
-		} catch (MQException ex) {
-			throw new IllegalStateException("IBM MQ connection failed", ex);
-		}
-	}
-
 	public void send(MessagePushRequest request) {
-		push(request);
+		if (request == null) {
+			throw new IllegalArgumentException("MessagePushRequest is required.");
+		}
+		if (StringUtils.isBlank(request.getQueueName()) || request.getMessageDetails().size() == 0) {
+			throw new IllegalArgumentException("QueueName or MessageDetails are required.");
+		}
+
+		for (MessageDetail detail : request.getMessageDetails()) {
+			mQueueProducer.sendMessage(request.getQueueName(), detail.getPayload());
+		}
 	}
 
 	private static String getValidatorError(MessageFetchRequest request) {
@@ -83,7 +80,7 @@ public class MessageService {
 	}
 
 	private static List<MessageDetail> fetchMessagesByType(MessageFetchRequest request, IbmMQConnectUtil mqUtil)
-				throws MQException {
+			throws MQException {
 		Ivy.log().info("===start listenAndParseMessages " + request);
 		int openOptions = CMQC.MQOO_INPUT_AS_Q_DEF + CMQC.MQOO_FAIL_IF_QUIESCING;
 		MQQueue queue = null;
@@ -101,7 +98,7 @@ public class MessageService {
 					String payload = StringUtils.trimToEmpty(message.readStringOfByteLength(message.getDataLength()));
 					String messageType = detectMessageType(payload);
 					if (StringUtils.isBlank(request.getMessageType())
-						|| request.getMessageType().equalsIgnoreCase(messageType)) {
+							|| request.getMessageType().equalsIgnoreCase(messageType)) {
 						messageDetails.add(new MessageDetail(false, messageType, payload));
 					}
 				} catch (MQException ex) {

@@ -12,6 +12,7 @@ Variables:
     # Name of the queue to send/receive messages (e.g., DEV.QUEUE.1)
     queueName: DEV.QUEUE.1
     # Username for authenticating with the IBM MQ server
-    user: app
+    username: app
     # Password for authenticating with the IBM MQ server
     password: "123456"
+    mqDebugMessages: "true"

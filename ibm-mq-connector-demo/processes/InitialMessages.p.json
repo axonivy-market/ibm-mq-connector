@@ -34,7 +34,7 @@
     }, {
       "id" : "f3",
       "type" : "SubProcessCall",
-      "name" : "Push messages",
+      "name" : "Send messages",
       "config" : {
         "processCall" : "MessageManagement:send(com.axonivy.connector.model.MessagePushRequest)",
         "call" : {
