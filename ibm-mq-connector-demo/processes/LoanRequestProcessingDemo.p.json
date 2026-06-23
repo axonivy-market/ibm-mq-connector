@@ -180,5 +180,29 @@
       "connect" : [
         { "id" : "f17", "to" : "f14" }
       ]
+    }, {
+      "id" : "f19",
+      "type" : "TaskEnd",
+      "visual" : {
+        "at" : { "x" : 320, "y" : 416 },
+        "labelOffset" : { "x" : 13, "y" : 33 }
+      }
+    }, {
+      "id" : "f20",
+      "type" : "ProgramStart",
+      "config" : {
+        "javaClass" : "com.axonivy.connector.bean.MQeueListenerBean",
+        "userConfig" : {
+          "queueNameField" : "DEV.QUEUE.1"
+        },
+        "link" : "eventLink.ivp"
+      },
+      "visual" : {
+        "at" : { "x" : 96, "y" : 416 },
+        "labelOffset" : { "x" : 13, "y" : 33 }
+      },
+      "connect" : [
+        { "id" : "f21", "to" : "f19" }
+      ]
     } ]
 }
