@@ -7,26 +7,24 @@ import javax.jms.Message;
 import javax.jms.MessageConsumer;
 import javax.jms.Session;
 import javax.jms.TextMessage;
-import javax.xml.bind.JAXBException;
 
 import com.axonivy.connector.model.AbstractMQueue;
 import com.axonivy.connector.model.PropertyManager;
 
 import ch.ivyteam.ivy.environment.Ivy;
-import ch.ivyteam.ivy.security.exec.Sudo;
 
 public class MQueueListener extends AbstractMQueue {
 	private static final int WAIT_BEFORE_RESTART_MIN = 5;// seconds
 	private static final int WAIT_BEFORE_RESTART_MAX = 60;// seconds
 
-	private static MQueueListener instance = new MQueueListener();
+	private static MQueueListener INSTANCE = new MQueueListener();
 	private MessageConsumer consumer;
 	protected long timeout;
 	private boolean isPolling = false;
 	private String queueName;
 
 	public static MQueueListener getInstance() {
-		return instance;
+		return INSTANCE;
 	}
 
 	protected MQueueListener() {
@@ -41,10 +39,10 @@ public class MQueueListener extends AbstractMQueue {
 		try {
 			createConnectionFactory();
 			startConsumer();
-			Ivy.log().info("IBMMQueueListener::MQ Listener started");
+			Ivy.log().info("MQueueListener::start...");
 		} catch (Exception e) {
 			stopConsumer();
-			Ivy.log().error("IBMMQueueListener::Failed to start MQ listener", e);
+			Ivy.log().error("MQueueListener::Failed to start: ", e);
 			return;
 		}
 
@@ -54,7 +52,7 @@ public class MQueueListener extends AbstractMQueue {
 	public void stop() {
 		isPolling = false;
 		stopConsumer();
-		Ivy.log().warn("IBMMQueueListener::MQ Listener stopped");
+		Ivy.log().warn("MQueueListener::stop()");
 	}
 
 	public boolean isPolling() {
@@ -73,7 +71,7 @@ public class MQueueListener extends AbstractMQueue {
 	}
 
 	private void pollLoop() {
-		Ivy.log().info("IBMMQueueListener::Started polling queue {0} in Thread {1}", queueName,
+		Ivy.log().info("MQueueListener::Started polling queue {0} in Thread {1}", queueName,
 				Thread.currentThread().getName());
 		isPolling = true;
 
@@ -86,23 +84,23 @@ public class MQueueListener extends AbstractMQueue {
 				}
 			} catch (JMSException je) {
 				if (keepPolling()) {
-					Ivy.log().warn("IBMMQueueListener::Failed to receive the message. Restart consumer!", je);
+					Ivy.log().warn("MQueueListener::Failed to receive the message. Restart consumer!", je);
 					restartConsumer();
 				}
 			} catch (Exception e) {
-				Ivy.log().warn("IBMMQueueListener::Error while handling message. Rollback!", e);
+				Ivy.log().warn("MQueueListener::Error while handling message. Rollback!", e);
 				rollbackQuietly();
 			}
 		}
 
 		isPolling = false;
-		Ivy.log().info("IBMMQueueListener::Stopped polling queue {0} in Thread {1}", queueName,
+		Ivy.log().info("MQueueListener::Stopped polling queue {0} in Thread {1}", queueName,
 				Thread.currentThread().getName());
 	}
 
 	protected void handleMessage(Message message) throws JMSException {
 		if (isDebugMode()) {
-			Ivy.log().warn("IBMMQueueListener::HandleMessage - Read JMS Message {0}", message.getJMSMessageID());
+			Ivy.log().warn("MQueueListener::HandleMessage - Read JMS Message {0}", message.getJMSMessageID());
 		}
 		String text = "";
 		if (message instanceof TextMessage textMessage) {
@@ -110,7 +108,7 @@ public class MQueueListener extends AbstractMQueue {
 			Ivy.log().warn("implement handle messages interface: " + textMessage);
 
 		} else {
-			Ivy.log().warn("IBMMQueueListener::Received non-text message: {0}", message);
+			Ivy.log().warn("MQueueListener::Received non-text message: {0}", message);
 		}
 	}
 
@@ -141,17 +139,17 @@ public class MQueueListener extends AbstractMQueue {
 
 			try {
 				startConsumer();
-				Ivy.log().info("IBMMQueueListener::Consumer restarted successfully");
+				Ivy.log().info("MQueueListener::Consumer restarted successfully");
 				return;
 			} catch (Exception e) {
-				Ivy.log().warn("IBMMQueueListener::Failed to restart consumer. Retry in {0} sec.", e,
+				Ivy.log().warn("MQueueListener::Failed to restart consumer. Retry in {0} sec.", e,
 						waitBeforeRestart);
 			}
 
 			try {
 				TimeUnit.SECONDS.sleep(waitBeforeRestart);
 			} catch (InterruptedException e) {
-				Ivy.log().warn("IBMMQueueListener::Interrupted while waiting before restart consumer", e);
+				Ivy.log().warn("MQueueListener::Interrupted while waiting before restart consumer", e);
 				Thread.currentThread().interrupt();
 				return;
 			}
@@ -160,7 +158,7 @@ public class MQueueListener extends AbstractMQueue {
 		}
 
 		Ivy.log().warn(
-				"IBMMQueueListener::Stopped consumer restart attempts because listener is no longer polling or thread was interrupted");
+				"MQueueListener::Stopped consumer restart attempts because listener is no longer polling or thread was interrupted");
 	}
 
 	private boolean keepPolling() {
