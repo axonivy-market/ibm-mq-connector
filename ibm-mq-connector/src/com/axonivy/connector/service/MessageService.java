@@ -62,8 +62,11 @@ public class MessageService {
 		if (request == null) {
 			throw new IllegalArgumentException("MessagePushRequest is required.");
 		}
-		if (StringUtils.isBlank(request.getQueueName()) || request.getMessageDetails().size() == 0) {
-			throw new IllegalArgumentException("QueueName or MessageDetails are required.");
+		if (StringUtils.isBlank(request.getQueueName())) {
+			throw new IllegalArgumentException("QueueName is required.");
+		}
+		if (request.getMessageDetails() == null) {
+			return;
 		}
 
 		for (MessageDetail detail : request.getMessageDetails()) {

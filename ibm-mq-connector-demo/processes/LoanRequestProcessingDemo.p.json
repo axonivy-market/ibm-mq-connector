@@ -191,7 +191,7 @@
       "id" : "f20",
       "type" : "ProgramStart",
       "config" : {
-        "javaClass" : "com.axonivy.connector.bean.MQeueListenerBean",
+        "javaClass" : "com.axonivy.connector.imb.mq.bean.MQueueListenerBean",
         "userConfig" : {
           "queueNameField" : "DEV.QUEUE.1"
         },

@@ -1,7 +1,8 @@
-package com.axonivy.connector.bean;
+package com.axonivy.connector.imb.mq.bean;
 
 import org.apache.commons.lang3.StringUtils;
 
+import com.axonivy.connector.imb.mq.service.ProcessMessageHandler;
 import com.axonivy.connector.service.MQueueListener;
 
 import ch.ivyteam.api.PublicAPI;
@@ -12,11 +13,11 @@ import ch.ivyteam.ivy.process.extension.ProgramConfig;
 import ch.ivyteam.ivy.process.extension.ui.ExtensionUiBuilder;
 import ch.ivyteam.ivy.process.extension.ui.UiEditorExtension;
 
-public class MQeueListenerBean extends AbstractProcessStartEventBean {
+public class MQueueListenerBean extends AbstractProcessStartEventBean {
 	private static final String QUEUE_NAME_FIELD = "queueNameField";
 	private boolean isPolling = false;
 
-	public MQeueListenerBean() {
+	public MQueueListenerBean() {
 		super("Run IBM Message Qeue Listenner", "Subscribe to MQ Qeue");
 	}
 
@@ -40,7 +41,7 @@ public class MQeueListenerBean extends AbstractProcessStartEventBean {
 		isPolling = true;
 		
 
-		MQueueListener.getInstance().start(queueName);
+		MQueueListener.getInstance().start(queueName, new ProcessMessageHandler());
 	}
 	
 	protected String getQueueName() {

@@ -18,10 +18,14 @@ public class MQueueListener extends AbstractMQueue {
 	private static final int WAIT_BEFORE_RESTART_MAX = 60;// seconds
 
 	private static MQueueListener INSTANCE = new MQueueListener();
-	private MessageConsumer consumer;
-	protected long timeout;
+	private MessageConsumer consumer;    
 	private boolean isPolling = false;
 	private String queueName;
+	private MessageHandler messageHandler;
+
+	public void setMessageHandler(MessageHandler handler) {
+		this.messageHandler = handler;
+	}
 
 	public static MQueueListener getInstance() {
 		return INSTANCE;
@@ -30,8 +34,9 @@ public class MQueueListener extends AbstractMQueue {
 	protected MQueueListener() {
 	}
 
-	public void start(String queueName) {
+	public void start(String queueName, MessageHandler messageHandler) {
 		this.queueName = queueName;
+		this.messageHandler = messageHandler;
 		if (isPolling) {
 			return;
 		}
@@ -77,7 +82,7 @@ public class MQueueListener extends AbstractMQueue {
 
 		while (keepPolling()) {
 			try {
-				Message message = consumer.receive(timeout);
+				Message message = consumer.receive(5000);
 				if (message != null) {
 					handleMessage(message);
 					session.commit();
@@ -103,14 +108,21 @@ public class MQueueListener extends AbstractMQueue {
 			Ivy.log().warn("MQueueListener::HandleMessage - Read JMS Message {0}", message.getJMSMessageID());
 		}
 		String text = "";
-		if (message instanceof TextMessage textMessage) {
-
-			Ivy.log().warn("implement handle messages interface: " + textMessage);
-
+		if (message instanceof TextMessage) {
+			TextMessage textMessage = (TextMessage) message;
+			text = textMessage.getText();
+			if (isDebugMode()) {
+				Ivy.log().info("MQueueListener::Received text message: {0}", text);
+			}
+			if (messageHandler != null) {
+				messageHandler.handleText(text);
+			} else {
+				Ivy.log().warn("MQueueListener::No MessageHandler registered - message ignored");
+			}
 		} else {
 			Ivy.log().warn("MQueueListener::Received non-text message: {0}", message);
 		}
-	}
+	}	
 
 	private void startConsumer() throws JMSException {
 		connection = createConnection();
