@@ -32,8 +32,13 @@ public class MQueueStartEventBean extends AbstractProcessStartEventBean {
 	@Override
 	@PublicAPI
 	public void poll() {
+		Ivy.log().debug("MQueueStartEventBean::will skip: isPolling: {0} || isSkipInitializing: {1}" + isPolling, isSkipInitializing);
 		queueName = getQueueName();
-		if (isPolling || isSkipInitializing || StringUtils.isBlank(queueName)) {
+		if (StringUtils.isBlank(queueName)) {
+			Ivy.log().warn("MQueueStartEventBean::queueName is required.");
+			return;
+		}
+		if (isPolling || isSkipInitializing)  {
 			return;
 		}
 		isPolling = true;
