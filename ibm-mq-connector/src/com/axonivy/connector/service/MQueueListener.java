@@ -17,41 +17,28 @@ public class MQueueListener extends AbstractMQueue {
 	private static final int WAIT_BEFORE_RESTART_MIN = 5;// seconds
 	private static final int WAIT_BEFORE_RESTART_MAX = 60;// seconds
 
-	private static MQueueListener INSTANCE = new MQueueListener();
-	private MessageConsumer consumer;    
+	private MessageConsumer consumer;
 	private boolean isPolling = false;
 	private String queueName;
 	private MessageHandler messageHandler;
 
-	public void setMessageHandler(MessageHandler handler) {
-		this.messageHandler = handler;
-	}
-
-	public static MQueueListener getInstance() {
-		return INSTANCE;
-	}
-
-	protected MQueueListener() {
-	}
-
-	public void start(String queueName, MessageHandler messageHandler) {
+	public MQueueListener(String queueName, MessageHandler messageHandler) {
 		this.queueName = queueName;
 		this.messageHandler = messageHandler;
+	}
+
+	public void start() {
 		if (isPolling) {
 			return;
 		}
-
 		try {
 			createConnectionFactory();
 			startConsumer();
 			Ivy.log().info("MQueueListener::start...");
 		} catch (Exception e) {
 			stopConsumer();
-			Ivy.log().error("MQueueListener::Failed to start: ", e);
-			return;
+			Ivy.log().error("MQueueListener::Failed to start: ", e);		
 		}
-
-		pollLoop();
 	}
 
 	public void stop() {
@@ -75,7 +62,24 @@ public class MQueueListener extends AbstractMQueue {
 		mqDebugMessages = PropertyManager.getDebugMessages();
 	}
 
-	private void pollLoop() {
+	public void receiveNoWait() {
+		Ivy.log().info("MQueueListener::receiveNoWait queue {0} in Thread {1}", queueName,
+				Thread.currentThread().getName());
+		try {
+			Message message;
+			int receivedCount = 0;
+			while ((message = consumer.receiveNoWait()) != null) {
+				handleMessage(message);
+				session.commit();
+				receivedCount++;
+			}
+			Ivy.log().info("MQueueListener::receiveNoWait drained {0} messages", receivedCount);
+		} catch (JMSException je) {
+			Ivy.log().warn("MQueueListener::receiveNoWait failed to receive the message.", je);
+		}
+	}
+
+	public void receive() {
 		Ivy.log().info("MQueueListener::Started polling queue {0} in Thread {1}", queueName,
 				Thread.currentThread().getName());
 		isPolling = true;
@@ -122,7 +126,7 @@ public class MQueueListener extends AbstractMQueue {
 		} else {
 			Ivy.log().warn("MQueueListener::Received non-text message: {0}", message);
 		}
-	}	
+	}
 
 	private void startConsumer() throws JMSException {
 		connection = createConnection();
@@ -154,8 +158,7 @@ public class MQueueListener extends AbstractMQueue {
 				Ivy.log().info("MQueueListener::Consumer restarted successfully");
 				return;
 			} catch (Exception e) {
-				Ivy.log().warn("MQueueListener::Failed to restart consumer. Retry in {0} sec.", e,
-						waitBeforeRestart);
+				Ivy.log().warn("MQueueListener::Failed to restart consumer. Retry in {0} sec.", e, waitBeforeRestart);
 			}
 
 			try {

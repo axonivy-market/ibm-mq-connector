@@ -1,17 +1,12 @@
 package com.axonivy.connector.imb.mq.service;
 
-import java.util.List;
-
 import org.apache.commons.lang3.StringUtils;
 
-import com.axonivy.connector.imb.mq.model.AutoApprovalResult;
 import com.axonivy.connector.imb.mq.model.CreditXmlMessage;
 import com.axonivy.connector.imb.mq.model.LoanApplication;
 import com.axonivy.connector.imb.mq.model.LoanJsonMessage;
 import com.axonivy.connector.imb.mq.model.TaskDetail;
 import com.axonivy.connector.imb.mq.util.TaskUtil;
-import com.axonivy.connector.model.MessageDetail;
-import com.axonivy.connector.model.MessageFetchResult;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
@@ -29,36 +24,19 @@ public class ProcessMessageService {
 	}
 
 	public void process(String payload) {
-		processMessage(payload);
+		processMessage(payload, null);
 	}
 
-	public AutoApprovalResult process(MessageFetchResult fetchResult) {
-		AutoApprovalResult autoApprovalResult = new AutoApprovalResult();
-		List<MessageDetail> messageDetails = fetchResult.getMessageDetails();
-		int countManual = 0;
-		int countAuto = 0;
-		for (MessageDetail detail : messageDetails) {
-			try {
-				TaskDetail taskDetail = processMessage(detail.getPayload());
-				if (taskDetail == null) {
-					continue;
-				}
-				if (taskDetail.isAutoApproval()) {
-					++countAuto;
-				} else {
-					++countManual;
-				}
-			} catch (Exception ex) {
-				Ivy.log().error("Failed to process message detail: " + detail, ex);
-			}
+	public void processFilter(String payload, String messageType) {
+		if (StringUtils.isBlank(messageType)) {
+			Ivy.log().error("Message type is empty, cannot process message: " + payload);
+			return;
 		}
-		autoApprovalResult.setTotalManualMessages(countManual);
-
-		return autoApprovalResult;
+		processMessage(payload, messageType);
 	}
-
-	private TaskDetail processMessage(String payload) {
-		LoanApplication loanApplication = getLoanApplication(payload);
+	
+	private TaskDetail processMessage(String payload, String messageType) {
+		LoanApplication loanApplication = getLoanApplication(payload, messageType);
 		if (loanApplication == null) {
 			return null;
 		}
@@ -74,9 +52,13 @@ public class ProcessMessageService {
 		return taskDetail;
 	}
 
-	private static LoanApplication getLoanApplication(String payload) {
+	private static LoanApplication getLoanApplication(String payload, String messageTypeRequest) {
 		String messageType = detectMessageType(payload);
 		if (messageType == null) {
+			return null;
+		}
+		
+		if (!messageType.equalsIgnoreCase(messageTypeRequest)) {			
 			return null;
 		}
 
@@ -95,7 +77,7 @@ public class ProcessMessageService {
 
 		return loanApplication;
 	}
-	
+
 	private static boolean validateLoanApplication(LoanApplication loanApplication) {
 		if (loanApplication == null) {
 			return false;

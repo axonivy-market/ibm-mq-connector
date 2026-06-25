@@ -7,6 +7,4 @@ public class ProcessMessageHandler implements MessageHandler {
     public void handleText(String payload) {
         ProcessMessageService.getInstance().process(payload);
     }
-
-
 }
