@@ -1,8 +1,8 @@
-package com.axonivy.connector.model;
+package com.axonivy.connector.imb.mq.model;
 
 import java.io.Serializable;
 
-import com.axonivy.connector.model.LoanJsonMessage.Name;
+import com.axonivy.connector.imb.mq.model.LoanJsonMessage.Name;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)

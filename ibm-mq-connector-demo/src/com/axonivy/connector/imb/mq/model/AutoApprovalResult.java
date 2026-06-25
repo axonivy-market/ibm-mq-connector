@@ -1,32 +1,23 @@
 package com.axonivy.connector.imb.mq.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.axonivy.connector.model.MessageDetail;
-
-public class AutoApprovalResult {	
-	private List<MessageDetail> autoApprovalMessages;
+public class AutoApprovalResult {
 	private int totalManualMessages;
+	private int totalAutoMessages;
 	
-	public AutoApprovalResult() {
-		autoApprovalMessages = new ArrayList<>();				
-	}
-
-	public List<MessageDetail> getAutoApprovalMessages() {
-		return autoApprovalMessages;
-	}
-
-	public void setAutoApprovalMessages(List<MessageDetail> autoApprovalMessages) {
-		this.autoApprovalMessages = autoApprovalMessages;
-	}
-
 	public int getTotalManualMessages() {
 		return totalManualMessages;
 	}
 
 	public void setTotalManualMessages(int totalManualMessages) {
 		this.totalManualMessages = totalManualMessages;
+	}
+
+	public int getTotalAutoMessages() {
+		return totalAutoMessages;
+	}
+
+	public void setTotalAutoMessages(int totalAutoMessages) {
+		this.totalAutoMessages = totalAutoMessages;
 	}
 	
 }

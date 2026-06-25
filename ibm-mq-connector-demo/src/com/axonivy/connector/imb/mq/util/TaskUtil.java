@@ -1,13 +1,13 @@
 package com.axonivy.connector.imb.mq.util;
 
+import com.axonivy.connector.imb.mq.model.Applicant;
+import com.axonivy.connector.imb.mq.model.CreditScore;
+import com.axonivy.connector.imb.mq.model.CreditXmlMessage;
+import com.axonivy.connector.imb.mq.model.CreditXmlMessage.CreditApplicationRequest;
 import com.axonivy.connector.imb.mq.model.LoanApplication;
-import com.axonivy.connector.model.Applicant;
-import com.axonivy.connector.model.CreditScore;
-import com.axonivy.connector.model.LoanRequest;
-import com.axonivy.connector.model.CreditXmlMessage;
-import com.axonivy.connector.model.CreditXmlMessage.CreditApplicationRequest;
-import com.axonivy.connector.model.LoanJsonMessage;
-import com.axonivy.connector.model.LoanJsonMessage.Name;
+import com.axonivy.connector.imb.mq.model.LoanJsonMessage;
+import com.axonivy.connector.imb.mq.model.LoanJsonMessage.Name;
+import com.axonivy.connector.imb.mq.model.LoanRequest;
 
 public final class TaskUtil {
 	private TaskUtil() {

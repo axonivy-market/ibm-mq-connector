@@ -190,16 +190,16 @@
     }, {
       "id" : "f20",
       "type" : "ProgramStart",
+      "name" : "StartEventBean",
       "config" : {
-        "javaClass" : "com.axonivy.connector.imb.mq.bean.MQueueListenerBean",
+        "javaClass" : "com.axonivy.connector.imb.mq.bean.MQueueStartEventBean",
         "userConfig" : {
           "queueNameField" : "DEV.QUEUE.1"
         },
         "link" : "eventLink.ivp"
       },
       "visual" : {
-        "at" : { "x" : 96, "y" : 416 },
-        "labelOffset" : { "x" : 13, "y" : 33 }
+        "at" : { "x" : 96, "y" : 416 }
       },
       "connect" : [
         { "id" : "f21", "to" : "f19" }

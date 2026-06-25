@@ -1,4 +1,4 @@
-package com.axonivy.connector.model;
+package com.axonivy.connector.imb.mq.model;
 
 import java.io.Serializable;
 
@@ -55,3 +55,4 @@ public class CreditScore implements Serializable {
 				'}';
 	}
 }
+
