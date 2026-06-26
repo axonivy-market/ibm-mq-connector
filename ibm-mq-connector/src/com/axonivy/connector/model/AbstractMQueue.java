@@ -23,6 +23,7 @@ public abstract class AbstractMQueue {
 	protected Session session;
 	protected Queue queue;
 
+	protected boolean skipListener;
 	protected String host;
 	protected int port;	
 	protected String queueManager;

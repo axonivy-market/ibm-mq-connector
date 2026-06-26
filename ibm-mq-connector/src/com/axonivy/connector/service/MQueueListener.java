@@ -37,7 +37,7 @@ public class MQueueListener extends AbstractMQueue {
 			Ivy.log().info("MQueueListener::start...");
 		} catch (Exception e) {
 			stopConsumer();
-			Ivy.log().error("MQueueListener::Failed to start: ", e);		
+			Ivy.log().error("MQueueListener::Failed to start: ", e);
 		}
 	}
 
@@ -53,6 +53,7 @@ public class MQueueListener extends AbstractMQueue {
 
 	@Override
 	protected void initializeConnectionProperties() {
+		skipListener = PropertyManager.getSkipListener();
 		host = PropertyManager.getHost();
 		port = PropertyManager.getPort();
 		channel = PropertyManager.getChannel();
@@ -108,16 +109,11 @@ public class MQueueListener extends AbstractMQueue {
 	}
 
 	protected void handleMessage(Message message) throws JMSException {
-		if (isDebugMode()) {
-			Ivy.log().warn("MQueueListener::HandleMessage - Read JMS Message {0}", message.getJMSMessageID());
-		}
+		Ivy.log().warn("MQueueListener::HandleMessage - Read JMS Message {0}", message.getJMSMessageID());
 		String text = "";
 		if (message instanceof TextMessage) {
 			TextMessage textMessage = (TextMessage) message;
 			text = textMessage.getText();
-			if (isDebugMode()) {
-				Ivy.log().info("MQueueListener::Received text message: {0}", text);
-			}
 			if (messageHandler != null) {
 				messageHandler.handleText(text);
 			} else {
@@ -146,6 +142,7 @@ public class MQueueListener extends AbstractMQueue {
 		queue = null;
 		consumer = null;
 	}
+
 
 	private void restartConsumer() {
 		long waitBeforeRestart = WAIT_BEFORE_RESTART_MIN;
