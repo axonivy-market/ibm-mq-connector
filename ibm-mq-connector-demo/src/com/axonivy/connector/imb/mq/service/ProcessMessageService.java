@@ -16,7 +16,7 @@ import ch.ivyteam.ivy.environment.Ivy;
 public class ProcessMessageService {
 	private static final ObjectMapper JSON_MAPPER = new ObjectMapper();
 	private static final XmlMapper XML_MAPPER = new XmlMapper();
-	private static final String SIGNAL_CODE = "mqdemo:manualapproval";
+	private static final String SIGNAL_CODE = "mqdemo:approval";
 	private static final ProcessMessageService INSTANCE = new ProcessMessageService();
 
 	public static ProcessMessageService getInstance() {

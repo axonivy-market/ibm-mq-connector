@@ -3,14 +3,6 @@
   "simpleName" : "MessageManagementData",
   "namespace" : "com.axonivy.connector.imb.mq",
   "fields" : [ {
-    "name" : "messageFetchResult",
-    "type" : "com.axonivy.connector.model.MessageFetchResult",
-    "modifiers" : [ ]
-  }, {
-    "name" : "messageFetchRequest",
-    "type" : "com.axonivy.connector.model.MessageFetchRequest",
-    "modifiers" : [ ]
-  }, {
     "name" : "messagePushRequest",
     "type" : "com.axonivy.connector.model.MessagePushRequest",
     "modifiers" : [ ]

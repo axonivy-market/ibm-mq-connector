@@ -6,69 +6,6 @@
     "data" : "com.axonivy.connector.imb.mq.MessageManagementData"
   },
   "elements" : [ {
-      "id" : "f0",
-      "type" : "CallSubStart",
-      "name" : "fetch(MessageFetchRequest)",
-      "config" : {
-        "signature" : "fetch",
-        "input" : {
-          "params" : [
-            { "name" : "messageFetchRequest", "type" : "com.axonivy.connector.model.MessageFetchRequest", "desc" : "" }
-          ],
-          "map" : {
-            "out.messageFetchRequest" : "param.messageFetchRequest"
-          }
-        },
-        "result" : {
-          "params" : [
-            { "name" : "messageFetchResult", "type" : "com.axonivy.connector.model.MessageFetchResult", "desc" : "" }
-          ],
-          "map" : {
-            "result.messageFetchResult" : "in.messageFetchResult"
-          }
-        }
-      },
-      "tags" : [
-        "connector"
-      ],
-      "visual" : {
-        "at" : { "x" : 96, "y" : 64 },
-        "labelOffset" : { "x" : 17, "y" : 41 }
-      },
-      "connect" : [
-        { "id" : "f2", "to" : "f3" }
-      ]
-    }, {
-      "id" : "f1",
-      "type" : "CallSubEnd",
-      "visual" : {
-        "at" : { "x" : 424, "y" : 64 },
-        "labelOffset" : { "x" : 13, "y" : 33 }
-      }
-    }, {
-      "id" : "f3",
-      "type" : "Script",
-      "name" : "filter messages",
-      "config" : {
-        "output" : {
-          "map" : {
-            "out" : "in",
-            "out.messageFetchRequest" : "in.messageFetchRequest"
-          },
-          "code" : [
-            "import com.axonivy.connector.service.MessageService;",
-            "",
-            "out.messageFetchResult = MessageService.getInstance().fetch(in.messageFetchRequest);"
-          ]
-        }
-      },
-      "visual" : {
-        "at" : { "x" : 256, "y" : 64 }
-      },
-      "connect" : [
-        { "id" : "f4", "to" : "f1", "color" : "default" }
-      ]
-    }, {
       "id" : "f5",
       "type" : "CallSubStart",
       "name" : "send(MessagePushRequest)",
@@ -87,7 +24,7 @@
         "connector"
       ],
       "visual" : {
-        "at" : { "x" : 96, "y" : 208 }
+        "at" : { "x" : 112, "y" : 72 }
       },
       "connect" : [
         { "id" : "f9", "to" : "f7" }
@@ -96,7 +33,7 @@
       "id" : "f6",
       "type" : "CallSubEnd",
       "visual" : {
-        "at" : { "x" : 424, "y" : 208 },
+        "at" : { "x" : 440, "y" : 72 },
         "labelOffset" : { "x" : 13, "y" : 33 }
       }
     }, {
@@ -112,7 +49,7 @@
         }
       },
       "visual" : {
-        "at" : { "x" : 256, "y" : 208 }
+        "at" : { "x" : 272, "y" : 72 }
       },
       "connect" : [
         { "id" : "f8", "to" : "f6" }

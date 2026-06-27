@@ -12,7 +12,6 @@ import ch.ivyteam.ivy.process.eventstart.IProcessStartEventBeanRuntime;
 import ch.ivyteam.ivy.process.extension.ProgramConfig;
 import ch.ivyteam.ivy.process.extension.ui.ExtensionUiBuilder;
 import ch.ivyteam.ivy.process.extension.ui.UiEditorExtension;
-import ch.ivyteam.ivy.service.ServiceException;
 
 public class MQueueStartEventBean extends AbstractProcessStartEventBean {
 	private static final String QUEUE_NAME_FIELD = "queueNameField";
