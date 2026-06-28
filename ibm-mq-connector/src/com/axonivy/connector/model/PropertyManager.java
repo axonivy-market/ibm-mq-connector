@@ -3,8 +3,7 @@ package com.axonivy.connector.model;
 import ch.ivyteam.ivy.environment.Ivy;
 
 public final class PropertyManager {
-	private static final String CONNECTOR_ROOT_PROPERTY = "ibmmqConnector.";
-	private static final String SKIP_LISTENER_PROPERTY = CONNECTOR_ROOT_PROPERTY + "skipListener";
+	private static final String CONNECTOR_ROOT_PROPERTY = "ibmmqConnector.";	
 	private static final String HOST_PROPERTY = CONNECTOR_ROOT_PROPERTY + "host";
 	private static final String PORT_PROPERTY = CONNECTOR_ROOT_PROPERTY + "port";
 	private static final String CHANNEL_PROPERTY = CONNECTOR_ROOT_PROPERTY + "channel";
@@ -12,10 +11,6 @@ public final class PropertyManager {
 	private static final String USERNAME_PROPERTY = CONNECTOR_ROOT_PROPERTY + "username";
 	private static final String PASSWORD_PROPERTY = CONNECTOR_ROOT_PROPERTY + "password";
 	private static final String MQ_DEBUG_MESSAGES_PROPERTY = CONNECTOR_ROOT_PROPERTY + "mqDebugMessages";
-
-	public static boolean getSkipListener() {
-		return Boolean.parseBoolean(Ivy.var().get(SKIP_LISTENER_PROPERTY));
-	}
 
 	public static String getHost() {
 		return Ivy.var().get(HOST_PROPERTY);

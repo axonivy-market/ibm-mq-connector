@@ -2,6 +2,7 @@ package com.axonivy.connector.imb.mq.bean;
 
 import org.apache.commons.lang3.StringUtils;
 
+import com.axonivy.connector.imb.mq.model.PropertyManagerDemo;
 import com.axonivy.connector.imb.mq.service.ProcessMessageHandler;
 import com.axonivy.connector.service.MQueueListener;
 
@@ -16,7 +17,7 @@ import ch.ivyteam.ivy.process.extension.ui.UiEditorExtension;
 public class MQueueStartEventBean extends AbstractProcessStartEventBean {
 	private static final String QUEUE_NAME_FIELD = "queueNameField";
 	private boolean isPolling = false;
-	private boolean isSkipInitializing = true;
+	private boolean isSkipInitializing;
 	private String queueName = "";
 	private MQueueListener mqListener;
 	private IProcessStartEventBeanRuntime eventRuntime;
@@ -29,8 +30,9 @@ public class MQueueStartEventBean extends AbstractProcessStartEventBean {
 	public void initialize(IProcessStartEventBeanRuntime eventRuntime, ProgramConfig programConfig) {
 		super.initialize(eventRuntime, programConfig);
 		this.eventRuntime = eventRuntime;
-		queueName = getQueueName();
-		mqListener = new MQueueListener(queueName, new ProcessMessageHandler());
+		this.isSkipInitializing = PropertyManagerDemo.getSkipListener();
+		this.queueName = getQueueName();
+		this.mqListener = new MQueueListener(queueName, new ProcessMessageHandler());
 
 		Ivy.log().debug("MQueueStartEventBean::initialize");
 	}
