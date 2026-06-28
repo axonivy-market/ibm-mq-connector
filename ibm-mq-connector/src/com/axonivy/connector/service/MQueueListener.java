@@ -52,8 +52,7 @@ public class MQueueListener extends AbstractMQueue {
 	}
 
 	@Override
-	protected void initializeConnectionProperties() {
-		skipListener = PropertyManager.getSkipListener();
+	protected void initializeConnectionProperties() {		
 		host = PropertyManager.getHost();
 		port = PropertyManager.getPort();
 		channel = PropertyManager.getChannel();
