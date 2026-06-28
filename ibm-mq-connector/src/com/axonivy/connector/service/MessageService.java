@@ -14,7 +14,7 @@ public class MessageService {
 
 	public static MessageService getInstance() {
 		return INSTANCE;
-	}	
+	}
 
 	public void send(MessagePushRequest request) {
 		if (request == null) {
@@ -23,12 +23,12 @@ public class MessageService {
 		if (StringUtils.isBlank(request.getQueueName())) {
 			throw new IllegalArgumentException("QueueName is required.");
 		}
-		if (request.getMessageDetails() == null) {
+		if (request.getPayloads() == null) {
 			return;
 		}
 
-		for (MessageDetail detail : request.getMessageDetails()) {
-			mQueueProducer.sendMessage(request.getQueueName(), detail.getPayload());
+		for (String payload : request.getPayloads()) {
+			mQueueProducer.sendMessage(request.getQueueName(), payload);
 		}
 	}
 

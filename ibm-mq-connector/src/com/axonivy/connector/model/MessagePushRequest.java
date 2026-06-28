@@ -8,10 +8,10 @@ public class MessagePushRequest implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private String queueName;	
-	private List<MessageDetail> messageDetails;
+	private List<String> payloads;
 	
 	public MessagePushRequest() {
-		messageDetails = new ArrayList<>();
+		payloads = new ArrayList<>();
 	}
 
 	public String getQueueName() {
@@ -22,17 +22,12 @@ public class MessagePushRequest implements Serializable {
 		this.queueName = queueName;
 	}
 
-	public List<MessageDetail> getMessageDetails() {
-		return messageDetails;
+	public List<String> getPayloads() {
+		return payloads;
 	}
 
-	public void setMessageDetails(List<MessageDetail> messageDetails) {
-		this.messageDetails = messageDetails;
+	public void setPayloads(List<String> payloads) {
+		this.payloads = payloads;
 	}
-
-	@Override
-	public String toString() {
-		return "MessagePushRequest [queueName=" + queueName + ", messageDetails=" + messageDetails + "]";
-	}	
 	
 }

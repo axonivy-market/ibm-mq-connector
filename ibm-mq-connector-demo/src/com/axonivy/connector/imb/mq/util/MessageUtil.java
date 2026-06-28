@@ -8,11 +8,11 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
 
-import com.axonivy.connector.model.MessageDetail;
 import com.axonivy.connector.model.MessagePushRequest;
 
 public final class MessageUtil {
-	private MessageUtil() {}
+	private MessageUtil() {
+	}
 
 	public static MessagePushRequest loadResourceFiles() {
 		MessagePushRequest request = new MessagePushRequest();
@@ -24,22 +24,17 @@ public final class MessageUtil {
 			}
 			Path dirPath = Paths.get(dirUrl.toURI());
 			try (Stream<Path> files = Files.walk(dirPath, 1)) {
-				// filter only files, ignore directories
 				files.filter(Files::isRegularFile).forEach(filePath -> {
 					try {
 						String content = Files.readString(filePath);
-						String fileName = filePath.getFileName().toString();
-						String messageType = fileName.substring(fileName.lastIndexOf(".") + 1);
-
-						MessageDetail messageDetail = new MessageDetail(false, messageType, content);
-						request.getMessageDetails().add(messageDetail);
+						request.getPayloads().add(content);
 					} catch (IOException ex) {
 						throw new IllegalStateException("Unable to read resource file: " + filePath, ex);
 					}
 				});
-			 }
+			}
 		} catch (IOException | URISyntaxException ex) {
-			throw new IllegalStateException("Unable to read resource directory data: " +  ex);
+			throw new IllegalStateException("Unable to read resource directory data: " + ex);
 		}
 
 		return request;
