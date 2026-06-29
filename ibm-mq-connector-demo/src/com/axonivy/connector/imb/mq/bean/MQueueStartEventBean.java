@@ -19,8 +19,7 @@ public class MQueueStartEventBean extends AbstractProcessStartEventBean {
 	private boolean isPolling = false;
 	private boolean isSkipInitializing;
 	private String queueName = "";
-	private MQueueListener mqListener;
-	private IProcessStartEventBeanRuntime eventRuntime;
+	private MQueueListener mqListener;	
 
 	public MQueueStartEventBean() {
 		super("Run IBM MQ  StartEventBean", "Subscribe to MQ Queue");
@@ -28,8 +27,7 @@ public class MQueueStartEventBean extends AbstractProcessStartEventBean {
 
 	@Override
 	public void initialize(IProcessStartEventBeanRuntime eventRuntime, ProgramConfig programConfig) {
-		super.initialize(eventRuntime, programConfig);
-		this.eventRuntime = eventRuntime;
+		super.initialize(eventRuntime, programConfig);		
 		this.isSkipInitializing = PropertyManagerDemo.getSkipListener();
 		this.queueName = getQueueName();
 		this.mqListener = new MQueueListener(queueName, new ProcessMessageHandler());
@@ -37,26 +35,22 @@ public class MQueueStartEventBean extends AbstractProcessStartEventBean {
 		Ivy.log().debug("MQueueStartEventBean::initialize");
 	}
 
-
 	@Override
 	@PublicAPI
-	public void poll() {
+	public void poll() {		
 		Ivy.log().debug("MQueueStartEventBean::will skip: isPolling: {0} || isSkipInitializing: {1} ", isPolling,
 				isSkipInitializing);
 
 		if (StringUtils.isBlank(queueName)) {
 			Ivy.log().warn("MQueueStartEventBean::queueName is required.");
 			return;
-		}
+		}		
 		if (isPolling || isSkipInitializing) {
 			return;
 		}
 		isPolling = true;
-		eventRuntime.threads().boundToEventLifecycle(() -> {
-			mqListener.start();
-			mqListener.receive();
-		});
-
+		mqListener.start();
+		mqListener.receive();
 	}
 
 	protected String getQueueName() {

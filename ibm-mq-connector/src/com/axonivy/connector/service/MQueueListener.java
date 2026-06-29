@@ -63,6 +63,10 @@ public class MQueueListener extends AbstractMQueue {
 	}
 
 	public void receiveNoWait() {
+		if (consumer == null || session == null) {
+			Ivy.log().warn("MQueueListener::Consumer not started; skipping receiveNoWait.");
+			return;
+		}
 		Ivy.log().info("MQueueListener::receiveNoWait queue {0} in Thread {1}", queueName,
 				Thread.currentThread().getName());
 		try {
@@ -80,6 +84,11 @@ public class MQueueListener extends AbstractMQueue {
 	}
 
 	public void receive() {
+		if (consumer == null || session == null) {
+			Ivy.log().warn("MQueueListener::Consumer not started; skipping polling.");
+			isPolling = false;
+			return;
+		}
 		Ivy.log().info("MQueueListener::Started polling queue {0} in Thread {1}", queueName,
 				Thread.currentThread().getName());
 		isPolling = true;
@@ -132,9 +141,19 @@ public class MQueueListener extends AbstractMQueue {
 	}
 
 	private void stopConsumer() {
-		closeQuietly(consumer);
-		closeQuietly(session);
-		closeQuietly(connection);
+		if (connection == null && session == null && consumer == null) {
+			return;
+		}
+
+		if (consumer != null) {
+			closeQuietly(consumer);
+		}
+		if (session != null) {
+			closeQuietly(session);
+		}
+		if (connection != null) {
+			closeQuietly(connection);
+		}
 
 		connection = null;
 		session = null;

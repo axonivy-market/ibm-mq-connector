@@ -2,4 +2,4 @@
 Variables:
   ibmMQ:
     # Skip MQ Listener flag: When true, prevents automatic IBM MQ listener initialization at application startup (default: false)
-    skipListener: "true"
+    skipListener: "false"

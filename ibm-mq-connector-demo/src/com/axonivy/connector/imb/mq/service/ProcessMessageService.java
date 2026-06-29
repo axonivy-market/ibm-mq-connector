@@ -37,6 +37,7 @@ public class ProcessMessageService {
 	
 	private TaskDetail processMessage(String payload, String messageType) {
 		LoanApplication loanApplication = getLoanApplication(payload, messageType);
+		Ivy.log().info("===loanApplication: " + loanApplication);
 		if (loanApplication == null) {
 			return null;
 		}
@@ -46,9 +47,11 @@ public class ProcessMessageService {
 		taskDetail.setLoanApplication(loanApplication);
 
 		Ivy.log().info("=== call signal Task: " + SIGNAL_CODE + ", auto approval: " + taskDetail.isAutoApproval());
-		Ivy.log().info("TaskDetail: " + taskDetail);
+		Ivy.log().info("TaskDetail: " + taskDetail);		
 		Ivy.wf().signals().create().data(taskDetail).send(SIGNAL_CODE);
-
+		
+		Ivy.log().info("=== End processMessage.");
+		
 		return taskDetail;
 	}
 
@@ -58,7 +61,7 @@ public class ProcessMessageService {
 			return null;
 		}
 		
-		if (!messageType.equalsIgnoreCase(messageTypeRequest)) {			
+		if (messageTypeRequest != null && !messageType.equalsIgnoreCase(messageTypeRequest)) {			
 			return null;
 		}
 

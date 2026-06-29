@@ -2,7 +2,6 @@ package com.axonivy.connector.service;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.axonivy.connector.model.MessageDetail;
 import com.axonivy.connector.model.MessagePushRequest;
 
 public class MessageService {
