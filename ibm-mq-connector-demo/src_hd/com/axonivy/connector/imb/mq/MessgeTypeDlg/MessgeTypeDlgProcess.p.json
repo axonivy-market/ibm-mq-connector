@@ -103,7 +103,9 @@
             "import javax.faces.context.FacesContext;",
             "if (in.messageFetchResult.error != null && !in.messageFetchResult.error.isEmpty()) {",
             "  FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, in.messageFetchResult.error, null));",
-            "} "
+            "} else if (in.messageFetchResult.notification != null) {",
+            "  FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, in.messageFetchResult.notification, null));",
+            "}"
           ]
         }
       },
@@ -143,7 +145,8 @@
         "output" : {
           "code" : [
             "import com.axonivy.connector.imb.mq.service.ProcessButtonHandler;",
-            "ProcessButtonHandler.getInstance().process(out.messageFetchRequest.messageType,\"DEV.QUEUE.1\");"
+            "ProcessButtonHandler.getInstance().process(out.messageFetchRequest.messageType,\"DEV.QUEUE.1\");",
+            "out.messageFetchResult.notification = \"Process messages successfully.\";"
           ]
         }
       },
