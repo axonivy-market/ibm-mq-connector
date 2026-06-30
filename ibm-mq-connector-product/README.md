@@ -1,56 +1,98 @@
-<!--
-Dear developer!     
+# IBM MQ Connector
 
-When you create your very valuable documentation, please be aware that this Readme.md is not only published on github. This documentation is also processed automatically and published on our website. For this to work, the two headings "Demo" and "Setup" must not be changed. Do also not change the order of the headings. Feel free to add sub-sections wherever you want.
--->
+The IBM MQ Connector lets Axon Ivy processes connect to IBM MQ queues for reliable message exchange. It supports both outbound message sending and inbound message retrieval, so you can build queue-based workflows without custom integration code.
 
-# IMB MQ Connector
-
-This connector integrates Axon Ivy with IBM MQ. It provides a callable sub to send one or more text messages to a queue and a demo setup that runs IBM MQ locally with Docker.
-
-## Callable Subs
-
-The connector ships the callable process MessageManagement with the following callable sub:
-
-- send(MessagePushRequest)
-  - Input parameter: messagePushRequest of type com.axonivy.connector.model.MessagePushRequest
-    - queueName: the target IBM MQ queue name
-    - payloads: one or more message payloads to send
-  - Result: none
-  - Behavior: each payload is sent to IBM MQ using the configured connection settings.
-
-<!--
-The explanations under "MY-RRODUCT-NAME" are displayed  e.g. for the Connector A-Trust here: https://market.axonivy.com/a-trust#tab-description   
--->
+**Key features**
+- Send IBM MQ messages directly from your Axon Ivy processes.
+- Retrieve queued messages and route them back into your business workflows.
+- Reuse the connector through callable subprocesses for consistent message handling.
+- Use demo implementations that show how to push and process messages end to end.
+- Integrate queue-based approvals and event handling into your existing process models.
+- Keep the integration simple with reusable connector logic and a lightweight setup flow.
 
 ## Demo
 
-The demo project contains a ready-to-run IBM MQ container and example processes for sending and processing messages. Start the local broker with Docker Compose from the demo module, import the demo project, and use the included sample flow to verify end-to-end message exchange.
+Use the built-in demo modules to see how queue-based messaging fits into an Axon Ivy application. The demos show how a message can be prepared, sent to IBM MQ, and processed by a follow-up workflow.
 
-<!--
-We use all entries under the heading "Demo" for the demo-Tab on our Website, e.g. for the Connector A-Trust here: https://market.axonivy.com/a-trust#tab-demo  
--->
+### Demo Workflows
+
+#### ibm-mq-connector-demo (ibm-mq-connector-demo)
+
+##### Initial Messages
+1. Launch the initial messages demo from the demo menu.
+2. Review the sample message payload that is loaded for the queue flow.
+3. Send the prepared message through the connector.
+4. Confirm that the process completes and the message is delivered as expected.
+
+##### Loan Request Processing Demo
+1. Launch the loan request processing demo from the demo menu.
+2. Follow the approval flow and review the request details presented in the dialog.
+3. Continue through the manual or automatic approval steps.
+4. Confirm the resulting task and message handling status.
 
 ## Setup
 
-Configure the IBM MQ connection properties in the project variables for your environment:
+- **Roles:** Manager (configured in config/roles.xml)
+- **OpenAPI:** No information was delivered for this section.
 
-- host
-- port
-- channel
-- queueManager
-- username
-- password
-- mqDebugMessages
-- skipListener
+1. Configure the IBM MQ connection details and queue names in the application variables for your environment.
+2. Deploy the connector module and ensure the demo modules are available in your Axon Ivy workspace.
+3. Run one of the demo processes to verify that messages can be sent and retrieved successfully.
+4. Review the results in your process model and adjust queue names or message content as needed.
 
-Example values are already provided in the connector configuration. If you want the connector to start listening for incoming messages automatically, leave skipListener disabled; otherwise set it to true.
-
-Call the callable sub from your Ivy process with a MessagePushRequest data object to send messages to the selected queue.
-<!--
-The entries under the heading "Setup" are filled in this tab, e.g. for the Connector A-Trust here: https://market.axonivy.com/a-trust#tab-setup. 
--->
+### Variables
 
 ```
 @variables.yaml@
+```
+
+## Components
+
+### Callable Subprocesses
+
+#### MessageManagement.p.json
+
+- **Signature**: fetch(com.axonivy.connector.model.MessageFetchRequest messageFetchRequest) -> messageFetchResult: com.axonivy.connector.model.MessageFetchResult
+    - Input:
+        - `messageFetchRequest` (com.axonivy.connector.model.MessageFetchRequest) - Message fetch request data
+    - Result:
+        - `messageFetchResult` (com.axonivy.connector.model.MessageFetchResult) - Message fetch result data
+
+- **Signature**: send(com.axonivy.connector.model.MessagePushRequest messagePushRequest)
+    - Input:
+        - `messagePushRequest` (com.axonivy.connector.model.MessagePushRequest) - Message payload to send
+    - Result: (none)
+
+### Dialog Components
+
+- For this market extension we do not provide any dialog components.
+
+### Rest Clients
+
+- For this market extension we do not provide any rest clients.
+
+### Web Services
+
+- For this market extension we do not provide any web services.
+
+### Maven Artifacts
+
+1. ibm-mq-connector
+
+```xml
+<dependency>
+  <groupId>com.axonivy.connector.imb.mq</groupId>
+  <artifactId>ibm-mq-connector</artifactId>
+  <type>iar</type>
+</dependency>
+```
+
+2. ibm-mq-connector-demo
+
+```xml
+<dependency>
+  <groupId>com.axonivy.connector.imb.mq</groupId>
+  <artifactId>ibm-mq-connector-demo</artifactId>
+  <type>iar</type>
+</dependency>
 ```
