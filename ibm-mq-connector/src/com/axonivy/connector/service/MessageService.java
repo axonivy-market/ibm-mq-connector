@@ -26,9 +26,7 @@ public class MessageService {
 			return;
 		}
 
-		for (String payload : request.getPayloads()) {
-			mQueueProducer.sendMessage(request.getQueueName(), payload);
-		}
+		mQueueProducer.sendMessages(request.getQueueName(), request.getPayloads());
 	}
 
 }

@@ -36,8 +36,8 @@ public class ProcessMessageService {
 	}
 	
 	private TaskDetail processMessage(String payload, String messageType) {
-		LoanApplication loanApplication = getLoanApplication(payload, messageType);
-		Ivy.log().info("===loanApplication: " + loanApplication);
+		Ivy.log().info("ProcessMessageService::processMessage: payload: {0}, messageType: {1}", payload, messageType);
+		LoanApplication loanApplication = getLoanApplication(payload, messageType);		
 		if (loanApplication == null) {
 			return null;
 		}
@@ -55,13 +55,14 @@ public class ProcessMessageService {
 		return taskDetail;
 	}
 
-	private static LoanApplication getLoanApplication(String payload, String messageTypeRequest) {
-		String messageType = detectMessageType(payload);
+	private static LoanApplication getLoanApplication(String payload, String messageTypeRequest) {		
+		String messageType = detectMessageType(payload);		
 		if (messageType == null) {
 			return null;
 		}
 		
-		if (messageTypeRequest != null && !messageType.equalsIgnoreCase(messageTypeRequest)) {			
+		if (messageTypeRequest != null && !messageType.equalsIgnoreCase(messageTypeRequest)) {
+			Ivy.log().info("Ignore the message by filter {0} only", messageTypeRequest);
 			return null;
 		}
 

@@ -1,5 +1,6 @@
 package com.axonivy.connector.service;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import javax.jms.JMSException;
@@ -7,6 +8,8 @@ import javax.jms.Message;
 import javax.jms.MessageProducer;
 import javax.jms.Session;
 import javax.jms.TextMessage;
+
+import org.apache.commons.collections4.CollectionUtils;
 
 import com.axonivy.connector.model.AbstractMQueue;
 import com.axonivy.connector.model.PropertyManager;
@@ -35,10 +38,33 @@ public class MQueueProducer extends AbstractMQueue {
 		if (text == null) {
 			return;
 		}
+		try {
+			startProducer(queueName);
+			sendWithRetry(queueName,  () -> {
+				return session.createTextMessage(text);
+			});
+			stopProducer();
+		} catch (JMSException e) {
+			Ivy.log().error("MQueueProducer::sendMessage: got error: ", e);
+		}
 
-		sendWithRetry(queueName,  () -> {
-			return session.createTextMessage(text);
-		});
+	}
+
+	public void sendMessages(String queueName, List<String> texts) {
+		if (CollectionUtils.isEmpty(texts)) {
+			return;
+		}
+		try {
+		startProducer(queueName);
+			for (String text : texts) {
+				sendWithRetry(queueName,  () -> {
+					return session.createTextMessage(text);
+				});
+			}
+			stopProducer();
+		} catch (JMSException e) {
+			Ivy.log().error("MQueueProducer::sendMessage: got error: ", e);
+		}
 	}
 
 	private synchronized void sendWithRetry(String queueName, MessageSupplier messageSupplier) {

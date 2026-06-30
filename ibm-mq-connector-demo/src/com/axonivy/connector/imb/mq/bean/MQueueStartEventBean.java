@@ -37,7 +37,8 @@ public class MQueueStartEventBean extends AbstractProcessStartEventBean {
 
 	@Override
 	@PublicAPI
-	public void poll() {		
+	public void poll() {	
+		isSkipInitializing = true;
 		Ivy.log().debug("MQueueStartEventBean::will skip: isPolling: {0} || isSkipInitializing: {1} ", isPolling,
 				isSkipInitializing);
 
@@ -51,6 +52,13 @@ public class MQueueStartEventBean extends AbstractProcessStartEventBean {
 		isPolling = true;
 		mqListener.start();
 		mqListener.receive();
+	}
+	
+	@Override
+	public void stop() {
+		mqListener.stop();
+		super.stop();
+		Ivy.log().info("Stopped KafkaStartEventBean.");
 	}
 
 	protected String getQueueName() {
