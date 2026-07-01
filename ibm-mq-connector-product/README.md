@@ -35,10 +35,15 @@ Use the built-in demo modules to see how queue-based messaging fits into an Axon
 - **Roles:** Manager (configured in config/roles.xml)
 - **OpenAPI:** No information was delivered for this section.
 
-1. Configure the IBM MQ connection details and queue names in the application variables for your environment.
-2. Deploy the connector module and ensure the demo modules are available in your Axon Ivy workspace.
-3. Run one of the demo processes to verify that messages can be sent and retrieved successfully.
-4. Review the results in your process model and adjust queue names or message content as needed.
+1. Setup IBM MQ docker
+   - Go to `ibm-mq-connector-demo/docker`
+   - Update username, password in `Dockerfile`
+   - Run `docker-compose up --build`
+   - Open link: https://localhost:9443/ibmmq/console
+2. Configure the IBM MQ connection details and queue names in the application variables for your environment.
+3. Deploy the connector module and ensure the demo modules are available in your Axon Ivy workspace.
+4. Run one of the demo processes to verify that messages can be sent and retrieved successfully.
+5. Review the results in your process model and adjust queue names or message content as needed.
 
 ### Variables
 

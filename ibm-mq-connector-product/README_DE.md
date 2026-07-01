@@ -35,10 +35,16 @@ Nutze die integrierten Demo-Module, um zu sehen, wie warteschlangenbasierte Nach
 - **Rollen:** Manager (konfiguriert in config/roles.xml)
 - **OpenAPI:** Keine Informationen verfügbar für diesen Abschnitt.
 
-1. Konfiguriere die IBM-MQ-Verbindungsdetails und Warteschlangen-Namen in den Anwendungsvariablen für deine Umgebung.
-2. Deploye das Connector-Modul und stelle sicher, dass die Demo-Module in deinem Axon-Ivy-Workspace verfügbar sind.
-3. Starte einen der Demo-Prozesse, um zu prüfen, ob Nachrichten gesendet und abgerufen werden können.
-4. Prüfe die Ergebnisse in deinem Prozessmodell und passe Warteschlangen-Namen oder Nachrichteninhalte bei Bedarf an.
+
+1. IBM MQ Docker einrichten
+   - Wechseln Sie in das Verzeichnis `ibm-mq-connector-demo/docker`
+   - Aktualisieren Sie Benutzername und Passwort in der `Dockerfile`
+   - Führen Sie `docker-compose up --build` aus
+   - Öffnen Sie die Konsole unter: https://localhost:9443/ibmmq/console
+2. Konfiguriere die IBM-MQ-Verbindungsdetails und Warteschlangen-Namen in den Anwendungsvariablen für deine Umgebung.
+3. Deploye das Connector-Modul und stelle sicher, dass die Demo-Module in deinem Axon-Ivy-Workspace verfügbar sind.
+4. Starte einen der Demo-Prozesse, um zu prüfen, ob Nachrichten gesendet und abgerufen werden können.
+5. Prüfe die Ergebnisse in deinem Prozessmodell und passe Warteschlangen-Namen oder Nachrichteninhalte bei Bedarf an.
 
 ### Variablen
 
