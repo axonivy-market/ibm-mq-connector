@@ -7,9 +7,9 @@
   <version>12.0.15-SNAPSHOT</version>
   <packaging>iar-integration-test</packaging>
   <properties>
-    <project.build.plugin.version>12.0.15</project.build.plugin.version>
+    <project.build.plugin.version>12.0.13</project.build.plugin.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <tester.version>13.2.0</tester.version>
+    <tester.version>12.0.3</tester.version>
   </properties>
  <pluginRepositories>
     <pluginRepository>
@@ -48,11 +48,11 @@
       </exclusions>
     </dependency>
     <dependency>
-      <groupId>com.axonivy.ivy.api.test</groupId>
-      <artifactId>ivy-test-api</artifactId>
-      <version>${tester.version}</version>
-      <scope>test</scope>
-    </dependency>    
+    	<groupId>com.axonivy.ivy.test</groupId>
+    	<artifactId>unit-tester</artifactId>
+    	<version>${tester.version}</version>
+    	<scope>test</scope>
+    </dependency>  
   </dependencies>
    <repositories>
     <repository>
