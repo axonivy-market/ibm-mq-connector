@@ -10,7 +10,6 @@ public final class PropertyManager {
 	private static final String QUEUE_MANAGER_PROPERTY = CONNECTOR_ROOT_PROPERTY + "queueManager";
 	private static final String USERNAME_PROPERTY = CONNECTOR_ROOT_PROPERTY + "username";
 	private static final String PASSWORD_PROPERTY = CONNECTOR_ROOT_PROPERTY + "password";
-	private static final String MQ_DEBUG_MESSAGES_PROPERTY = CONNECTOR_ROOT_PROPERTY + "mqDebugMessages";
 
 	public static String getHost() {
 		return Ivy.var().get(HOST_PROPERTY);
@@ -34,10 +33,6 @@ public final class PropertyManager {
 
 	public static String getPassword() {
 		return Ivy.var().get(PASSWORD_PROPERTY);
-	}
-
-	public static boolean getDebugMessages() {
-		return Boolean.parseBoolean(Ivy.var().get(MQ_DEBUG_MESSAGES_PROPERTY));
 	}
 
 	private PropertyManager() {}

@@ -7,7 +7,6 @@ import javax.jms.JMSException;
 import javax.jms.Queue;
 import javax.jms.Session;
 
-import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import com.ibm.mq.jms.MQQueueConnectionFactory;
@@ -31,8 +30,7 @@ public abstract class AbstractMQueue {
 	protected String username;
 	protected String password;
 	protected String SSLCipherSuite;
-	protected int transportType;
-	protected boolean mqDebugMessages;
+	protected int transportType;	
 	protected String additionalStringValues;
 	protected String additionalBooleanValues;
 
@@ -62,19 +60,13 @@ public abstract class AbstractMQueue {
 				: connectionFactory.createConnection();
 	}
 
-	protected boolean isDebugMode() {
-		return BooleanUtils.isTrue(mqDebugMessages);
-	}
-
 	protected void rollbackQuietly() {
 		if (session != null) {
 			try {
 				session.rollback();
-			} catch (Exception e) {
-				if (isDebugMode()) {
-					Ivy.log().warn("{0}::Failed to rollback session: {1}", this.getClass().getSimpleName(),
-							e.getMessage());
-				}
+			} catch (Exception e) {				
+				Ivy.log().warn("{0}::Failed to rollback session: {1}", this.getClass().getSimpleName(),
+						e.getMessage());				
 			}
 		}
 	}
@@ -83,11 +75,9 @@ public abstract class AbstractMQueue {
 		if (resource != null) {
 			try {
 				resource.close();
-			} catch (Exception e) {
-				if (isDebugMode()) {
-					Ivy.log().warn("{0}::Failed to close {1}: {2}", this.getClass().getSimpleName(),
-							resource.getClass().getSimpleName(), e.getMessage());
-				}
+			} catch (Exception e) {				
+				Ivy.log().warn("{0}::Failed to close {1}: {2}", this.getClass().getSimpleName(),
+						resource.getClass().getSimpleName(), e.getMessage());				
 			}
 		}
 	}

@@ -13,7 +13,6 @@ Variables:
     username: app
     # Password for authenticating with the IBM MQ server
     password: "123456"
-    mqDebugMessages: "true"
     # IBM MQ Connection Configuration Variables - Defines connectivity and behavior for message queue integration
     # Skip MQ Listener flag: When true, prevents automatic IBM MQ listener initialization at application startup (default: false)
     skipListener: "true"

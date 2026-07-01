@@ -7,7 +7,6 @@ import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageProducer;
 import javax.jms.Session;
-import javax.jms.TextMessage;
 
 import org.apache.commons.collections4.CollectionUtils;
 
@@ -31,7 +30,6 @@ public class MQueueProducer extends AbstractMQueue {
 		queueManager = PropertyManager.getQueueManager();
 		username = PropertyManager.getUsername();
 		password = PropertyManager.getPassword();
-		mqDebugMessages = PropertyManager.getDebugMessages();
 	}
 
 	public void sendMessage(String queueName, String text) {
@@ -40,7 +38,7 @@ public class MQueueProducer extends AbstractMQueue {
 		}
 		try {
 			startProducer(queueName);
-			sendWithRetry(queueName,  () -> {
+			sendWithRetry(queueName, () -> {
 				return session.createTextMessage(text);
 			});
 			stopProducer();
@@ -55,9 +53,9 @@ public class MQueueProducer extends AbstractMQueue {
 			return;
 		}
 		try {
-		startProducer(queueName);
+			startProducer(queueName);
 			for (String text : texts) {
-				sendWithRetry(queueName,  () -> {
+				sendWithRetry(queueName, () -> {
 					return session.createTextMessage(text);
 				});
 			}
@@ -79,14 +77,8 @@ public class MQueueProducer extends AbstractMQueue {
 				var message = messageSupplier.get();
 				producer.send(message);
 				session.commit();
-				if (isDebugMode()) {
-					Ivy.log().warn("{0}::SendMessage with JMS Message {1}", this.getClass().getSimpleName(),
-							message.getJMSMessageID());
-					if (message instanceof TextMessage textMessage) {
-						Ivy.log().warn("{0}::Send message with text: {1}", this.getClass().getSimpleName(),
-								textMessage.getText());
-					}
-				}
+				Ivy.log().warn("{0}::SendMessage with JMS Message {1}", this.getClass().getSimpleName(),
+						message.getJMSMessageID());
 				return;
 			} catch (JMSException e) {
 				rollbackQuietly();

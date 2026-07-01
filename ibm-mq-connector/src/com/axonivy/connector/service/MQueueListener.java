@@ -59,7 +59,6 @@ public class MQueueListener extends AbstractMQueue {
 		queueManager = PropertyManager.getQueueManager();
 		username = PropertyManager.getUsername();
 		password = PropertyManager.getPassword();
-		mqDebugMessages = PropertyManager.getDebugMessages();
 	}
 
 	public void receiveNoWait() {
