@@ -201,5 +201,33 @@
       "connect" : [
         { "id" : "f21", "to" : "f19" }
       ]
+    }, {
+      "id" : "f22",
+      "type" : "ProcessAnnotation",
+      "name" : "Start form for select JSON/XML to fetch from message queue",
+      "visual" : {
+        "at" : { "x" : 640, "y" : 64 }
+      }
+    }, {
+      "id" : "f23",
+      "type" : "ProcessAnnotation",
+      "name" : [
+        "A Signal creation tasks from messages for manager role. ",
+        "",
+        "- If an auto-approval task, the task will be done when start.",
+        "- If a manual task, it will be show manual approval form when the task start."
+      ],
+      "visual" : {
+        "at" : { "x" : 1133, "y" : 210 },
+        "size" : { "width" : 491, "height" : 91 }
+      }
+    }, {
+      "id" : "f24",
+      "type" : "ProcessAnnotation",
+      "name" : "MQ StartEventBean is based on configuration skipListener. If skipListener=true, the bean will not start.",
+      "visual" : {
+        "at" : { "x" : 616, "y" : 416 },
+        "size" : { "width" : 358, "height" : 78 }
+      }
     } ]
 }

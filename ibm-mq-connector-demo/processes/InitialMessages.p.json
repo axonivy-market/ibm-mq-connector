@@ -68,5 +68,13 @@
       "connect" : [
         { "id" : "f6", "to" : "f3", "color" : "default" }
       ]
+    }, {
+      "id" : "f7",
+      "type" : "ProcessAnnotation",
+      "name" : "Send messages to QUEUE.DEV.1 queue for testing. Load data files from the src/resources/data directory. Once the data is successfully parsed, the system sends the corresponding messages to the target IBM MQ queue: QUEUE.DEV.1",
+      "visual" : {
+        "at" : { "x" : 799, "y" : 79 },
+        "size" : { "width" : 419, "height" : 87 }
+      }
     } ]
 }

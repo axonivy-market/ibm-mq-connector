@@ -24,7 +24,16 @@
         "connector"
       ],
       "visual" : {
-        "at" : { "x" : 112, "y" : 72 }
+        "at" : { "x" : 112, "y" : 72 },
+        "description" : [
+          "Send a message with MessagePushRequest parameter.",
+          "",
+          "<b><font color=\"red\">Please note, that the send will be done in the context of the connector.</font></b>",
+          "",
+          "MessagePushRequest",
+          "- queueName: the queue name that receive the messages",
+          "-  payloads: List string payload"
+        ]
       },
       "connect" : [
         { "id" : "f9", "to" : "f7" }
