@@ -1,5 +1,6 @@
 package com.axonivy.connector.imb.mq.service;
 
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import com.axonivy.connector.imb.mq.model.CreditXmlMessage;
@@ -34,10 +35,10 @@ public class ProcessMessageService {
 		}
 		processMessage(payload, messageType);
 	}
-	
+
 	private TaskDetail processMessage(String payload, String messageType) {
 		Ivy.log().info("ProcessMessageService::processMessage: payload: {0}, messageType: {1}", payload, messageType);
-		LoanApplication loanApplication = getLoanApplication(payload, messageType);		
+		LoanApplication loanApplication = getLoanApplication(payload, messageType);
 		if (loanApplication == null) {
 			return null;
 		}
@@ -47,20 +48,20 @@ public class ProcessMessageService {
 		taskDetail.setLoanApplication(loanApplication);
 
 		Ivy.log().info("=== call signal Task: " + SIGNAL_CODE + ", auto approval: " + taskDetail.isAutoApproval());
-		Ivy.log().info("TaskDetail: " + taskDetail);		
+		Ivy.log().info("TaskDetail: " + taskDetail);
 		Ivy.wf().signals().create().data(taskDetail).send(SIGNAL_CODE);
-		
+
 		Ivy.log().info("=== End processMessage.");
-		
+
 		return taskDetail;
 	}
 
-	private static LoanApplication getLoanApplication(String payload, String messageTypeRequest) {		
-		String messageType = detectMessageType(payload);		
+	private static LoanApplication getLoanApplication(String payload, String messageTypeRequest) {
+		String messageType = detectMessageType(payload);
 		if (messageType == null) {
 			return null;
 		}
-		
+
 		if (messageTypeRequest != null && !messageType.equalsIgnoreCase(messageTypeRequest)) {
 			Ivy.log().info("Ignore the message by filter {0} only", messageTypeRequest);
 			return null;
@@ -83,16 +84,7 @@ public class ProcessMessageService {
 	}
 
 	private static boolean validateLoanApplication(LoanApplication loanApplication) {
-		if (loanApplication == null) {
-			return false;
-		}
-		if (loanApplication.getApplicant() == null) {
-			return false;
-		}
-		if (loanApplication.getCreditScore() == null) {
-			return false;
-		}
-		return true;
+		return !ObjectUtils.anyNull(loanApplication, loanApplication.getApplicant(), loanApplication.getCreditScore());
 	}
 
 	private static boolean isAutoApproval(LoanApplication loan) {
