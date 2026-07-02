@@ -1,9 +1,13 @@
 package com.axonivy.connector.imb.mq.util;
 
 import com.axonivy.connector.imb.mq.model.Applicant;
+import com.axonivy.connector.imb.mq.model.CreditApplicationRequest;
 import com.axonivy.connector.imb.mq.model.CreditScore;
+import com.axonivy.connector.imb.mq.model.CreditXmlApplicant;
+import com.axonivy.connector.imb.mq.model.CreditXmlCreditScore;
+import com.axonivy.connector.imb.mq.model.CreditXmlFinancialProfile;
+import com.axonivy.connector.imb.mq.model.CreditXmlLoanRequest;
 import com.axonivy.connector.imb.mq.model.CreditXmlMessage;
-import com.axonivy.connector.imb.mq.model.CreditXmlMessage.CreditApplicationRequest;
 import com.axonivy.connector.imb.mq.model.LoanApplication;
 import com.axonivy.connector.imb.mq.model.LoanJsonMessage;
 import com.axonivy.connector.imb.mq.model.LoanJsonMessage.Name;
@@ -30,59 +34,63 @@ public final class TaskUtil {
 			return null;
 		}
 		LoanApplication loanApplication = new LoanApplication();
-		CreditApplicationRequest Request = xmlMessage.getCreditApplicationRequest();
-		if (Request == null) {
+		CreditApplicationRequest request = xmlMessage.getCreditApplicationRequest();
+		if (request == null) {
 			return null;
 		}
-		loanApplication.setApplicant(getApplicantXml(Request));
-		loanApplication.setCreditScore(getCreditScoreXml(Request));
-		loanApplication.setLoanRequest(getLoanReuestXml(Request));
+		loanApplication.setApplicant(getApplicantXml(request));
+		loanApplication.setCreditScore(getCreditScoreXml(request));
+		loanApplication.setLoanRequest(getLoanRequestXml(request));
 
 		return loanApplication;
 	}
 
 	private static CreditScore getCreditScoreXml(CreditApplicationRequest request) {
-		if (request.getFinancialProfile() == null || request.getFinancialProfile().getCreditScore() == null) {
+		CreditXmlFinancialProfile financialProfile = request.getFinancialProfile();
+		CreditXmlCreditScore creditScoreData = financialProfile == null ? null : financialProfile.getCreditScore();
+		if (creditScoreData == null) {
 			return null;
 		}
 		CreditScore creditScore = new CreditScore();
-		creditScore.setProvider(request.getFinancialProfile().getCreditScore().getProvider());
-		creditScore.setScore(request.getFinancialProfile().getCreditScore().getScore());
-		creditScore.setScoreClass(request.getFinancialProfile().getCreditScore().getScoreClass());
+		creditScore.setProvider(creditScoreData.getProvider());
+		creditScore.setScore(creditScoreData.getScore());
+		creditScore.setScoreClass(creditScoreData.getScoreClass());
 
 		return creditScore;
 	}
 
-	private static LoanRequest getLoanReuestXml(CreditApplicationRequest request) {
-		if (request.getLoanRequest() == null) {
+	private static LoanRequest getLoanRequestXml(CreditApplicationRequest request) {
+		CreditXmlLoanRequest loanRequestData = request.getLoanRequest();
+		if (loanRequestData == null || loanRequestData.getRequestedAmount() == null) {
 			return null;
 		}
 		LoanRequest loanRequest = new LoanRequest();
-		loanRequest.setPurpose(request.getLoanRequest().getLoanPurpose());
-		loanRequest.setAmount(Double.parseDouble(request.getLoanRequest().getRequestedAmount().getValue()));
-		loanRequest.setTermMonths(request.getLoanRequest().getRequestedTermMonths());
+		loanRequest.setPurpose(loanRequestData.getLoanPurpose());
+		loanRequest.setAmount(Double.parseDouble(loanRequestData.getRequestedAmount().getValue()));
+		loanRequest.setTermMonths(loanRequestData.getRequestedTermMonths());
 
 		return loanRequest;
 	}
 
 	private static Applicant getApplicantXml(CreditApplicationRequest request) {
-		if (request.getApplicant() == null) {
+		CreditXmlApplicant applicantData = request.getApplicant();
+		if (applicantData == null) {
 			return null;
 		}
 
 		Applicant applicant = new Applicant();
 		Name name = new Name();
-		name.setFirst(request.getApplicant().getFirstName());
-		name.setLast(request.getApplicant().getLastName());
+		name.setFirst(applicantData.getFirstName());
+		name.setLast(applicantData.getLastName());
 
 		applicant.setName(name);
-		applicant.setCustomerId(request.getApplicant().getCustomerId());
-		applicant.setDateOfBirth(request.getApplicant().getDateOfBirth());
+		applicant.setCustomerId(applicantData.getCustomerId());
+		applicant.setDateOfBirth(applicantData.getDateOfBirth());
 
-		if (request.getApplicant().getEmploymentDetails() != null
-				&& request.getApplicant().getEmploymentDetails().getMonthlyNetIncome() != null) {
+		if (applicantData.getEmploymentDetails() != null
+				&& applicantData.getEmploymentDetails().getMonthlyNetIncome() != null) {
 			applicant.setMonthlyNetIncome(
-					Double.parseDouble(request.getApplicant().getEmploymentDetails().getMonthlyNetIncome().getValue()));
+					Double.parseDouble(applicantData.getEmploymentDetails().getMonthlyNetIncome().getValue()));
 		} else {
 			applicant.setMonthlyNetIncome(0.0);
 		}
