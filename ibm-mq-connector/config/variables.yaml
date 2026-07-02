@@ -2,17 +2,17 @@
 Variables:
   ibmmqConnector:
     # Hostname or IP address of the IBM MQ server (e.g., localhost or mq.example.com)
-    host: localhost
+    host: 
     # TCP port on which the IBM MQ listener is running (default: 1414)
-    port: "1414"
+    port: 
     # MQ channel name used for client connections (e.g., DEV.APP.SVRCONN)
-    channel: DEV.APP.SVRCONN
+    channel: 
     # Name of the Queue Manager to connect to (e.g., QM1)
-    queueManager: QM1
+    queueManager:
     # Username for authenticating with the IBM MQ server
-    username: app
+    username:
     # Password for authenticating with the IBM MQ server
-    password: "123456"
+    password:
     # IBM MQ Connection Configuration Variables - Defines connectivity and behavior for message queue integration
     # Skip MQ Listener flag: When true, prevents automatic IBM MQ listener initialization at application startup (default: false)
-    skipListener: "true"
+    skipListener: 
