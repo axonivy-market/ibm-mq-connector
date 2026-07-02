@@ -16,15 +16,21 @@ Nutze die integrierten Demo-Module, um zu sehen, wie warteschlangenbasierte Nach
 
 ### Demo-Workflows
 
-#### ibm-mq-connector-demo (ibm-mq-connector-demo)
+#### ibm-mq-connector-demo
 
 ##### Initial Messages
+
+![Initial Messages Processes](images/initial-messages-processes.png)
+
 1. Starte die Demo „Initial Messages“ über das Demo-Menü.
 2. Prüfe die Beispiel-Nachricht, die für den Warteschlangen-Flow geladen wird.
 3. Sende die vorbereitete Nachricht über den Connector.
 4. Bestätige, dass der Prozess abgeschlossen ist und die Nachricht wie erwartet zugestellt wird.
 
 ##### Loan Request Processing Demo
+
+![Loan Request Processes](images/loan-request-processes.png)
+
 1. Starte die Demo „Loan Request Processing“ über das Demo-Menü.
 2. Folge dem Freigabe-Flow und prüfe die Anfragedaten im Dialog.
 3. Fahre durch die manuelle oder automatische Freigabe-Schritte fort.

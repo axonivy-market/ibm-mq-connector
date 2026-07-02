@@ -16,15 +16,21 @@ Use the built-in demo modules to see how queue-based messaging fits into an Axon
 
 ### Demo Workflows
 
-#### ibm-mq-connector-demo (ibm-mq-connector-demo)
-
+#### ibm-mq-connector-demo
 ##### Initial Messages
+
+![Initial Messages Processes](images/initial-messages-processes.png)
+
 1. Launch the initial messages demo from the demo menu.
 2. Review the sample message payload that is loaded for the queue flow.
 3. Send the prepared message through the connector.
 4. Confirm that the process completes and the message is delivered as expected.
 
 ##### Loan Request Processing Demo
+
+![Loan Request Processes](images/loan-request-processes.png)
+
+
 1. Launch the loan request processing demo from the demo menu.
 2. Follow the approval flow and review the request details presented in the dialog.
 3. Continue through the manual or automatic approval steps.
