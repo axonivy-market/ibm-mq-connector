@@ -98,7 +98,6 @@
       "config" : {
         "output" : {
           "code" : [
-            "import com.sun.org.apache.xalan.internal.xsltc.compiler.If;",
             "import javax.faces.application.FacesMessage;",
             "import javax.faces.context.FacesContext;",
             "if (in.messageFetchResult.error != null && !in.messageFetchResult.error.isEmpty()) {",

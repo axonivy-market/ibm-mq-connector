@@ -1,0 +1,14 @@
+Dialogs:
+  com:
+    axonivy:
+      connector:
+        ibmMq:
+          demo:
+            manualApprove:
+              firstname: First name
+            messageType:
+              cancelBtn: Cancel
+              desc: 'To start message fetching, select file format:'
+              fileFormat: 'File format:'
+              processBtn: Process
+              title: IBM MQ Messaging
