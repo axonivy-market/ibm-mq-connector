@@ -19,7 +19,7 @@ public class MQueueStartEventBean extends AbstractProcessStartEventBean {
 	private boolean isPolling = false;
 	private boolean isSkipInitializing;
 	private String queueName = "";
-	private MQueueListener mqListener;	
+	private MQueueListener mqListener;
 
 	public MQueueStartEventBean() {
 		super("Run IBM MQ  StartEventBean", "Subscribe to MQ Queue");
@@ -27,7 +27,7 @@ public class MQueueStartEventBean extends AbstractProcessStartEventBean {
 
 	@Override
 	public void initialize(IProcessStartEventBeanRuntime eventRuntime, ProgramConfig programConfig) {
-		super.initialize(eventRuntime, programConfig);		
+		super.initialize(eventRuntime, programConfig);
 		this.isSkipInitializing = PropertyManagerDemo.getSkipListener();
 		this.queueName = getQueueName();
 		this.mqListener = new MQueueListener(queueName, new ProcessMessageHandler());
@@ -44,7 +44,7 @@ public class MQueueStartEventBean extends AbstractProcessStartEventBean {
 		if (StringUtils.isBlank(queueName)) {
 			Ivy.log().warn("MQueueStartEventBean::queueName is required.");
 			return;
-		}		
+		}
 		if (isPolling || isSkipInitializing) {
 			return;
 		}
@@ -52,12 +52,12 @@ public class MQueueStartEventBean extends AbstractProcessStartEventBean {
 		mqListener.start();
 		mqListener.receive();
 	}
-	
+
 	@Override
 	public void stop() {
 		mqListener.stop();
 		super.stop();
-		Ivy.log().info("Stopped KafkaStartEventBean.");
+		Ivy.log().info("Stopped MQueueStartEventBean.");
 	}
 
 	protected String getQueueName() {

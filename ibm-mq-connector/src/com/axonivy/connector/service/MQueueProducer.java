@@ -1,7 +1,6 @@
 package com.axonivy.connector.service;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import javax.jms.JMSException;
 import javax.jms.Message;
@@ -16,11 +15,7 @@ import com.axonivy.connector.model.PropertyManager;
 import ch.ivyteam.ivy.environment.Ivy;
 
 public class MQueueProducer extends AbstractMQueue {
-	private static final int SEND_RETRY_COUNT = 5;
-	private static final int WAIT_BEFORE_RETRY_MIN = 5;// seconds
-
 	protected MessageProducer producer;
-	private boolean started = false;
 
 	@Override
 	protected void initializeConnectionProperties() {
@@ -33,19 +28,10 @@ public class MQueueProducer extends AbstractMQueue {
 	}
 
 	public void sendMessage(String queueName, String text) {
-		if (text == null) {
+		if (text == null || text.isBlank()) {
 			return;
 		}
-		try {
-			startProducer(queueName);
-			sendWithRetry(queueName, () -> {
-				return session.createTextMessage(text);
-			});
-			stopProducer();
-		} catch (JMSException e) {
-			Ivy.log().error("MQueueProducer::sendMessage: got error: ", e);
-		}
-
+		sendMessages(queueName, List.of(text));
 	}
 
 	public void sendMessages(String queueName, List<String> texts) {
@@ -54,56 +40,19 @@ public class MQueueProducer extends AbstractMQueue {
 		}
 		try {
 			startProducer(queueName);
+
 			for (String text : texts) {
-				sendWithRetry(queueName, () -> {
-					return session.createTextMessage(text);
-				});
+				Message message = session.createTextMessage(text);
+				producer.send(message);
+				session.commit();
+				Ivy.log().info("{0}::SendMessage with JMS Message {1}", this.getClass().getSimpleName(),
+						message.getJMSMessageID());
 			}
 			stopProducer();
 		} catch (JMSException e) {
 			Ivy.log().error("MQueueProducer::sendMessage: got error: ", e);
-		}
-	}
-
-	private synchronized void sendWithRetry(String queueName, MessageSupplier messageSupplier) {
-		long waitBeforeRetry = WAIT_BEFORE_RETRY_MIN;
-
-		for (int attempt = 1; attempt <= SEND_RETRY_COUNT; attempt++) {
-			try {
-				if (!started) {
-					startProducer(queueName);
-				}
-
-				var message = messageSupplier.get();
-				producer.send(message);
-				session.commit();
-				Ivy.log().warn("{0}::SendMessage with JMS Message {1}", this.getClass().getSimpleName(),
-						message.getJMSMessageID());
-				return;
-			} catch (JMSException e) {
-				rollbackQuietly();
-				stopProducer();
-
-				if (attempt >= SEND_RETRY_COUNT) {
-					Ivy.log().error("{0}::Failed to send message to MQ WFM after {1} attempts", e,
-							this.getClass().getSimpleName(), SEND_RETRY_COUNT);
-					return;
-				}
-
-				Ivy.log().warn("{0}::Failed to send message to MQ WFM. Retry in {1} sec. (attempt {2}/{3})", e,
-						this.getClass().getSimpleName(), waitBeforeRetry, attempt, SEND_RETRY_COUNT);
-			}
-
-			try {
-				TimeUnit.SECONDS.sleep(waitBeforeRetry);
-			} catch (InterruptedException e) {
-				Thread.currentThread().interrupt();
-				Ivy.log().warn("{0}::Interrupted while waiting before retrying MQ send", e,
-						this.getClass().getSimpleName());
-				return;
-			}
-
-			waitBeforeRetry = waitBeforeRetry * 2;
+		} finally {
+			stopProducer();
 		}
 	}
 
@@ -112,8 +61,7 @@ public class MQueueProducer extends AbstractMQueue {
 		session = connection.createSession(true, Session.SESSION_TRANSACTED);
 		queue = session.createQueue(queueName);
 		producer = session.createProducer(queue);
-		connection.start();
-		started = true;
+		connection.start();		
 	}
 
 	private void stopProducer() {
@@ -124,13 +72,6 @@ public class MQueueProducer extends AbstractMQueue {
 		connection = null;
 		session = null;
 		queue = null;
-		producer = null;
-		started = false;
+		producer = null;		
 	}
-
-	@FunctionalInterface
-	private interface MessageSupplier {
-		Message get() throws JMSException;
-	}
-
 }
