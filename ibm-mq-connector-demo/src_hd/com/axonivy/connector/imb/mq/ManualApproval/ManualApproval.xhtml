@@ -8,67 +8,66 @@
     <ui:define name="content">
 	<div class="card p-4 bg-gray-50 border-1 border-gray-200 border-round p-5 mx-auto" style="max-width: 450px;">
 
-    <h2 class="mt-0 mb-4">IBM MQ Messaging</h2>
+    <h2 class="mt-0 mb-4">#{ivy.cms.co('/Dialogs/com/axonivy/connector/ibmMq/demo/manualApprove/title')}</h2>
     <h:form id="approvalForm">
 
         <!-- Applicant -->
-    <h3 class="mb-3">Applicant</h3>
+    <h3 class="mb-3">#{ivy.cms.co('/Dialogs/com/axonivy/connector/ibmMq/demo/manualApprove/applicant')}</h3>
 
     <div class="flex justify-content-between py-2 border-bottom-1 surface-border">
-    fasdfasfas
     	<h:outputText value="#{ivy.cms.co('/Dialogs/com/axonivy/connector/ibmMq/demo/manualApprove/firstname')}" > </h:outputText>
         <h:outputLabel for="firstname" value="#{data.taskDetail.loanApplication.applicant.name.first}" />
     </div>
 
     <div class="flex justify-content-between py-2 border-bottom-1 surface-border">
-        <span>Last name</span>
+        <span>#{ivy.cms.co('/Dialogs/com/axonivy/connector/ibmMq/demo/manualApprove/lastname')}</span>
         <h:outputLabel for="lastname" value="#{data.taskDetail.loanApplication.applicant.name.last}" />
     </div>
 
     <div class="flex justify-content-between py-2 border-bottom-1 surface-border">
-        <span>Date of birth</span>
+        <span>#{ivy.cms.co('/Dialogs/com/axonivy/connector/ibmMq/demo/manualApprove/dateOfBirth')}</span>
         <h:outputLabel for="dateOfBirth" value="#{data.taskDetail.loanApplication.applicant.dateOfBirth}" />
     </div>
 
     <div class="flex justify-content-between py-2 mb-4">
-        <span>Monthly net income</span>
-        <span>EUR <h:outputLabel for="monthlyNetIncome" value="#{data.taskDetail.loanApplication.applicant.monthlyNetIncome}" /> </span>        
+        <span>#{ivy.cms.co('/Dialogs/com/axonivy/connector/ibmMq/demo/manualApprove/monthlyNetIncome')}</span>
+        <span>EUR <h:outputLabel for="monthlyNetIncome" value="#{data.taskDetail.loanApplication.applicant.monthlyNetIncome}" /> </span>
     </div>
 
     <!-- Loan Request -->
-    <h3 class="mb-3">Loan Request</h3>
+    <h3 class="mb-3">#{ivy.cms.co('/Dialogs/com/axonivy/connector/ibmMq/demo/manualApprove/loanRequest')}</h3>
 
     <div class="flex justify-content-between py-2 border-bottom-1 surface-border">
-        <span>Purpose</span>        
+        <span>#{ivy.cms.co('/Dialogs/com/axonivy/connector/ibmMq/demo/manualApprove/purpose')}</span>
         <h:outputLabel for="purpose" value="#{data.taskDetail.loanApplication.loanRequest.purpose}" />
     </div>
 
     <div class="flex justify-content-between py-2 border-bottom-1 surface-border">
-        <span>Amount</span>
+        <span>#{ivy.cms.co('/Dialogs/com/axonivy/connector/ibmMq/demo/manualApprove/amount')}</span>
         <span>EUR <h:outputLabel for="amount" value="#{data.taskDetail.loanApplication.loanRequest.amount}" /> </span>
     </div>
 
     <div class="flex justify-content-between py-2 mb-4">
-        <span>Term</span>
-        <span> <h:outputLabel for="termMonths" value="#{data.taskDetail.loanApplication.loanRequest.termMonths}" /> Months </span>
+        <span>#{ivy.cms.co('/Dialogs/com/axonivy/connector/ibmMq/demo/manualApprove/term')}</span>
+        <span> <h:outputLabel for="termMonths" value="#{data.taskDetail.loanApplication.loanRequest.termMonths}" /> #{ivy.cms.co('/Dialogs/com/axonivy/connector/ibmMq/demo/manualApprove/months')} </span>
     </div>
 
     <!-- Credit Score -->
-    <h3 class="mb-3">Credit Score</h3>
+    <h3 class="mb-3">#{ivy.cms.co('/Dialogs/com/axonivy/connector/ibmMq/demo/manualApprove/creditScore')}</h3>
 
     <div class="flex justify-content-between py-2 border-bottom-1 surface-border">
-        <span>Score</span>
-        <h:outputLabel for="score" value="#{data.taskDetail.loanApplication.creditScore.score}" />        
+        <span>#{ivy.cms.co('/Dialogs/com/axonivy/connector/ibmMq/demo/manualApprove/score')}</span>
+        <h:outputLabel for="score" value="#{data.taskDetail.loanApplication.creditScore.score}" />
     </div>
 
     <div class="flex justify-content-between py-2 border-bottom-1 surface-border">
-        <span>Score class</span>
-        <h:outputLabel for="scoreClass" value="#{data.taskDetail.loanApplication.creditScore.scoreClass}" />        
+        <span>#{ivy.cms.co('/Dialogs/com/axonivy/connector/ibmMq/demo/manualApprove/scoreClass')}</span>
+        <h:outputLabel for="scoreClass" value="#{data.taskDetail.loanApplication.creditScore.scoreClass}" />
     </div>
 
     <div class="flex justify-content-between py-2 mb-5">
-        <span>Provider</span>
-        <h:outputLabel for="provider" value="#{data.taskDetail.loanApplication.creditScore.provider}" />        
+        <span>#{ivy.cms.co('/Dialogs/com/axonivy/connector/ibmMq/demo/manualApprove/provider')}</span>
+        <h:outputLabel for="provider" value="#{data.taskDetail.loanApplication.creditScore.provider}" />
     </div>
 
     <!-- Buttons -->
@@ -78,25 +77,25 @@
     	<div>
 			<p:commandLink id="cancel"
 				actionListener="#{ivyWorkflowView.cancel()}" process="@this"
-				value="Cancel" />
+                value="#{ivy.cms.co('/Dialogs/com/axonivy/connector/ibmMq/demo/manualApprove/cancelBtn')}" />
 		</div>
-	
+
   	    <!-- Right side -->
 	    <div class="flex gap-2">
 	        <p:commandButton
-	            value="Reject"
+                value="#{ivy.cms.co('/Dialogs/com/axonivy/connector/ibmMq/demo/manualApprove/rejectBtn')}"
 	            icon="pi pi-times"
 	            styleClass="text-900 bg-white border-1 border-white"
 	            action="#{logic.submit('REJECT')}" />
-	
+
 	        <p:commandButton
-	            value="Confirm"
+                value="#{ivy.cms.co('/Dialogs/com/axonivy/connector/ibmMq/demo/manualApprove/confirmBtn')}"
 	            icon="pi pi-check"
 	            update="approvalForm"
 	            action="#{logic.submit('CONFIRM')}" />
 	    </div>
 	</div>
-    
+
 </h:form>
 </div>
     </ui:define>
