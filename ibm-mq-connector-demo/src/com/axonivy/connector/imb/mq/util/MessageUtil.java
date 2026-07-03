@@ -34,7 +34,7 @@ public final class MessageUtil {
 				});
 			}
 		} catch (IOException | URISyntaxException ex) {
-			throw new IllegalStateException("Unable to read resource directory data: " + ex);
+			throw new IllegalStateException("Unable to read resource directory data: ", ex);
 		}
 
 		return request;

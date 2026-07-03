@@ -1,5 +1,6 @@
 # Use the official IBM MQ Developer image as the base
-FROM icr.io/ibm-messaging/mq:latest
+# Pin to a specific, supported IBM MQ image version (avoid using `latest`)
+FROM icr.io/ibm-messaging/mq:9.3.0.0
 
 # Automatically accept the IBM license agreement
 ENV LICENSE=accept
