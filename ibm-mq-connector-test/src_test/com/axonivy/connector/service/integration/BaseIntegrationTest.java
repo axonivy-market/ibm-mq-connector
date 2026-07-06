@@ -17,7 +17,7 @@ public abstract class BaseIntegrationTest {
 
   protected static final String HOST;
   protected static final int MQ_PORT;
-  protected static final String DOCKER_COMPPOSE_FILE_PATH = "../ibm-mq-connector-demo/docker/docker-compose.yaml";
+  protected static final String DOCKER_COMPPOSE_FILE_PATH = "../ibm-mq-connector-test/docker/docker-compose.yaml";
   private static final String FINISHED_SETUP_LOG_TEXT_REGEX = ".*Messages preloaded!.*";
 
   @SuppressWarnings("resource")
@@ -26,6 +26,7 @@ public abstract class BaseIntegrationTest {
   static {
     System.out.println("Starting IBM MQ container via ComposeContainer...");
     MQ_CONTAINER = new ComposeContainer(new File(DOCKER_COMPPOSE_FILE_PATH))
+        .withBuild(true)
         .withExposedService("ibm-mq", 1414)
         .withExposedService("ibm-mq", 9443)
         .waitingFor("ibm-mq", Wait.forLogMessage(FINISHED_SETUP_LOG_TEXT_REGEX, 1).withStartupTimeout(Duration.ofMinutes(2)));
