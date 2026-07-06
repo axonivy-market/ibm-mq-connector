@@ -10,7 +10,6 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 import com.axonivy.connector.service.MQueueListener;
-import com.axonivy.connector.service.MQueueProducer;
 
 import ch.ivyteam.ivy.environment.IvyTest;
 
