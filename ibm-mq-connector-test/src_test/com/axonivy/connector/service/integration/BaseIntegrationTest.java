@@ -1,6 +1,7 @@
 package com.axonivy.connector.test.integration;
 
 import java.io.File;
+import java.time.Duration;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.testcontainers.containers.ComposeContainer;
@@ -17,6 +18,7 @@ public abstract class BaseIntegrationTest {
   protected static final String HOST;
   protected static final int MQ_PORT;
   protected static final String DOCKER_COMPPOSE_FILE_PATH = "../ibm-mq-connector-demo/docker/docker-compose.yaml";
+  private static final String FINISHED_SETUP_LOG_TEXT_REGEX = ".*Messages preloaded!.*";
 
   @SuppressWarnings("resource")
   protected static final ComposeContainer MQ_CONTAINER;
@@ -26,7 +28,7 @@ public abstract class BaseIntegrationTest {
     MQ_CONTAINER = new ComposeContainer(new File(DOCKER_COMPPOSE_FILE_PATH))
         .withExposedService("ibm-mq", 1414)
         .withExposedService("ibm-mq", 9443)
-        .waitingFor("ibm-mq", Wait.forListeningPort());
+        .waitingFor("ibm-mq", Wait.forLogMessage(FINISHED_SETUP_LOG_TEXT_REGEX, 1).withStartupTimeout(Duration.ofMinutes(2)));
 
     MQ_CONTAINER.start();
     HOST = MQ_CONTAINER.getServiceHost("ibm-mq", 1414);

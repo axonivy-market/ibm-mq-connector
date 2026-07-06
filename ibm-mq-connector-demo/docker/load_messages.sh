@@ -25,4 +25,5 @@
   echo 'Preloaded Message from Docker 2' | /opt/mqm/samp/bin/amqsput DEV.QUEUE.1 QM1 >> /etc/mqm/load.log 2>&1
   echo 'Preloaded Message from Docker 3' | /opt/mqm/samp/bin/amqsput DEV.QUEUE.1 QM1 >> /etc/mqm/load.log 2>&1
   echo "Messages preloaded! Exit code: $?" >> /etc/mqm/load.log
+  echo "Messages preloaded!"
 ) &

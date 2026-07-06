@@ -1,9 +1,6 @@
 package com.axonivy.connector.test.integration;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.awaitility.Awaitility.await;
-import static java.util.concurrent.TimeUnit.SECONDS;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,34 +20,30 @@ public class MQueueIntegrationIT extends BaseIntegrationTest {
 
     listener.start();
     
-    // Use pollInSameThread() to preserve the current thread's Ivy Context
-    await().pollInSameThread().atMost(45, SECONDS).untilAsserted(() -> {
-      // Read all currently available messages
-      while (true) {
-        int sizeBefore = listenerReceived.size();
-        listener.receiveNoWait();
-        if (listenerReceived.size() == sizeBefore) {
-          break;
-        }
+    // Read all currently available messages
+    for (int i = 0; i < 5 && listenerReceived.size() < 3; i++) {
+      listener.receiveNoWait();
+      if (listenerReceived.size() < 3) {
+        Thread.sleep(1000);
       }
-      
-      int messageCount = listenerReceived.size();
-      assertThat(messageCount)
-        .as("The amount of messages should be exactly 3")
-        .isEqualTo(3);
+    }
+    
+    int messageCount = listenerReceived.size();
+    assertThat(messageCount)
+      .as("The amount of messages should be exactly 3")
+      .isEqualTo(3);
 
-      for (String val : listenerReceived) {
-        System.out.println("Received message: " + val);
-      }
-      
-      assertThat(listenerReceived)
-        .as("Listener should read exactly 3 preloaded messages from Docker queue")
-        .containsExactly(
-          "Preloaded Message from Docker 1",
-          "Preloaded Message from Docker 2",
-          "Preloaded Message from Docker 3"
-        );
-    });
+    for (String val : listenerReceived) {
+      System.out.println("Received message: " + val);
+    }
+    
+    assertThat(listenerReceived)
+      .as("Listener should read exactly 3 preloaded messages from Docker queue")
+      .containsExactly(
+        "Preloaded Message from Docker 1",
+        "Preloaded Message from Docker 2",
+        "Preloaded Message from Docker 3"
+      );
 
     listener.stop();
   }
