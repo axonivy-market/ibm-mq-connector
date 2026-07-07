@@ -1,0 +1,9 @@
+services:
+  ibm-mq:
+    build:
+      context: .
+    image: ibm-mq:dev
+    ports:
+      - "1414:1414"
+      - "9443:9443"
+    entrypoint: ["/bin/bash", "-c", "/etc/mqm/load_messages.sh & exec runmqdevserver"]

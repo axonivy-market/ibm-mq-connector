@@ -1,2 +1,10 @@
 # yaml-language-server: $schema=https://json-schema.axonivy.com/app/12.0.0/variables.json
 Variables:
+  ibmmqConnector:
+    host: localhost
+    port: "1414"
+    channel: DEV.APP.SVRCONN
+    queueManager: QM1
+    queueName: DEV.QUEUE.1
+    user: app
+    password: "123456"

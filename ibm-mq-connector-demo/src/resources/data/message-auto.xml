@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.09">
+
+  <CreditApplicationRequest>
+    <!-- Message Header -->
+    <MsgHdr>
+      <MsgId>BANK-LOAN-20240520-00044</MsgId>
+      <CreDtTm>2024-05-20T09:32:11.000Z</CreDtTm>
+      <OriginSystem>CBS-CORE-BANKING</OriginSystem>
+      <TargetSystem>LOAN-ORIGINATION-SYSTEM</TargetSystem>
+      <Priority>NORMAL</Priority>
+      <CorrelationId>REQ-2024-GB-98765</CorrelationId>
+      <ReplyToQueue>BANK.LOAN.RESPONSE.QUEUE</ReplyToQueue>
+    </MsgHdr>
+    <!-- Applicant -->
+    <Applicant>
+      <CustomerId>GB-CUST-4471823</CustomerId>
+      <Salutation>Mr</Salutation>
+      <FirstName>James</FirstName>
+      <LastName>Harrison</LastName>
+      <DateOfBirth>1982-07-14</DateOfBirth>
+      <Nationality>GB</Nationality>
+      <TaxId>AB-123456-C</TaxId>
+      <Address>
+        <Street>14 Baker Street</Street>
+        <PostalCode>W1U 3BW</PostalCode>
+        <City>London</City>
+        <Country>GB</Country>
+        <ResidenceSince>2018-03-01</ResidenceSince>
+      </Address>
+      <Contact>
+        <Email>james.harrison@email.co.uk</Email>
+        <Phone>+44 20 7946 0123</Phone>
+      </Contact>
+      <EmploymentDetails>
+        <Status>EMPLOYED_PERMANENT</Status>
+        <Employer>Rolls-Royce Holdings plc</Employer>
+        <EmployedSince>2015-09-01</EmployedSince>
+        <JobTitle>Senior Engineer</JobTitle>
+        <MonthlyNetIncome currency="GBP">4250.00</MonthlyNetIncome>
+      </EmploymentDetails>
+    </Applicant>
+    <!-- Loan Details -->
+    <LoanRequest>
+      <LoanPurpose>VEHICLE_PURCHASE</LoanPurpose>
+      <RequestedAmount currency="GBP">28500.00</RequestedAmount>
+      <RequestedTermMonths>60</RequestedTermMonths>
+      <DesiredMonthlyRate currency="GBP">520.00</DesiredMonthlyRate>
+      <Collateral>
+        <Type>VEHICLE</Type>
+        <Description>BMW 320d, Year 2023</Description>
+        <EstimatedValue currency="GBP">35000.00</EstimatedValue>
+      </Collateral>
+    </LoanRequest>
+    <!-- Financial Situation -->
+    <FinancialProfile>
+      <MonthlyExpenses currency="GBP">1800.00</MonthlyExpenses>
+      <ExistingLoans>
+        <Loan>
+          <Purpose>REAL_ESTATE</Purpose>
+          <OutstandingAmount currency="GBP">85000.00</OutstandingAmount>
+          <MonthlyRate currency="GBP">620.00</MonthlyRate>
+        </Loan>
+      </ExistingLoans>
+      <CreditScore>
+        <Score>740</Score>
+        <ScoreClass>A</ScoreClass>
+        <Provider>Experian</Provider>
+        <QueryDate>2024-05-20</QueryDate>
+        <NegativeEntries>false</NegativeEntries>
+      </CreditScore>
+    </FinancialProfile>
+    <!-- Process Control Hints for Axon Ivy -->
+    <ProcessingHints>
+      <RequestChannel>ONLINE_BANKING</RequestChannel>
+      <AutoDecisionAllowed>true</AutoDecisionAllowed>
+      <MaxDecisionTimeSec>30</MaxDecisionTimeSec>
+      <FallbackQueue>BANK.LOAN.MANUAL.REVIEW.QUEUE</FallbackQueue>
+      <NotifyCustomerOnComplete>true</NotifyCustomerOnComplete>
+    </ProcessingHints>
+  </CreditApplicationRequest>
+</Document>

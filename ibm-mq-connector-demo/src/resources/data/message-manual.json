@@ -1,0 +1,25 @@
+{
+  "msgHeader": {
+    "msgId": "BANK-LOAN-20240521-00046",
+    "createdAt": "2024-05-21T09:32:11Z",
+    "correlationId": "REQ-2024-GB-98764",
+    "replyToQueue": "BANK.LOAN.RESPONSE.QUEUE"
+  },
+  "applicant": {
+    "customerId": "GB-CUST-4571824",
+    "name": { "first": "Olivia", "last": "Bennett" },
+    "dateOfBirth": "1986-02-14",
+    "monthlyNetIncome": 6250.00
+  },
+  "loanRequest": {
+    "purpose": "HOUSE_PURCHASE",
+    "amount": 27500.00,
+    "termMonths": 60
+  },
+  "creditScore": {
+    "score": 699,
+    "scoreClass": "B",
+    "provider": "Experian",
+    "negativeEntries": false
+  }
+}

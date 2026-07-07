@@ -1,0 +1,31 @@
+Dialogs:
+  com:
+    axonivy:
+      connector:
+        ibmMq:
+          demo:
+            manualApprove:
+              applicant: Applicant
+              amount: Amount
+              cancelBtn: Cancel
+              confirmBtn: Confirm
+              creditScore: Credit Score
+              dateOfBirth: Date of birth
+              firstname: First name
+              lastname: Last name
+              loanRequest: Loan Request
+              monthlyNetIncome: Monthly net income
+              months: Months
+              provider: Provider
+              purpose: Purpose
+              rejectBtn: Reject
+              score: Score
+              scoreClass: Score class
+              term: Term
+              title: IBM MQ Messaging
+            messageType:
+              cancelBtn: Cancel
+              desc: 'To start message fetching, select file format:'
+              fileFormat: 'File format:'
+              processBtn: Process
+              title: IBM MQ Messaging

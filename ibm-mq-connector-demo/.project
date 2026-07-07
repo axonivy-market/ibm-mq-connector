@@ -49,5 +49,5 @@
 		<nature>org.eclipse.m2e.core.maven2Nature</nature>
 		<nature>org.eclipse.jem.beaninfo.BeanInfoNature</nature>
 		<nature>org.eclipse.wst.common.project.facet.core.nature</nature>
-	</natures>
+	</natures>	
 </projectDescription>
