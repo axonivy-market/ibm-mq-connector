@@ -1,0 +1,67 @@
+{
+  "$schema" : "https://json-schema.axonivy.com/process/12.0.0/process.json",
+  "id" : "19E97328BAFB7033",
+  "kind" : "CALLABLE_SUB",
+  "config" : {
+    "data" : "com.axonivy.connector.imb.mq.MessageManagementData"
+  },
+  "elements" : [ {
+      "id" : "f5",
+      "type" : "CallSubStart",
+      "name" : "send(MessagePushRequest)",
+      "config" : {
+        "signature" : "send",
+        "input" : {
+          "params" : [
+            { "name" : "messagePushRequest", "type" : "com.axonivy.connector.model.MessagePushRequest", "desc" : "" }
+          ],
+          "map" : {
+            "out.messagePushRequest" : "param.messagePushRequest"
+          }
+        }
+      },
+      "tags" : [
+        "connector"
+      ],
+      "visual" : {
+        "at" : { "x" : 112, "y" : 72 },
+        "description" : [
+          "Send a message with MessagePushRequest parameter.",
+          "",
+          "<b><font color=\"red\">Please note, that the send will be done in the context of the connector.</font></b>",
+          "",
+          "MessagePushRequest",
+          "- queueName: the queue name that receive the messages",
+          "-  payloads: List string payload"
+        ]
+      },
+      "connect" : [
+        { "id" : "f9", "to" : "f7" }
+      ]
+    }, {
+      "id" : "f6",
+      "type" : "CallSubEnd",
+      "visual" : {
+        "at" : { "x" : 440, "y" : 72 },
+        "labelOffset" : { "x" : 13, "y" : 33 }
+      }
+    }, {
+      "id" : "f7",
+      "type" : "Script",
+      "name" : "send",
+      "config" : {
+        "output" : {
+          "code" : [
+            "import com.axonivy.connector.service.MessageService;",
+            "MessageService.getInstance().send(in.messagePushRequest);"
+          ]
+        }
+      },
+      "visual" : {
+        "at" : { "x" : 272, "y" : 72 }
+      },
+      "connect" : [
+        { "id" : "f8", "to" : "f6" }
+      ]
+    } ]
+}

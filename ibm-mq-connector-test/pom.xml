@@ -7,29 +7,19 @@
   <version>12.0.15-SNAPSHOT</version>
   <packaging>iar-integration-test</packaging>
   <properties>
-    <project.build.plugin.version>12.0.15</project.build.plugin.version>
+    <project.build.plugin.version>12.0.13</project.build.plugin.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <tester.version>12.0.15</tester.version>
+    <tester.version>12.0.3</tester.version>
   </properties>
-  <pluginRepositories>
-    <!-- Snapshot releases are available via sonatype.org -->
+ <pluginRepositories>
     <pluginRepository>
-      <id>sonatype</id>
-      <url>https://central.sonatype.com/repository/maven-snapshots</url>
       <snapshots>
         <updatePolicy>always</updatePolicy>
       </snapshots>
+      <id>sonatype</id>
+      <url>https://central.sonatype.com/repository/maven-snapshots</url>
     </pluginRepository>
   </pluginRepositories>
-  <repositories>
-    <repository>
-      <id>sonatype</id>
-      <url>https://central.sonatype.com/repository/maven-snapshots</url>
-      <snapshots>
-        <updatePolicy>always</updatePolicy>
-      </snapshots>
-    </repository>
-  </repositories>
   <dependencies>
     <dependency>
       <groupId>com.axonivy.connector.imb.mq</groupId>
@@ -38,18 +28,55 @@
       <type>iar</type>
     </dependency>
     <dependency>
+      <groupId>org.testcontainers</groupId>
+      <artifactId>testcontainers</artifactId>
+      <version>2.0.5</version>
+      <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>com.fasterxml.jackson.core</groupId>
+          <artifactId>jackson-databind</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>com.fasterxml.jackson.core</groupId>
+          <artifactId>jackson-core</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>com.fasterxml.jackson.core</groupId>
+          <artifactId>jackson-annotations</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
     	<groupId>com.axonivy.ivy.test</groupId>
     	<artifactId>unit-tester</artifactId>
     	<version>${tester.version}</version>
     	<scope>test</scope>
-    </dependency>
-    <dependency>
-    	<groupId>com.axonivy.ivy.webtest</groupId>
-    	<artifactId>web-tester</artifactId>
-    	<version>${tester.version}</version>
-    	<scope>test</scope>
-    </dependency>
+    </dependency>  
   </dependencies>
+   <repositories>
+    <repository>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+      <id>central</id>
+      <url>https://repo.maven.apache.org/maven2</url>
+    </repository>
+    <repository>
+      <snapshots>
+        <updatePolicy>always</updatePolicy>
+      </snapshots>
+      <id>sonatype</id>
+      <url>https://central.sonatype.com/repository/maven-snapshots</url>
+    </repository>
+    <repository>
+      <snapshots>
+        <updatePolicy>always</updatePolicy>
+      </snapshots>
+      <id>maven.axonivy.com</id>
+      <url>https://maven.axonivy.com</url>
+    </repository>
+  </repositories>
   <build>
     <testSourceDirectory>src_test</testSourceDirectory>
     <plugins>

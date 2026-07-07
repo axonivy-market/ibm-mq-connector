@@ -1,2 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<userConfig/>
+<userConfig>
+    <user>
+        <username>user1</username>
+        <role>Manager</role>
+    </user>
+    <user>
+        <username>user2</username>
+    </user>
+</userConfig>

@@ -1,0 +1,24 @@
+{
+  "$schema" : "https://json-schema.axonivy.com/data-class/12.0.1/data-class.json",
+  "simpleName" : "MessgeTypeDlgData",
+  "namespace" : "com.axonivy.connector.imb.mq.MessgeTypeDlg",
+  "fields" : [ {
+    "name" : "messageFetchResult",
+    "type" : "com.axonivy.connector.model.MessageFetchResult"
+  }, {
+    "name" : "processMessageService",
+    "type" : "com.axonivy.connector.imb.mq.service.ProcessMessageService"
+  }, {
+    "name" : "messageFetchRequest",
+    "type" : "com.axonivy.connector.model.MessageFetchRequest"
+  }, {
+    "name" : "autoApprovalResult",
+    "type" : "com.axonivy.connector.imb.mq.model.AutoApprovalResult"
+  }, {
+    "name" : "messagePushRequest",
+    "type" : "com.axonivy.connector.model.MessagePushRequest"
+  }, {
+    "name" : "manualMessages",
+    "type" : "List<String>"
+  } ]
+}

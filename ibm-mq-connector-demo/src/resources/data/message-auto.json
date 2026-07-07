@@ -1,0 +1,25 @@
+{
+  "msgHeader": {
+    "msgId": "BANK-LOAN-20240520-00042",
+    "createdAt": "2024-05-20T09:32:11Z",
+    "correlationId": "REQ-2024-GB-98765",
+    "replyToQueue": "BANK.LOAN.RESPONSE.QUEUE"
+  },
+  "applicant": {
+    "customerId": "GB-CUST-4471823",
+    "name": { "first": "James", "last": "Harrison" },
+    "dateOfBirth": "1982-07-14",
+    "monthlyNetIncome": 4250.00
+  },
+  "loanRequest": {
+    "purpose": "VEHICLE_PURCHASE",
+    "amount": 28500.00,
+    "termMonths": 60
+  },
+  "creditScore": {
+    "score": 740,
+    "scoreClass": "A",
+    "provider": "Experian",
+    "negativeEntries": false
+  }
+}

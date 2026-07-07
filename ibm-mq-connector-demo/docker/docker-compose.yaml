@@ -1,0 +1,9 @@
+services:
+  ibm-mq:
+    build:
+      context: .
+    image: ibm-mq:dev
+    container_name: my-mq-container
+    ports:
+      - "1414:1414"
+      - "9443:9443"
