@@ -3,7 +3,7 @@
   <groupId>com.axonivy.connector.imb.mq</groupId>
   <name>ibm-mq-connector</name>
   <artifactId>ibm-mq-connector-modules</artifactId>
-  <version>12.0.15-SNAPSHOT</version>
+  <version>12.0.15</version>
   <packaging>pom</packaging>
 
   <modules>
@@ -15,7 +15,7 @@
 
   <scm>
     <developerConnection>scm:git:https://github.com/axonivy-market/ibm-mq-connector.git</developerConnection>
-    <tag>HEAD</tag>
+    <tag>v12.0.15</tag>
   </scm>
 
   <build>
