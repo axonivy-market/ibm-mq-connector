@@ -1,5 +1,5 @@
 {
-  "$schema" : "https://json-schema.axonivy.com/process/12.0.0/process.json",
+  "$schema" : "https://json-schema.axonivy.com/process/13.2.0/process.json",
   "id" : "19E971FDF9DF9B0D",
   "config" : {
     "data" : "com.axonivy.connector.imb.mq.demo.LoanQueueDemoData"
@@ -76,7 +76,9 @@
       "config" : {
         "task" : {
           "responsible" : {
-            "activator" : "Manager"
+            "roles" : [
+              "Manager"
+            ]
           }
         }
       },
@@ -166,7 +168,9 @@
       "config" : {
         "task" : {
           "responsible" : {
-            "activator" : "Manager"
+            "roles" : [
+              "Manager"
+            ]
           },
           "skipTasklist" : true
         }
