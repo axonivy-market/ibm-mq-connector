@@ -12,10 +12,6 @@
   <artifactId>ibm-mq-connector-test</artifactId>
   <version>13.2.0-SNAPSHOT</version>
   <packaging>iar-integration-test</packaging>
-  <properties>
-    <tester.version>12.0.3</tester.version>
-    <project.build.plugin.version>12.0.13</project.build.plugin.version>
-  </properties>
   <dependencies>
     <dependency>
       <groupId>com.axonivy.connector.imb.mq</groupId>
