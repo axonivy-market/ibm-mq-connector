@@ -1,17 +1,18 @@
-package com.axonivy.connector.test.integration;
+package com.axonivy.connector.service.integration;
 
 import java.io.File;
 import java.time.Duration;
+
+import javax.jms.Connection;
+import javax.jms.JMSException;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.testcontainers.containers.ComposeContainer;
 import org.testcontainers.containers.wait.strategy.Wait;
 
-import ch.ivyteam.ivy.environment.AppFixture;
-
-import javax.jms.Connection;
-import javax.jms.JMSException;
 import com.axonivy.connector.model.AbstractMQueue;
+
+import ch.ivyteam.ivy.environment.AppFixture;
 
 public abstract class BaseIntegrationTest {
 
@@ -29,7 +30,8 @@ public abstract class BaseIntegrationTest {
         .withBuild(true)
         .withExposedService("ibm-mq", 1414)
         .withExposedService("ibm-mq", 9443)
-        .waitingFor("ibm-mq", Wait.forLogMessage(FINISHED_SETUP_LOG_TEXT_REGEX, 1).withStartupTimeout(Duration.ofMinutes(2)));
+        .waitingFor("ibm-mq",
+            Wait.forLogMessage(FINISHED_SETUP_LOG_TEXT_REGEX, 1).withStartupTimeout(Duration.ofMinutes(2)));
 
     MQ_CONTAINER.start();
     HOST = MQ_CONTAINER.getServiceHost("ibm-mq", 1414);

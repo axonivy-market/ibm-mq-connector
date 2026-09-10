@@ -1,6 +1,7 @@
-package com.axonivy.connector.test.integration;
+package com.axonivy.connector.service.integration;
 
 import static org.assertj.core.api.Assertions.assertThat;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +20,7 @@ public class MQueueIntegrationIT extends BaseIntegrationTest {
     MQueueListener listener = new MQueueListener("DEV.QUEUE.1", listenerReceived::add);
 
     listener.start();
-    
+
     // Read all currently available messages
     for (int i = 0; i < 5 && listenerReceived.size() < 3; i++) {
       listener.receiveNoWait();
@@ -27,23 +28,22 @@ public class MQueueIntegrationIT extends BaseIntegrationTest {
         Thread.sleep(1000);
       }
     }
-    
+
     int messageCount = listenerReceived.size();
     assertThat(messageCount)
-      .as("The amount of messages should be exactly 3")
-      .isEqualTo(3);
+        .as("The amount of messages should be exactly 3")
+        .isEqualTo(3);
 
     for (String val : listenerReceived) {
       System.out.println("Received message: " + val);
     }
-    
+
     assertThat(listenerReceived)
-      .as("Listener should read exactly 3 preloaded messages from Docker queue")
-      .containsExactly(
-        "Preloaded Message from Docker 1",
-        "Preloaded Message from Docker 2",
-        "Preloaded Message from Docker 3"
-      );
+        .as("Listener should read exactly 3 preloaded messages from Docker queue")
+        .containsExactly(
+            "Preloaded Message from Docker 1",
+            "Preloaded Message from Docker 2",
+            "Preloaded Message from Docker 3");
 
     listener.stop();
   }
