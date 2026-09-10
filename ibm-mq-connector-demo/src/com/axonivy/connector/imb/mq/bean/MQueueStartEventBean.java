@@ -11,10 +11,10 @@ import ch.ivyteam.ivy.environment.Ivy;
 import ch.ivyteam.ivy.process.eventstart.AbstractProcessStartEventBean;
 import ch.ivyteam.ivy.process.eventstart.IProcessStartEventBeanRuntime;
 import ch.ivyteam.ivy.process.extension.ProgramConfig;
-import ch.ivyteam.ivy.process.program.ui.ProgramEditorUi;
-import ch.ivyteam.ivy.process.program.ui.ProgramUiBuilder;
+import ch.ivyteam.ivy.process.extension.ui.ExtensionUiBuilder;
+import ch.ivyteam.ivy.process.extension.ui.UiEditorExtension;
 
-public class MQueueStartEventBean extends AbstractProcessStartEventBean implements ProgramEditorUi {
+public class MQueueStartEventBean extends AbstractProcessStartEventBean {
 	private static final String QUEUE_NAME_FIELD = "queueNameField";
 	private boolean isPolling = false;
 	private boolean isSkipInitializing;
@@ -64,15 +64,18 @@ public class MQueueStartEventBean extends AbstractProcessStartEventBean implemen
 		return getConfig().get(QUEUE_NAME_FIELD);
 	}
 
-	@Override
-	public void editor(ProgramUiBuilder ui) {
-		ui.label("Queue Name:").create();
-		ui.textField(QUEUE_NAME_FIELD).create();
+	public static class Editor extends UiEditorExtension {
 
-		String helpTopic = String.format("""
-				Queue name:
-				The queue from which messages will be received.
-				""");
-		ui.label(helpTopic).multiline().create();
+		@Override
+		public void initUiFields(ExtensionUiBuilder ui) {
+			ui.label("Queue Name:").create();
+			ui.textField(QUEUE_NAME_FIELD).create();
+
+			String helpTopic = String.format("""
+					Queue name:
+					The queue from which messages will be received.
+					""");
+			ui.label(helpTopic).multiline().create();
+		}
 	}
 }

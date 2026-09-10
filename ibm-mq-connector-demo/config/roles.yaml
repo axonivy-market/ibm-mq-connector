@@ -1,4 +1,0 @@
-# yaml-language-server: $schema=https://json-schema.axonivy.com/14.0/config/roles.json
-Roles:
-  - Id: Manager
-  - Id: Developer
